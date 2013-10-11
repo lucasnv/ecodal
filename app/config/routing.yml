@@ -1,0 +1,8 @@
+gma_site:
+    resource: "@GmaSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gma_game:
+    resource: "@GmaGameBundle/Resources/config/routing.yml"
+    prefix:   /
+

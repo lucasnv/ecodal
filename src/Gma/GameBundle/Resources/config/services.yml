@@ -1,0 +1,7 @@
+parameters:
+#    gma_game.example.class: Gma\GameBundle\Example
+
+services:
+#    gma_game.example:
+#        class: %gma_game.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
