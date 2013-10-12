@@ -18,11 +18,18 @@ define(['myclass',
                 console.log('God', 'create', arguments);
 
                 var world = new World();
-                var home = new Home();
+
+                var homeStage = new createjs.Stage('main_canvas');
+                var home = new Home(homeStage);
+
                 console.log('Vitality home: ' + home.getVitality());
                 var scene = new Scene();
+
+                var denizenStage = new createjs.Stage('denizen_canvas');
                 var conscience = new Conscience(this);
-                var denizen = new Denizen(conscience);
+                var denizen = new Denizen(conscience, denizenStage);
+
+                home.addChild(denizen);
 
             }
         });

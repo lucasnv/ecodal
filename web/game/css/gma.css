@@ -1,0 +1,9 @@
+#gma_container {
+    position: relative;
+}
+
+.gma_canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

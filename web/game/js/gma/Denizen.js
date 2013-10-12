@@ -1,15 +1,16 @@
-define(['myclass', 'gma/Entity'], function (my, Entity) {
+define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
     "use strict";
 
     var Denizen = my.Class(Entity, {
         conscience: null,
-        state: {
-
+        state: {},
+        on: {
+            interpreted: new signals.Signal()
         },
-        constructor: function (conscience, container) {
-            Denizen.Super.call(this, container);
+        constructor: function (conscience, stage) {
+            Denizen.Super.call(this, stage);
 
-            console.log('Creando Denizen con conscience:', conscience, 'y container:', container);
+            console.log('Denizen', '::', 'constructor', 'conscience:', conscience);
 
             if (!conscience) {
                 throw new Error('No puede haber Denizen sin conciencia');
@@ -17,8 +18,14 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
             this.conscience = conscience;
 
-            // Esperar ideas
+            // Referencia bidireccional
+            this.conscience.denizen = this;
+
+            // Cuando la conciencia produjo una idea...
             this.conscience.on['thought'].add(this.onThought, this);
+
+            // Cuando el denizen termino de procesar una idea...
+            this.on['interpreted'].add(this.onInterpreted, this);
 
             // Pensar
             this.think();
@@ -32,6 +39,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
             if (idea.length() == 0) {
                 console.log('   ', 'No hay acciones en la idea');
+                this.on['interpreted'].dispatch(idea);
                 return;
             }
 
@@ -50,8 +58,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             });
 
             chain.always(function () {
-                console.log('Denizen', '::', 'terminó de realizar la idea');
-                //self.think();
+                self.on['interpreted'].dispatch(idea);
             });
         },
         act: function (action) {
@@ -81,6 +88,16 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
             return d.promise();
         },
+        embody: function () {
+            console.log('Denizen', '::', 'embody');
+
+            this.body = new createjs.Shape();
+            this.body.graphics.beginFill('#000000').drawRect(-10, -10, 20, 20);
+            this.body.x = 10;
+            this.body.y = 10;
+
+            Denizen.Super.prototype.embody.call(this);
+        },
         // Acciones
         sayHello: function () {
             console.log('Denizen', '::', 'sayHello', arguments);
@@ -95,10 +112,19 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
             return d.promise();
         },
+        teleport: function (x, y) {
+            this.body.x = x;
+            this.body.y = y;
+            this.render();
+        },
         // Event handlers
         onThought: function (idea) {
             console.log('Denizen', '::', 'recibió la idea', idea);
             this.interpret(idea);
+        },
+        onInterpreted: function (idea) {
+            console.log('Denizen', '::', 'terminó de interpretar la idea:', idea);
+            this.think();
         }
     });
 

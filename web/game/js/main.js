@@ -10,9 +10,37 @@ requirejs.config({
     }
 });
 
-require(['gma/God'], function (God) {
+var manifest = [];
+var queue;
 
-    var god = new God();
-    god.create();
+var preload = function () {
+    console.log('main', '::', 'preload');
+    var d = $.Deferred();
 
-});
+    queue = new createjs.LoadQueue();
+    queue.installPlugin(createjs.Sound);
+    queue.addEventListener('loadComplete', function () {
+        d.resolve();
+    });
+
+    if (manifest.length) {
+        queue.loadManifest(manifest);
+    } else {
+        d.resolve();
+    }
+
+    return d.promise();
+};
+
+var init = function () {
+    console.log('main', '::', 'init');
+
+    require(['gma/God'], function (God) {
+        var god = new God();
+        god.create();
+    });
+
+    var stage = new createjs.Stage('main_canvas');
+};
+
+preload().then(init);

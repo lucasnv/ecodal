@@ -3,7 +3,8 @@ define(['myclass', 'gma/util/Iterator'], function (my, Iterator) {
 
     var Idea = my.Class({
         constructor: function () {
-            console.log('Creando Idea');
+            console.log('Idea', '::', 'constructor');
+            this.index = 0;
             this.items = [];
         }
     });
