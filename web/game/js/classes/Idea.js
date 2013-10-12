@@ -1,4 +1,0 @@
-/**
- * Class Idea
- * @Extend: Entity
- */
