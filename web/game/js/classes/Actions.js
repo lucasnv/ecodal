@@ -1,4 +1,0 @@
-/**
- * Class Action
- * @Extend: Entity
- */
