@@ -1,3 +1,7 @@
+/**
+ * Class Denizen
+ * @Extend: Entity
+ */
 Denizen = new JS.Class(Existant, {
     conscience: null,
     initialize: function (container, conscience) {

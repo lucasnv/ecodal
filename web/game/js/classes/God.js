@@ -1,3 +1,9 @@
+/**
+ * Class God
+ * @Extend: Entity
+ * @Description: Encargado de enlazar todas las clases y crear el mundo desde una configuración
+ * 
+ */
 God = new JS.Class({
     config: null,
     initialize: function (config) {

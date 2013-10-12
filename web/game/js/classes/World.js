@@ -1,3 +1,4 @@
 /**
  * Class World
+ * @extend: Entity
  */

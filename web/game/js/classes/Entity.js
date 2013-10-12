@@ -1,3 +1,6 @@
+/**
+ * Class Entity
+ */
 Existant = JS.Class({
     container: null,
     initialize: function (container) {
