@@ -25,8 +25,11 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, signals, 
                 var idea = new Idea();
 
                 var actionTeleport = new Action('teleport', [Math.round(Math.random() * 200), Math.round(Math.random() * 200)]);
+                var actionMove = new Action('move', [Math.round(Math.random() * 200), Math.round(Math.random() * 200)]);
                 var actionWait = new Action('wait', [1000]);
 
+                idea.addItem(actionMove);
+                idea.addItem(actionWait);
                 idea.addItem(actionTeleport);
                 idea.addItem(actionWait);
 

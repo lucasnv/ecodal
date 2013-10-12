@@ -2,6 +2,7 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
     "use strict";
 
     var Denizen = my.Class(Entity, {
+        speed: 0.1,
         conscience: null,
         state: {},
         on: {
@@ -93,8 +94,8 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
 
             this.body = new createjs.Shape();
             this.body.graphics.beginFill('#000000').drawRect(-10, -10, 20, 20);
-            this.body.x = 10;
-            this.body.y = 10;
+            this.body.x = 0;
+            this.body.y = 0;
 
             Denizen.Super.prototype.embody.call(this);
         },
@@ -116,6 +117,26 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
             this.body.x = x;
             this.body.y = y;
             this.render();
+        },
+        move: function (x, y) {
+            var d = $.Deferred();
+
+            var self = this;
+
+            var dx = x - this.body.x;
+            var dy = y - this.body.y;
+            var distance = Math.sqrt((dx * dx) + (dy * dy));
+            var time = Math.round(distance / this.speed);
+
+            createjs.Tween.get(this.body).to({x: x, y: y}, time)
+                .call(function () {
+                    d.resolve();
+                })
+                .addEventListener("change", function () {
+                    self.render();
+                });
+
+            return d.promise();
         },
         // Event handlers
         onThought: function (idea) {
