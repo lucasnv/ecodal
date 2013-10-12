@@ -1,8 +1,11 @@
 define(['myclass',
+    'gma/World',
+    'gma/Home',
+    'gma/Scene',
     'gma/Conscience',
     'gma/Denizen',
     'gma/Idea'],
-    function (my, Conscience, Denizen, Idea) {
+    function (my, World, Home, Scene, Conscience, Denizen, Idea) {
         "use strict";
 
         return my.Class({
@@ -14,8 +17,13 @@ define(['myclass',
             create: function () {
                 console.log('God', 'create', arguments);
 
+                var world = new World();
+                var home = new Home();
+                console.log('Vitality home: ' + home.getVitality());
+                var scene = new Scene();
                 var conscience = new Conscience(this);
                 var denizen = new Denizen(conscience);
+
             }
         });
     });
