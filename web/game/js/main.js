@@ -1,35 +1,17 @@
-JS.packages(function () {
-    with (this) {
-        file('/game/js/classes/God.js')
-            .requires('JS.Class')
-            .requires('Denizen')
-            .requires('Conscience')
-            .provides('God');
-
-        file('/game/js/classes/Conscience.js')
-            .requires('JS.Class')
-            .provides('Conscience');
-
-        file('/game/js/classes/Entity.js')
-            .requires('JS.Class')
-            .provides('Existant');
-
-        file('/game/js/classes/Denizen.js')
-            .requires('Existant')
-            .provides('Denizen');
+// requirejs config
+requirejs.config({
+    baseUrl: '/',
+    paths: {
+        lib: 'game/lib',
+        gma: 'game/js/gma',
+        jquery: 'game/lib/jquery-proxy',
+        myclass: 'game/lib/my.class.min'
     }
 });
 
-JS.require('God', function (God) {
-    var aGod = new God({
-        "children": [
-            {id: 1},
-            {id: 2},
-            {id: 3},
-            {id: 4},
-            {id: 5}
-        ]
-    });
+require(['gma/God'], function (God) {
 
-    aGod.create();
+    var god = new God();
+    god.create();
+
 });
