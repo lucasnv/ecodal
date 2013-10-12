@@ -10,4 +10,14 @@ class DefaultController extends Controller
     {
         return $this->render('GmaSiteBundle:Default:index.html.twig', array());
     }
+
+    public function contactAction()
+    {
+
+    }
+
+    public function projectAction()
+    {
+
+    }
 }
