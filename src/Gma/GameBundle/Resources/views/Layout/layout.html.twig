@@ -7,12 +7,12 @@
 
 {% block javascripts %}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{ asset('game/lib/jquery-2.0.3.min.js') }}"></script>
+    <script src="{{ asset('/game/lib/jquery-2.0.3.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{ asset('game/lib/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/game/lib/bootstrap.min.js') }}"></script>
 
-    <script>JSCLASS_PATH = 'game/lib/jsclass'</script>
-    <script src="{{ asset('game/lib/jsclass/loader-browser.js') }}"></script>
+    <script>JSCLASS_PATH = '/game/lib/jsclass'</script>
+    <script src="{{ asset('/game/lib/jsclass/loader-browser.js') }}"></script>
 
-    <script src="{{ asset('game/js/main.js') }}"></script>
+    <script src="{{ asset('/game/js/main.js') }}"></script>
 {% endblock %}
