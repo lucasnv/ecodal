@@ -1,3 +1,18 @@
+/**
+ // using for loop
+
+ for (var item = iter.first(); iter.hasNext(); item = iter.next()) {
+    log.add(item);
+ }
+
+ log.add("");
+
+ // using Iterator's each method
+
+ iter.each(function(item) {
+    log.add(item);
+ });
+ */
 define([], function () {
     "use strict";
 
