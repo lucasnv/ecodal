@@ -1,9 +1,10 @@
-define(['myclass'], function (my) {
+define(['myclass', 'signals', 'gma/Idea'], function (my, signals, Idea) {
     "use strict";
 
     var Conscience = my.Class({
         god: null,
         timeout: null,
+        thought: new signals.Signal(),
         constructor: function (god) {
             console.log('Creando Conscience con god:', god);
 
@@ -12,14 +13,15 @@ define(['myclass'], function (my) {
             }
 
             this.god = god;
-            this.think();
         },
         think: function () {
+            console.log('Conscience', 'think');
             var self = this;
-            var defer = $.deferred
 
             this.timeout = setTimeout(function () {
-                console.log('think', self);
+                var idea = new Idea();
+                console.log('Conscience', 'generó la Idea:', idea);
+                self.thought.dispatch(idea);
             }, 1000);
         }
     });

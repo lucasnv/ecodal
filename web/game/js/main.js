@@ -5,7 +5,8 @@ requirejs.config({
         lib: 'game/lib',
         gma: 'game/js/gma',
         jquery: 'game/lib/jquery-proxy',
-        myclass: 'game/lib/my.class.min'
+        myclass: 'game/lib/my.class.min',
+        signals: 'game/lib/signals.min'
     }
 });
 

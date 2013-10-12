@@ -1,7 +1,8 @@
 define(['myclass',
     'gma/Conscience',
-    'gma/Denizen'],
-    function (my, Conscience, Denizen) {
+    'gma/Denizen',
+    'gma/Idea'],
+    function (my, Conscience, Denizen, Idea) {
         "use strict";
 
         return my.Class({
