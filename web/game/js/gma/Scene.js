@@ -1,16 +1,16 @@
 /**
- * Class World
+ * Class Scene
  * @extend: Entity
  */
 define(['myclass', 'gma/Entity'], function (my, Entity) {
 
-    var World = my.Class(Entity, {
+    var Scene = my.Class(Entity, {
 
         constructor: function () {
-        	console.log('Generate World');
+        	console.log('Generate Scene');
         },
 
     });
 
-    return World;
+    return Scene;
 });
