@@ -1,10 +1,12 @@
-JS.packages(function () {
+JS.Packages(function () {
     with (this) {
         file('/game/js/classes/God.js')
-            .provides('Game.God')
+            .requires('JS.Class')
+            .provides('God');
     }
 });
 
-JS.require('Game.God', function(God) {
+JS.require('God', function(God) {
+    console.log(God == '');
     console.log('Tengo God', God);
 });

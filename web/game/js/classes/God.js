@@ -1,5 +1,5 @@
-console.log(JS);
-
-JS.define('JS.Class', function (Class) {
-    return Class;
+God = new Class({
+    initialize: function () {
+        var o = new Denizen();
+    }
 });
