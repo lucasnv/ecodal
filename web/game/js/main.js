@@ -4,6 +4,7 @@ requirejs.config({
     paths: {
         lib: 'game/lib',
         gma: 'game/js/gma',
+        test: 'game/js/test',
         jquery: 'game/lib/jquery-proxy',
         myclass: 'game/lib/my.class.min',
         signals: 'game/lib/signals.min'
@@ -40,7 +41,11 @@ var init = function () {
         god.create();
     });
 
-    var stage = new createjs.Stage('main_canvas');
+    /*
+     require(['test/test'], function () {
+
+     });
+     */
 };
 
 preload().then(init);

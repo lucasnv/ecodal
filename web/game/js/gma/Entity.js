@@ -14,6 +14,7 @@ define(['myclass'], function (my) {
             child.parent = this;
             child.embody();
             this.children.push(child);
+            console.log('children', this.children);
         },
         embody: function () {
             console.log('Entity', '::', 'embody');

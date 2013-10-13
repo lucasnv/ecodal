@@ -1,9 +1,13 @@
+canvas {
+    border: 1px solid red;
+}
+
 #gma_container {
     position: relative;
 }
 
 .gma_canvas {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     left: 0;
 }

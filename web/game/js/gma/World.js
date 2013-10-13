@@ -8,7 +8,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
         constructor: function () {
         	console.log('Generate World');
-        },
+        }
 
     });
 

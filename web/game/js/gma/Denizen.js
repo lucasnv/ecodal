@@ -6,7 +6,7 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
         conscience: null,
         state: {},
         on: {
-            interpreted: new signals.Signal()
+            interpreted: new signals()
         },
         constructor: function (conscience, stage) {
             Denizen.Super.call(this, stage);
@@ -36,6 +36,7 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
         },
         interpret: function (idea) {
             console.log('Denizen', '::', 'interpretando', 'idea:', idea);
+            console.log('   ', 'conciencia:', this.conscience.caca);
             console.log('   ', 'cantidad de acciones:', idea.length());
 
             if (idea.length() == 0) {
@@ -97,7 +98,10 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
             this.body.x = 0;
             this.body.y = 0;
 
-            Denizen.Super.prototype.embody.call(this);
+            if (this.stage && this.body) {
+                this.stage.addChild(this.body);
+                this.render();
+            }
         },
         // Acciones
         sayHello: function () {
@@ -140,12 +144,14 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
         },
         // Event handlers
         onThought: function (idea) {
-            console.log('Denizen', '::', 'recibió la idea', idea);
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+            console.log('Denizen', '::', 'recibió la idea', idea, 'de', this.conscience.caca, 'stage', this.stage.caca, new Date());
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
             this.interpret(idea);
         },
         onInterpreted: function (idea) {
             console.log('Denizen', '::', 'terminó de interpretar la idea:', idea);
-            this.think();
+            //this.think();
         }
     });
 
