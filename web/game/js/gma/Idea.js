@@ -9,7 +9,7 @@ define(['myclass', 'gma/util/Iterator'], function (my, Iterator) {
         }
     });
 
-    my.extendClass(Idea, Iterator);
+    my.extendClass(Idea, new Iterator());
 
     return Idea;
 });
