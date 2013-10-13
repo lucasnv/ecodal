@@ -33,8 +33,6 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
 
             // Cuando el denizen termino de procesar una idea...
             this.on['interpreted'].add(this.onInterpreted, this);
-
-
         },
 
         think: function () {
