@@ -12,7 +12,9 @@ requirejs.config({
 });
 
 var manifest = [
-    {src: "/game/assets/runningGrant.png", id: "denizen"}
+    {src: "/game/assets/runningGrant.png", id: "denizen"},
+    {src: "/game/assets/MonsterARun.png", id: "monster_run"},
+    {src: "/game/assets/MonsterAIdle.png", id: "monster_idle"}
 ];
 var Resources = {
     loader: null

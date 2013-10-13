@@ -3,9 +3,29 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
 
     var Denizen = my.Class(Entity, {
         constructor: function (conscience, stage) {
-            this.speed = 0.5;
+            this.speed = 0.1;
             this.conscience = null;
-            this.state = {};
+            this.state = {
+                gesture: null
+            };
+            this.sprites = {
+                idle: null,
+                walk: null
+            };
+            this.gestures = {
+                idle: {
+                    sprite: 'idle',
+                    animation: 'idle'
+                },
+                walkLeft: {
+                    sprite: 'walk',
+                    animation: 'walk'
+                },
+                walkRight: {
+                    sprite: 'walk',
+                    animation: 'walk_h'
+                }
+            };
             this.on = {
                 interpreted: new signals()
             };
@@ -100,17 +120,29 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
 
             console.log('Denizen', '::', 'embody');
 
-            var data = new createjs.SpriteSheet({
-                "images": [Resource.loader.getResult("denizen")],
-                "frames": {"regX": 0, "height": 292, "count": 64, "regY": 0, "width": 165},
+            var spriteSheet = new createjs.SpriteSheet({
+                "images": [Resource.loader.getResult("monster_run")],
+                "frames": {width: 64, height: 64, regX: 32, regY: 32},
                 // define two animations, run (loops, 1.5x speed) and jump (returns to run):
-                "animations": {"run": [0, 25, "run", 1.5], "jump": [26, 63, "run"]}
+                "animations": {"walk": [0, 9, "walk"]}
             });
 
-            this.body = new createjs.Sprite(data, "run");
-            this.body.setTransform(-200, 90, 0.8, 0.8);
-            this.body.framerate = 30;
-            this.body.gotoAndPlay("run");
+            createjs.SpriteSheetUtils.addFlippedFrames(spriteSheet, true, false, false);
+
+            this.sprites.walk = new createjs.Sprite(spriteSheet, 'walk');
+
+            var idleSpriteSheet = new createjs.SpriteSheet({
+                "images": [Resource.loader.getResult("monster_idle")],
+                "frames": {width: 64, height: 64, regX: 32, regY: 32},
+                // define two animations, run (loops, 1.5x speed) and jump (returns to run):
+                "animations": {"idle": [0, 10, "idle"]}
+            });
+
+            this.sprites.idle = new createjs.Sprite(idleSpriteSheet, 'idle');
+
+            this.body = new createjs.Container();
+
+            this.gesture('idle');
 
             // Pensar
             this.think();
@@ -119,6 +151,23 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
                 this.stage.addChild(this.body);
                 //this.render();
             }
+        },
+        gesture: function (name) {
+            if (!this.gestures[name]) {
+                console.log('Denizen', '::', 'gesture desconicida', name);
+            }
+
+            if (this.state.gesture == name) {
+                return;
+            }
+
+            this.state.gesture = name;
+            var gestureDef = this.gestures[name];
+            var sprite = this.sprites[gestureDef.sprite];
+
+            this.body.removeAllChildren();
+            this.body.addChild(sprite);
+            sprite.gotoAndPlay(gestureDef.animation);
         },
         // Acciones
         sayHello: function () {
@@ -135,9 +184,9 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
             return d.promise();
         },
         teleport: function (x, y) {
+            this.gesture('idle');
             this.body.x = x;
             this.body.y = y;
-            this.render();
         },
         move: function (x, y) {
             var d = $.Deferred();
@@ -149,6 +198,10 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
 
             var self = this;
 
+            var gestureName = self.body.x > x ? 'walkLeft' : 'walkRight';
+
+            this.gesture(gestureName);
+
             var dx = x - this.body.x;
             var dy = y - this.body.y;
             var distance = Math.sqrt((dx * dx) + (dy * dy));
@@ -156,6 +209,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
 
             createjs.Tween.get(this.body).to({x: x, y: y}, time)
                 .call(function () {
+                    self.gesture('idle');
                     d.resolve();
                 })
                 .addEventListener("change", function () {
