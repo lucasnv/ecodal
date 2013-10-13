@@ -2,11 +2,12 @@ define(['myclass'], function (my) {
     "use strict";
 
     return my.Class({
-        stage: null,
-        parent: null,
-        body: null,
-        children: [],
+
         constructor: function (stage) {
+            this.stage: null,
+            this.parent: null,
+            this.body: null,
+            this.children: [],
             console.log('Entity', '::', 'constructor', 'stage:', stage);
             this.stage = stage;
         },
