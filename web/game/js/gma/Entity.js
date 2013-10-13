@@ -4,10 +4,10 @@ define(['myclass'], function (my) {
     return my.Class({
 
         constructor: function (stage) {
-            this.stage: null,
-            this.parent: null,
-            this.body: null,
-            this.children: [],
+            this.stage: null;
+            this.parent: null;
+            this.body: null;
+            this.children: [];
             console.log('Entity', '::', 'constructor', 'stage:', stage);
             this.stage = stage;
         },
