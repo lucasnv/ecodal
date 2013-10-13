@@ -1,9 +1,20 @@
-define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, Idea, Action) {
+/**
+ * Class Conscience
+ * @Extend: Idea, Action
+ */
+define(
+    ['myclass', 
+     'signals', 
+     'gma/Idea', 
+     'gma/Action'
+    ], 
+    function (my, Signal, Idea, Action) {
     "use strict";
 
     var Conscience = my.Class({
+
         constructor: function (god) {
-            console.log('Conscience', '::', 'constructor', 'god:', god);
+
             this.denizen = null;
             this.timeout = null;
             this.on = {
@@ -16,8 +27,8 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
             this.god = god;
         },
+
         think: function () {
-            console.log('Conscience', '::', 'think');
 
             return;
 

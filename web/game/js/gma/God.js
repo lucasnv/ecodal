@@ -14,14 +14,15 @@ define(
         return my.Class({
 
             constructor: function (config) {
+                /* Attr*/
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
             },
 
-            createStage: function (autorender) {
+            createStage: function (width, height, autorender) {
                 var stageId = this.getStageId();
-                var canvas = this.newCanvas(stageId, 1000, 500);    
+                var canvas = this.newCanvas(stageId, width, height);    
 
                 var stage = new createjs.Stage(stageId);
 
@@ -68,18 +69,18 @@ define(
 
                  }
                  */
-
-                var stage = this.createStage(true);
+                var speed = 0.5; 
+                var stage = this.createStage(1000, 500, true);
 
                 var conscience1 = new Conscience(this);
-                var denizen1 = new Denizen(conscience1, stage);
+                var denizen1 = new Denizen(conscience1, stage, speed);
                 home.addChild(denizen1);
 
                 denizen1.body.x = 0;
                 denizen1.body.y = 0;
 
                 var conscience2 = new Conscience(this);
-                var denizen2 = new Denizen(conscience2, stage);
+                var denizen2 = new Denizen(conscience2, stage, speed);
                 home.addChild(denizen2);
 
                 var idea = new Idea();

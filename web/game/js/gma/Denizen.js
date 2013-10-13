@@ -1,24 +1,26 @@
-define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signals, Entity, Resource) {
+/**
+ * Class Denizen
+ * @Extend: Entity, Resource
+ */
+define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], 
+    function (my, signals, Entity, Resource) {
     "use strict";
 
     var Denizen = my.Class(Entity, {
-        constructor: function (conscience, stage) {
-            this.speed = 0.5;
-            this.conscience = null;
-            this.state = {};
-            this.on = {
-                interpreted: new signals()
-            };
-
-            Denizen.Super.call(this, stage);
-
-            console.log('Denizen', '::', 'constructor', 'conscience:', conscience);
-
+        constructor: function (conscience, stage, speed) {
+            
             if (!conscience) {
                 throw new Error('No puede haber Denizen sin conciencia');
             }
 
             this.conscience = conscience;
+            this.speed = speed;
+            this.state = {};
+            this.on = {
+                interpreted: new signals()
+            };
+
+            Denizen.Super.call(this, stage);                        
 
             // Referencia bidireccional
             this.conscience.denizen = this;
@@ -29,23 +31,22 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
             // Cuando el denizen termino de procesar una idea...
             this.on['interpreted'].add(this.onInterpreted, this);
         },
+
         think: function () {
             this.conscience.think();
         },
+        
+        /* Interpreta el connjunto de acciones que representan una idea*/
         interpret: function (idea) {
-            console.log('Denizen', '::', 'interpretando', 'idea:', idea);
-            console.log('   ', 'cantidad de acciones:', idea.length());
+            var self = this;
+            var chain = null;
 
             if (idea.length() == 0) {
-                console.log('   ', 'No hay acciones en la idea');
                 this.on['interpreted'].dispatch(idea);
                 return;
             }
 
-            var self = this;
-
-            var chain = null;
-
+            //Debo preguntar si alguien implanto una nueva idea
             idea.each(function (action) {
                 if (!chain) {
                     chain = self.act(action);
@@ -62,8 +63,8 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
 
             return chain;
         },
+
         act: function (action) {
-            console.log('Denizen', '::', 'actuando', 'acción:', action);
 
             var d = $.Deferred();
 
