@@ -4,16 +4,15 @@
  */
 define(['myclass', 'gma/Entity'], function (my, Entity) {
 
-	"use strict";
+    "use strict";
 
     var Home = my.Class(Entity, {
 
         constructor: function (stage) {
-
-	        this.vitality: 0;
-	        this.energy: 0;
-	        this.water: 0;
-	        this.recycling: 0;
+            this.vitality = 0;
+            this.energy = 0;
+            this.water = 0;
+            this.recycling = 0;
             Home.Super.call(this, stage);
             console.log('Home', '::', 'constructor');
         },
