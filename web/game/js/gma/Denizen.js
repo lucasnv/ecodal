@@ -34,7 +34,6 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
         },
         interpret: function (idea) {
             console.log('Denizen', '::', 'interpretando', 'idea:', idea);
-            console.log('   ', 'conciencia:', this.conscience.caca);
             console.log('   ', 'cantidad de acciones:', idea.length());
 
             if (idea.length() == 0) {
@@ -60,6 +59,8 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
             chain.always(function () {
                 self.on['interpreted'].dispatch(idea);
             });
+
+            return chain;
         },
         act: function (action) {
             console.log('Denizen', '::', 'actuando', 'acción:', action);
@@ -88,7 +89,15 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
 
             return d.promise();
         },
+        interact: function (target, action) {
+            console.log('Denizen', '::', 'interactuando', 'acción:', action);
+            return target.act(action);
+        },
         embody: function () {
+            if (this.body) {
+                return;
+            }
+
             console.log('Denizen', '::', 'embody');
 
             var data = new createjs.SpriteSheet({

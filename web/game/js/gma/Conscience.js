@@ -18,28 +18,31 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
         },
         think: function () {
             console.log('Conscience', '::', 'think');
+
+            return;
+
             var self = this;
 
-            var time = 500 + Math.round(Math.random() * 500);
+            //var time = 500 + Math.round(Math.random() * 500);
 
             /*
-            this.timeout = setTimeout(function () {
-                var idea = new Idea();
+             this.timeout = setTimeout(function () {
+             var idea = new Idea();
 
-                var actionTeleport = new Action('teleport', [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)]);
-                var actionMove = new Action('move', [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)]);
-                var actionWait = new Action('wait', [1000]);
-                var actionAct = new Action('act', [actionTeleport]);
+             var actionTeleport = new Action('teleport', [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)]);
+             var actionMove = new Action('move', [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)]);
+             var actionWait = new Action('wait', [1000]);
+             var actionAct = new Action('act', [actionTeleport]);
 
-                idea.addItem(actionMove);
-                idea.addItem(actionWait);
-                //idea.addItem(actionTeleport);
-                //idea.addItem(actionWait);
+             idea.addItem(actionMove);
+             idea.addItem(actionWait);
+             //idea.addItem(actionTeleport);
+             //idea.addItem(actionWait);
 
-                self.on.thought.dispatch(idea);
+             self.on.thought.dispatch(idea);
 
-            }, time);
-            */
+             }, time);
+             */
 
             var idea = new Idea();
 
