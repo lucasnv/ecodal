@@ -8,11 +8,12 @@ define(['myclass'], function (my) {
             this.parent = null;
             this.body = null;
             this.children = [];
-            console.log('Entity', '::', 'constructor', 'stage:', stage);
             this.stage = stage;
+            console.log('Entity', '::', 'constructor', 'stage:', stage);
         },
 
         addChild: function (child) {
+            console.log('addChild', child);
             child.parent = this;
             child.embody();
             this.children.push(child);

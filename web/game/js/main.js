@@ -11,24 +11,31 @@ requirejs.config({
     }
 });
 
-var manifest = [];
-var queue;
+var manifest = [
+    {src: "/game/assets/runningGrant.png", id: "denizen"}
+];
+var Resources = {
+    loader: null
+};
 
 var preload = function () {
     console.log('main', '::', 'preload');
     var d = $.Deferred();
 
-    queue = new createjs.LoadQueue();
-    queue.installPlugin(createjs.Sound);
-    queue.addEventListener('loadComplete', function () {
-        d.resolve();
-    });
+    require(['gma/Resource'], function (Resource) {
+        Resource.loader = new createjs.LoadQueue();
+        Resource.loader.installPlugin(createjs.Sound);
+        Resource.loader.addEventListener('complete', function () {
+            console.log('TERMINO!');
+            d.resolve();
+        });
 
-    if (manifest.length) {
-        queue.loadManifest(manifest);
-    } else {
-        d.resolve();
-    }
+        if (manifest.length) {
+            Resource.loader.loadManifest(manifest);
+        } else {
+            d.resolve();
+        }
+    });
 
     return d.promise();
 };

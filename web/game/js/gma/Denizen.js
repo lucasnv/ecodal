@@ -1,4 +1,4 @@
-define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
+define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signals, Entity, Resource) {
     "use strict";
 
     var Denizen = my.Class(Entity, {
@@ -94,14 +94,21 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
         embody: function () {
             console.log('Denizen', '::', 'embody');
 
-            this.body = new createjs.Shape();
-            this.body.graphics.beginFill('#000000').drawRect(-10, -10, 20, 20);
-            this.body.x = 0;
-            this.body.y = 0;
+            var data = new createjs.SpriteSheet({
+                "images": [Resource.loader.getResult("denizen")],
+                "frames": {"regX": 0, "height": 292, "count": 64, "regY": 0, "width": 165},
+                // define two animations, run (loops, 1.5x speed) and jump (returns to run):
+                "animations": {"run": [0, 25, "run", 1.5], "jump": [26, 63, "run"]}
+            });
+
+            this.body = new createjs.Sprite(data, "run");
+            this.body.setTransform(-200, 90, 0.8, 0.8);
+            this.body.framerate = 30;
+            this.body.gotoAndPlay("run");
 
             if (this.stage && this.body) {
                 this.stage.addChild(this.body);
-                this.render();
+                //this.render();
             }
         },
         // Acciones
@@ -138,7 +145,7 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
                     d.resolve();
                 })
                 .addEventListener("change", function () {
-                    self.render();
+                    //self.render();
                 });
 
             return d.promise();

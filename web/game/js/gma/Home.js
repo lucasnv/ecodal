@@ -18,19 +18,19 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         },
 
         addEnergy: function (energy) {
-            this._energy += energy;
+            this.energy += energy;
         },
 
         addWater: function (water) {
-            this._water += water;
+            this.water += water;
         },
 
         getRecycling: function (recycling) {
-            this._recycling += recycling;
+            this.recycling += recycling;
         },
 
         getVitality: function () {
-            return this._energy + this._water + this._recycling;
+            return this.energy + this.water + this.recycling;
         }
 
     });

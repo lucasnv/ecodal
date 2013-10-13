@@ -14,12 +14,20 @@ define(['myclass',
                 this.config = config;
                 this.stageCount = 0;
             },
-            createStage: function () {
+            createStage: function (autorender) {
                 var stageId = 'gma_stage_' + (this.stageCount++);
-                var $canvas = $('<canvas id="' + stageId + '" class="gma_canvas" width="500" height="500"></canvas>');
+                var $canvas = $('<canvas id="' + stageId + '" class="gma_canvas" width="1000" height="500"></canvas>');
                 $('#gma_container').append($canvas);
 
-                return new createjs.Stage(stageId);
+                var stage = new createjs.Stage(stageId);
+
+                if (autorender) {
+                    createjs.Ticker.addEventListener("tick", function () {
+                        stage.update();
+                    });
+                }
+
+                return stage;
             },
             create: function () {
                 console.log('God', 'create', arguments);
@@ -32,15 +40,14 @@ define(['myclass',
                 console.log('Vitality home: ' + home.getVitality());
                 var scene = new Scene();
 
-                var stage = this.createStage();
+                var stage = this.createStage(true);
 
-                for (var i = 0; i < 100; i++) {
+                for (var i = 0; i < 10; i++) {
+                    //var stage = this.createStage();
                     var conscience = new Conscience(this);
                     var denizen = new Denizen(conscience, stage);
                     home.addChild(denizen);
                 }
-
-                home.addChild(denizen2);
             }
         });
     });

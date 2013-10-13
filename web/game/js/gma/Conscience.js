@@ -27,8 +27,8 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             this.timeout = setTimeout(function () {
                 var idea = new Idea();
 
-                var actionTeleport = new Action('teleport', [Math.round(Math.random() * 500), Math.round(Math.random() * 500)]);
-                var actionMove = new Action('move', [Math.round(Math.random() * 500), Math.round(Math.random() * 500)]);
+                var actionTeleport = new Action('teleport', [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)]);
+                var actionMove = new Action('move', [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)]);
                 var actionWait = new Action('wait', [1000]);
                 var actionAct = new Action('act', [actionTeleport]);
 
