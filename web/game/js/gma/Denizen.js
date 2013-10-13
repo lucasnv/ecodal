@@ -2,13 +2,14 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
     "use strict";
 
     var Denizen = my.Class(Entity, {
-        speed: 0.1,
-        conscience: null,
-        state: {},
-        on: {
-            interpreted: new signals()
-        },
         constructor: function (conscience, stage) {
+            this.speed = 0.1;
+            this.conscience = null;
+            this.state = {};
+            this.on = {
+                interpreted: new signals()
+            };
+
             Denizen.Super.call(this, stage);
 
             console.log('Denizen', '::', 'constructor', 'conscience:', conscience);

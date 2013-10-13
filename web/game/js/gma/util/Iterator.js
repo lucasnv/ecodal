@@ -16,32 +16,32 @@
 define([], function () {
     "use strict";
 
-    return {
-        index: 0,
-        items: [],
-        first: function () {
+    return function () {
+        this.index = 0;
+        this.items = [];
+        this.first = function () {
             this.reset();
             return this.next();
-        },
-        next: function () {
+        };
+        this.next = function () {
             return this.items[this.index++];
-        },
-        hasNext: function () {
+        };
+        this.hasNext = function () {
             return this.index <= this.items.length;
-        },
-        reset: function () {
+        };
+        this.reset = function () {
             this.index = 0;
-        },
-        each: function (callback) {
+        };
+        this.each = function (callback) {
             for (var item = this.first(); this.hasNext(); item = this.next()) {
                 callback(item);
             }
-        },
-        addItem: function (item) {
+        };
+        this.addItem = function (item) {
             this.items.push(item);
-        },
-        length: function () {
+        };
+        this.length = function () {
             return this.items.length;
-        }
+        };
     }
 });
