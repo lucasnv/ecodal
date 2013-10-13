@@ -4,6 +4,8 @@
  */
 define(['myclass', 'gma/Entity'], function (my, Entity) {
 
+	"use strict";
+	
     var Scene = my.Class(Entity, {
 
         constructor: function () {
