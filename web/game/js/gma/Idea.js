@@ -3,13 +3,16 @@ define(['myclass', 'gma/util/Iterator'], function (my, Iterator) {
 
     var Idea = my.Class({
         constructor: function (actions) {
-            console.log('Idea', '::', 'constructor');
+
             this.index = 0;
-            if (_.isArray(actions))
+            
+            if (_.isArray(actions)){
                 this.items = actions;
-            else
+            } else {
                 this.items = [];
+            }                
         }
+
     });
 
     my.extendClass(Idea, new Iterator());

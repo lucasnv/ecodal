@@ -39,7 +39,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
             this.conscience.think();
         },
 
-        /* Interpreta el connjunto de acciones que representan una idea*/
+        /* Interpreta el conjunto de acciones que representan una idea*/
         interpret: function (idea) {
             var self = this;
             var chain = null;
