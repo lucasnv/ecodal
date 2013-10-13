@@ -30,8 +30,6 @@ define(
 
         think: function () {
 
-            return;
-
             var self = this;
 
             //var time = 500 + Math.round(Math.random() * 500);

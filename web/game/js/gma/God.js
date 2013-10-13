@@ -19,6 +19,7 @@ define(
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
+                this.speedHuman = 0.2;
             },
 
             createStage: function (width, height, autorender) {
@@ -52,35 +53,10 @@ define(
 
             create: function () {
 
-                //var homeStage = this.createStage();
                 var home = new Home(/*homeStage*/);
+                this.createHuman(2, 'denizen', this.speedHuman, home);
 
-   
-                //var stage = this.createStage(true);
-
-                /*
-                 for (var i = 0; i < 10; i++) {
-                 //var stage = this.createStage();
-                 var conscience = new Conscience(this);
-                 var denizen = new Denizen(conscience, stage);
-                 home.addChild(denizen);
-
-                 }
-                 */
-                var speed = 0.5; 
-                var stage = this.createStage(1000, 500, true);
-
-                var conscience1 = new Conscience(this);
-                var human1 = new Human(conscience1, stage,'denizen', speed);
-                home.addChild(human1);
-
-                human1.body.x = 0;
-                human1.body.y = 0;
-
-                var conscience2 = new Conscience(this);
-                var human2 = new Human(conscience2, stage,'denizen', speed);
-                home.addChild(human2);
-
+              /* 
                 var idea = new Idea();
                 idea.addItem(new Action('teleport', [200, 200]));
                 idea.addItem(new Action('wait', [3000]));
@@ -92,8 +68,22 @@ define(
                     ])])
                 ]));
 
-                human2.interpret(idea);
+                human2.interpret(idea);*/
+            },
+
+            createHuman : function(cant, look, speed, source){
+
+                var stage = this.createStage(1000, 500, true);
+                var conscience = null;
+                var human = null;
+
+                for( var i = 0; i < cant ; ++i ){
+                    conscience = new Conscience(this);
+                    human = new Human(conscience, stage, look, speed);
+                    source.addChild(human);
+                }                
             }
+
         });
     }
 )
