@@ -47,6 +47,7 @@ define(['myclass',
                     var conscience = new Conscience(this);
                     var denizen = new Denizen(conscience, stage);
                     home.addChild(denizen);
+
                 }
             }
         });

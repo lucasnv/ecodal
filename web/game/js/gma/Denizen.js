@@ -28,9 +28,6 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
 
             // Cuando el denizen termino de procesar una idea...
             this.on['interpreted'].add(this.onInterpreted, this);
-
-            // Pensar
-            this.think();
         },
         think: function () {
             this.conscience.think();
@@ -106,6 +103,9 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
             this.body.framerate = 30;
             this.body.gotoAndPlay("run");
 
+            // Pensar
+            this.think();
+
             if (this.stage && this.body) {
                 this.stage.addChild(this.body);
                 //this.render();
@@ -133,6 +133,11 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
         move: function (x, y) {
             var d = $.Deferred();
 
+            if (!this.body) {
+                d.resolve();
+                return;
+            }
+
             var self = this;
 
             var dx = x - this.body.x;
@@ -152,9 +157,6 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
         },
         // Event handlers
         onThought: function (idea) {
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-            console.log('Denizen', '::', 'recibió la idea', idea, 'de', this.conscience.caca, 'stage', this.stage.caca, new Date());
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
             this.interpret(idea);
         },
         onInterpreted: function (idea) {
