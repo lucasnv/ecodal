@@ -26,7 +26,7 @@ define(['myclass'], function (my) {
                 this.render();
             }
         },
-        
+
         render: function () {
             console.log('Entity', '::', 'render');
             if (this.stage && this.body) {

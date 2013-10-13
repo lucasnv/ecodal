@@ -32,20 +32,13 @@ define(['myclass',
                 console.log('Vitality home: ' + home.getVitality());
                 var scene = new Scene();
 
-                var denizenStage1 = this.createStage();
-                denizenStage1.caca = 1;
-                var conscience1 = new Conscience(this);
-                conscience1.caca = 1;
-                var denizen1 = new Denizen(conscience1, denizenStage1);
-                home.addChild(denizen1);
+                var stage = this.createStage();
 
-                var denizenStage2 = this.createStage();
-                denizenStage2.caca = 2;
-                var conscience2 = new Conscience(this);
-                conscience2.caca = 2;
-                var denizen2 = new Denizen(conscience2, denizenStage2);
-
-                console.log(denizen1 == denizen2);
+                for (var i = 0; i < 100; i++) {
+                    var conscience = new Conscience(this);
+                    var denizen = new Denizen(conscience, stage);
+                    home.addChild(denizen);
+                }
 
                 home.addChild(denizen2);
             }

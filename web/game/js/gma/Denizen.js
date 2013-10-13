@@ -3,7 +3,7 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
 
     var Denizen = my.Class(Entity, {
         constructor: function (conscience, stage) {
-            this.speed = 0.1;
+            this.speed = 0.5;
             this.conscience = null;
             this.state = {};
             this.on = {
@@ -152,7 +152,7 @@ define(['myclass', 'signals', 'gma/Entity'], function (my, signals, Entity) {
         },
         onInterpreted: function (idea) {
             console.log('Denizen', '::', 'terminó de interpretar la idea:', idea);
-            //this.think();
+            this.think();
         }
     });
 

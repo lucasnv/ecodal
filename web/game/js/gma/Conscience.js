@@ -22,11 +22,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             console.log('Conscience', '::', 'think');
             var self = this;
 
-            console.log('CACA', self.caca);
-
-            var time = 500 + Math.round(Math.random() * 10000);
-
-            console.log('>>>>>>>>', time);
+            var time = 500 + Math.round(Math.random() * 500);
 
             this.timeout = setTimeout(function () {
                 var idea = new Idea();
@@ -34,14 +30,12 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                 var actionTeleport = new Action('teleport', [Math.round(Math.random() * 500), Math.round(Math.random() * 500)]);
                 var actionMove = new Action('move', [Math.round(Math.random() * 500), Math.round(Math.random() * 500)]);
                 var actionWait = new Action('wait', [1000]);
+                var actionAct = new Action('act', [actionTeleport]);
 
                 idea.addItem(actionMove);
                 idea.addItem(actionWait);
                 //idea.addItem(actionTeleport);
                 //idea.addItem(actionWait);
-
-                console.log('Conscience', '::', 'generó la Idea:', idea);
-                console.log('GENERO LA IDEA CACA', self.caca);
 
                 self.on.thought.dispatch(idea);
 
