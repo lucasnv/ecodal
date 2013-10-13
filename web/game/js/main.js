@@ -14,6 +14,7 @@ requirejs.config({
 var manifest = [
     {src: "/game/assets/runningGrant.png", id: "denizen"}
 ];
+
 var Resources = {
     loader: null
 };

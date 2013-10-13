@@ -7,13 +7,16 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
     "use strict";
 
     var Denizen = my.Class(Entity, {
-        constructor: function (conscience, stage, speed) {
+
+        constructor: function (conscience, stage, look, speed) {
             
             if (!conscience) {
                 throw new Error('No puede haber Denizen sin conciencia');
             }
 
+            /* Attr */
             this.conscience = conscience;
+            this.look = look;
             this.speed = speed;
             this.state = {};
             this.on = {
@@ -30,12 +33,14 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
 
             // Cuando el denizen termino de procesar una idea...
             this.on['interpreted'].add(this.onInterpreted, this);
+
+
         },
 
         think: function () {
             this.conscience.think();
         },
-        
+
         /* Interpreta el connjunto de acciones que representan una idea*/
         interpret: function (idea) {
             var self = this;
@@ -46,7 +51,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 return;
             }
 
-            //Debo preguntar si alguien implanto una nueva idea
+            //Debo preguntar si alguien implanto una nueva idea (FALTA)
             idea.each(function (action) {
                 if (!chain) {
                     chain = self.act(action);
@@ -90,19 +95,22 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
 
             return d.promise();
         },
+
         interact: function (target, action) {
-            console.log('Denizen', '::', 'interactuando', 'acción:', action);
             return target.act(action);
         },
+
         embody: function () {
             if (this.body) {
                 return;
             }
 
-            console.log('Denizen', '::', 'embody');
+            if (!this.look) {
+                throw new Error('No puede un denizen no tener cuerpo');
+            }
 
             var data = new createjs.SpriteSheet({
-                "images": [Resource.loader.getResult("denizen")],
+                "images": [Resource.loader.getResult(this.look)],
                 "frames": {"regX": 0, "height": 292, "count": 64, "regY": 0, "width": 165},
                 // define two animations, run (loops, 1.5x speed) and jump (returns to run):
                 "animations": {"run": [0, 25, "run", 1.5], "jump": [26, 63, "run"]}
@@ -121,10 +129,12 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 //this.render();
             }
         },
+
         // Acciones
         sayHello: function () {
             console.log('Denizen', '::', 'sayHello', arguments);
         },
+
         wait: function (milliseconds) {
             console.log('Denizen', '::', 'wait', arguments);
             var d = $.Deferred();
@@ -135,11 +145,13 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
 
             return d.promise();
         },
+
         teleport: function (x, y) {
             this.body.x = x;
             this.body.y = y;
             this.render();
         },
+
         move: function (x, y) {
             var d = $.Deferred();
 
@@ -165,10 +177,12 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
 
             return d.promise();
         },
+        
         // Event handlers
         onThought: function (idea) {
             this.interpret(idea);
         },
+
         onInterpreted: function (idea) {
             console.log('Denizen', '::', 'terminó de interpretar la idea:', idea);
             this.think();

@@ -5,10 +5,11 @@ define(
         'gma/Scene',
         'gma/Conscience',
         'gma/Denizen',
+        'gma/Human',
         'gma/Idea',
         'gma/Action'
     ],
-    function (my, World, Home, Scene, Conscience, Denizen, Idea, Action) {
+    function (my, World, Home, Scene, Conscience, Denizen, Human, Idea, Action) {
         "use strict";
 
         return my.Class({
@@ -51,13 +52,10 @@ define(
 
             create: function () {
 
-                var world = new World();
-
                 //var homeStage = this.createStage();
                 var home = new Home(/*homeStage*/);
 
-                var scene = new Scene();
-
+   
                 //var stage = this.createStage(true);
 
                 /*
@@ -73,15 +71,15 @@ define(
                 var stage = this.createStage(1000, 500, true);
 
                 var conscience1 = new Conscience(this);
-                var denizen1 = new Denizen(conscience1, stage, speed);
-                home.addChild(denizen1);
+                var human1 = new Human(conscience1, stage,'denizen', speed);
+                home.addChild(human1);
 
-                denizen1.body.x = 0;
-                denizen1.body.y = 0;
+                human1.body.x = 0;
+                human1.body.y = 0;
 
                 var conscience2 = new Conscience(this);
-                var denizen2 = new Denizen(conscience2, stage, speed);
-                home.addChild(denizen2);
+                var human2 = new Human(conscience2, stage,'denizen', speed);
+                home.addChild(human2);
 
                 var idea = new Idea();
                 idea.addItem(new Action('teleport', [200, 200]));
@@ -89,12 +87,12 @@ define(
                 idea.addItem(new Action('teleport', [200, 0]));
 
                 idea.addItem(new Action('interact', [
-                    denizen1, new Action('interpret', [new Idea([
+                    human1, new Action('interpret', [new Idea([
                         new Action('move', [200, 400])
                     ])])
                 ]));
 
-                denizen2.interpret(idea);
+                human2.interpret(idea);
             }
         });
     }
