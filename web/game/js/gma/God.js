@@ -12,15 +12,16 @@ define(
         "use strict";
 
         return my.Class({
+
             constructor: function (config) {
-                console.log('Creando God con config: ', config);
+                this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
             },
+
             createStage: function (autorender) {
-                var stageId = 'gma_stage_' + (this.stageCount++);
-                var $canvas = $('<canvas id="' + stageId + '" class="gma_canvas" width="1000" height="500"></canvas>');
-                $('#gma_container').append($canvas);
+                var stageId = this.getStageId();
+                var canvas = this.newCanvas(stageId, 1000, 500);    
 
                 var stage = new createjs.Stage(stageId);
 
@@ -32,15 +33,28 @@ define(
 
                 return stage;
             },
+
+            getStageId: function(){
+                return 'gma_stage_' + (this.stageCount++);
+            },
+
+            newCanvas: function(stageId, width, height){                
+                var canvas = $('<canvas id="' + stageId + '" class="gma_canvas" width="'+ width +'" height="'+ height +'"></canvas>');                
+                this.appendStage(canvas);
+                return canvas;
+            },
+
+            appendStage : function(canvas){
+                $(this.container).append(canvas);
+            },
+
             create: function () {
-                console.log('God', 'create', arguments);
 
                 var world = new World();
 
                 //var homeStage = this.createStage();
                 var home = new Home(/*homeStage*/);
 
-                console.log('Vitality home: ' + home.getVitality());
                 var scene = new Scene();
 
                 //var stage = this.createStage(true);
