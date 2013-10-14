@@ -11,17 +11,20 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li class="active">
-					<a href="#"><span class="glyphicon glyphicon-home"></span></a>
+					<a href="{{ url('gma_site_home') }}"><span class="glyphicon glyphicon-home"></span></a>
 				</li>
 				<li>
-					<a href="#about">Proyecto</a>
+					<a href="{{ url('gma_site_project') }}">Proyecto</a>
 				</li>
 				<li>
-					<a href="#contact">Contactanos</a>
+					<a href="{{ url('gma_site_academic') }}">Académico</a>
+				</li>
+				<li>
+					<a href="{{ url('gma_site_contact') }}">Contactanos</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../navbar/">Facebook</a></li>
+				<li><a href="#">Facebook</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
