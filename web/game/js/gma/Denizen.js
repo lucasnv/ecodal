@@ -24,7 +24,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
             };
 
             Denizen.Super.call(this, stage);                        
-            
+
             // Referencia bidireccional
             this.conscience.denizen = this;
 
@@ -41,6 +41,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
 
         /* Interpreta el conjunto de acciones que representan una idea*/
         interpret: function (idea) {
+
             var self = this;
             var chain = null;
 
@@ -107,7 +108,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 throw new Error('No puede un denizen no tener cuerpo');
             }
 
-            var data = new createjs.SpriteSheet({
+           /* var data = new createjs.SpriteSheet({
                 "images": [Resource.loader.getResult(this.look)],
                 "frames": {"regX": 0, "height": 292, "count": 64, "regY": 0, "width": 165},
                 // define two animations, run (loops, 1.5x speed) and jump (returns to run):
@@ -118,7 +119,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
             this.body.setTransform(-200, 90, 0.8, 0.8);
             this.body.framerate = 30;
             this.body.gotoAndPlay("run");
-
+*/
             // Pensar
             this.think();
 
@@ -176,13 +177,13 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
             return d.promise();
         },
         
-        // Event handlers
+        //En mi pensamiento interpreto
         onThought: function (idea) {
             this.interpret(idea);
         },
 
+        //Termino de interpretar la idea y comienzo a pensar nuevamente
         onInterpreted: function (idea) {
-            console.log('Denizen', '::', 'terminó de interpretar la idea:', idea);
             this.think();
         }
     });

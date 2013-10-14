@@ -39,6 +39,8 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
              }, time);
              */
+            
+            //Dios las posibilidades
 
             var idea = new Idea();
 
