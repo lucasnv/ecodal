@@ -3,7 +3,6 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
     var Conscience = my.Class({
         constructor: function (god) {
-            console.log('Conscience', '::', 'constructor', 'god:', god);
             this.denizen = null;
             this.timeout = null;
             this.on = {
@@ -17,7 +16,6 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             this.god = god;
         },
         think: function () {
-            console.log('Conscience', '::', 'think');
 
             var self = this;
 
@@ -42,17 +40,32 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
              }, time);
              */
 
+            //Dios las posibilidades
+
+
             var idea = new Idea();
 
-            var actionTeleport = new Action('teleport', [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)]);
-            var actionMove = new Action('move', [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)]);
-            var actionWait = new Action('wait', [1000]);
+            var actionTeleport = new Action('teleport', [Math.round(Math.random() * 1000), Math.round(Math.random() * 500)]);
+            var actionMove = new Action('move', [Math.round(Math.random() * 1000), Math.round(Math.random() * 500)]);
+            var actionWait = new Action('wait', [2000]);
             var actionAct = new Action('act', [actionTeleport]);
+            var actionGesture = new Action('gesture', ['action']);
 
-            idea.addItem(actionMove);
+            //idea.addItem(actionMove);
             //idea.addItem(actionWait);
             //idea.addItem(actionTeleport);
-            idea.addItem(actionWait);
+            //idea.addItem(actionWait);
+
+            var emptyRoom = this.god.getEmptyRoom(this.denizen);
+
+            if (emptyRoom) {
+                idea.addItem(new Action('move', [emptyRoom.body.x + 500, emptyRoom.body.y + 80]));
+                idea.addItem(actionGesture);
+                idea.addItem(new Action('interact', [emptyRoom, new Action('lights', [!emptyRoom.ligthsOn])]));
+                //idea.addItem(actionWait);
+            } else {
+                idea.addItem(actionWait);
+            }
 
             self.on.thought.dispatch(idea);
         }
