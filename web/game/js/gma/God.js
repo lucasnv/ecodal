@@ -24,6 +24,9 @@ define(
                 this.stageCount = 0;
                 this.speedHuman = 0.5;
 
+                this.roomWidth = 500;
+                this.roomHeight = 250;
+
                 // Temporal para probar
                 this.rooms = [];
             },
@@ -81,7 +84,7 @@ define(
                 this.rooms.push(this.createRoom('room4', 500, 250, roomStage));
 
                 var home = new Home(/*homeStage*/);
-                this.createHuman(3, this.speedHuman, home);
+                this.createHuman(4, this.speedHuman, home);
             },
 
             // Temporal para probar
@@ -99,17 +102,37 @@ define(
                     emptyRoom = tmp[0];
 
                     // Librerar los rooms previamente ocupados por el denizen
-                    _.each(this.rooms, function (room) {
-                        if (room.denizen == denizen) {
-                            room.denizen = undefined;
-                        }
-                    });
+                    this.clearRoom(denizen);
 
                     // Marcar el room como ocupado por el denizen
                     emptyRoom.denizen = denizen;
                 }
 
                 return emptyRoom;
+            },
+
+            getRoomByCoordinates: function (x, y) {
+                console.log('getRoomByCoordinates', x, y);
+                var c = this.rooms.length;
+
+                for (var i = 0; i < c; i++) {
+                    var room = this.rooms[i];
+                    var body = room.body;
+                    var minX = body.x;
+                    var maxX = body.x + this.roomWidth;
+                    var minY = body.y;
+                    var maxY = body.y + this.roomHeight;
+                    if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+                        return room;
+                    }
+                }
+
+                return null;
+            },
+
+            occupyRoom: function (room, denizen) {
+                this.clearRoom(denizen);
+                room.denizen = denizen;
             },
 
             clearRoom: function (denizen) {
@@ -152,6 +175,8 @@ define(
                 var stage = this.createStage(1000, 500, true);
                 var conscience = null;
                 var human = null;
+
+                var self = this;
 
                 for (var i = 0; i < cant; ++i) {
 
@@ -249,6 +274,41 @@ define(
 
                     var conscience = new Conscience(this);
                     var human = new Human(conscience, stage, look, speed);
+
+                    human.body.addEventListener('mousedown', function (evt) {
+                        var body = evt.currentTarget;
+                        body.offset = {x: body.x - evt.stageX, y: body.y - evt.stageY};
+                        var denizen = body.entity;
+                        denizen.halt();
+
+                        self.clearRoom(denizen);
+                    });
+
+                    human.body.addEventListener('pressmove', function (evt) {
+                        var body = evt.currentTarget;
+                        body.x = evt.stageX + body.offset.x;
+                        body.y = evt.stageY + body.offset.y;
+                    });
+
+                    human.body.addEventListener('pressup', function (evt) {
+                        var body = evt.currentTarget;
+                        var denizen = body.entity;
+
+                        var room = self.getRoomByCoordinates(evt.stageX, evt.stageY);
+
+                        if (room) {
+                            self.occupyRoom(room, denizen);
+                            denizen.interpret(new Idea([
+                                new Action('fly', [denizen.body.x, room.body.y + 80]),
+                                new Action('wait', [2000])
+                            ]));
+                        } else {
+                            console.error('El denizen no tiene donde carse muerto');
+                        }
+
+                        console.log(room);
+                    });
+
                     source.addChild(human);
                 }
             }

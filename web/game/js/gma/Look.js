@@ -13,18 +13,7 @@ define([], function () {
 
                 var gestureDef = this.gestures[gestureName];
 
-                console.log('gestures', this.gestures);
-                console.log('def', gestureDef);
-
-                var g = _.findWhere(gestureDef, {direction: direction});
-
-                console.log('g', g);
-
-                if (!g) {
-                    console.error('Entity', '::', 'no se ha definido el sprite:', g.sprite)
-                }
-
-                return g;
+                return _.findWhere(gestureDef, {direction: direction});
             }
         }
     }

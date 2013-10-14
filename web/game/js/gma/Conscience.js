@@ -62,7 +62,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                 idea.addItem(new Action('move', [emptyRoom.body.x + 500, emptyRoom.body.y + 80]));
                 idea.addItem(actionGesture);
                 idea.addItem(new Action('interact', [emptyRoom, new Action('lights', [!emptyRoom.ligthsOn])]));
-                //idea.addItem(actionWait);
+                idea.addItem(actionWait);
             } else {
                 idea.addItem(actionWait);
             }

@@ -18,8 +18,11 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 this.conscience = conscience;
                 this.speed = speed;
                 this.on = {
-                    interpreted: new Signal()
+                    interpreted: new Signal(),
+                    halted: new Signal()
                 };
+
+                this.memory = [];
 
                 // Referencia bidireccional
                 this.conscience.denizen = this;
@@ -39,11 +42,29 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 this.conscience.think();
             },
 
+            halt: function () {
+                console.log('Denizen', '::', 'halt');
+                TweenMax.killTweensOf(this.body);
+
+                if (this.state.act) {
+                    this.state.act.reject();
+                    this.state.act = null;
+                }
+
+                if (this.memory) {
+                    this.memory.reject();
+                    this.gesture('idle');
+                    this.memory = null;
+                }
+
+                this.on['halted'].dispatch(this);
+            },
+
             /* Interpreta el conjunto de acciones que representan una idea*/
             interpret: function (idea) {
 
                 var self = this;
-                var chain = null;
+                var chain = undefined;
 
                 if (idea.length() == 0) {
                     this.on['interpreted'].dispatch(idea);
@@ -55,49 +76,40 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                     if (!chain) {
                         chain = self.act(action);
                     } else {
-                        chain = chain.then(function () {
-                            return self.act(action);
+                        var d = $.Deferred();
+
+                        chain.then(function () {
+                            var dd = self.act(action);
+                            dd.then(function () {
+                                d.resolve();
+                            });
                         });
+
+                        chain = d;
                     }
                 });
 
-                chain.always(function () {
+                chain.then(function () {
                     self.on['interpreted'].dispatch(idea);
                 });
+
+                this.memory = chain;
 
                 return chain;
             },
 
             move: function (x, y) {
-                var d = $.Deferred();
-
-                if (!this.body) {
-                    d.resolve();
-                    return;
-                }
-
-                var self = this;
-
-                var dx = x - this.body.x;
-                var dy = y - this.body.y;
-                var distance = Math.sqrt((dx * dx) + (dy * dy));
-                var time = Math.round(distance / this.speed);
-
-                if (this.body.x != x)
-                    this.direction = this.body.x < x ? 90 : -90;
+                var d = this.fly(x, y);
 
                 this.gesture('walk');
 
-                createjs.Tween.get(this.body).to({x: x, y: y}, time)
-                    .call(function () {
-                        self.gesture('idle');
-                        d.resolve();
-                    })
-                    .addEventListener("change", function () {
-                        //self.render();
-                    });
+                var self = this;
 
-                return d.promise();
+                d.then(function () {
+                    self.gesture('idle');
+                });
+
+                return d;
             },
 
             //En mi pensamiento interpreto

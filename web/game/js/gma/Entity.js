@@ -9,6 +9,7 @@ define(['myclass'],
                 /* Attr*/
                 this.parent = null;
                 this.body = new createjs.Container();
+                this.body.entity = this;
                 this.children = [];
                 /* this.x = 0;
                  this.y = 0;
@@ -16,6 +17,7 @@ define(['myclass'],
                 this.stage = stage;
 
                 this.state = {
+                    act: null,
                     gesture: null
                 };
 
@@ -60,10 +62,6 @@ define(['myclass'],
                 }
             },
 
-            delParent: function (child) {
-                child.parent = null;
-            },
-
             gesture: function (name) {
                 if (this.state.gesture == name) {
                     return;
@@ -99,6 +97,14 @@ define(['myclass'],
 
                 var d = $.Deferred();
 
+                var self = this;
+
+                var clearAct = function () {
+                    if (self.state.act == d) {
+                        self.state.act = null;
+                    }
+                };
+
                 if (_.isFunction(this[action.name])) {
                     var promise = this[action.name].apply(this, action.params);
 
@@ -106,20 +112,26 @@ define(['myclass'],
                     if (promise && _.isFunction(promise.promise)) {
                         promise.then(
                             function () {
+                                clearAct();
                                 d.resolve();
                             }, function () {
+                                clearAct();
                                 d.resolve();
                             }
                         );
                     } else {
+                        clearAct();
                         d.resolve();
                     }
                 } else {
                     console.error('Entity', '::', 'Acción desconocida: ', action.name);
+                    clearAct();
                     d.resolve();
                 }
 
-                return d.promise();
+                this.state.act = d;
+
+                return d;
             },
 
             interact: function (target, action) {
@@ -139,6 +151,33 @@ define(['myclass'],
                 this.body.y = y;
             },
 
+            fly: function (x, y) {
+                var d = $.Deferred();
+
+                if (!this.body) {
+                    d.resolve();
+                    return;
+                }
+
+                var self = this;
+
+                var dx = x - this.body.x;
+                var dy = y - this.body.y;
+                var distance = Math.sqrt((dx * dx) + (dy * dy));
+                var time = Math.round(distance / this.speed);
+                var seconds = time * 0.001;
+
+                if (this.body.x != x)
+                    this.direction = this.body.x < x ? 90 : -90;
+
+                TweenMax.to(this.body, seconds, {x: x, y: y, ease: Linear.easeNone, onComplete: function () {
+                    self.gesture('idle');
+                    d.resolve();
+                }});
+
+                return d;
+            },
+
             wait: function (milliseconds) {
                 console.log('Denizen', '::', 'wait', arguments);
                 var d = $.Deferred();
@@ -147,7 +186,7 @@ define(['myclass'],
                     d.resolve();
                 }, milliseconds);
 
-                return d.promise();
+                return d;
             },
 
             delay: function (milliseconds, action) {
