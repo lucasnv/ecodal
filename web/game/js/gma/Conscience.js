@@ -49,6 +49,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             var actionMove = new Action('move', [Math.round(Math.random() * 1000), Math.round(Math.random() * 500)]);
             var actionWait = new Action('wait', [2000]);
             var actionAct = new Action('act', [actionTeleport]);
+            var actionGesture = new Action('gesture', ['action']);
 
             //idea.addItem(actionMove);
             //idea.addItem(actionWait);
@@ -58,8 +59,10 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             var emptyRoom = this.god.getEmptyRoom(this.denizen);
 
             if (emptyRoom) {
-                idea.addItem(new Action('move', [emptyRoom.body.x + 250, emptyRoom.body.y + 200]));
-                idea.addItem(actionWait);
+                idea.addItem(new Action('move', [emptyRoom.body.x + 500, emptyRoom.body.y + 80]));
+                idea.addItem(actionGesture);
+                idea.addItem(new Action('interact', [emptyRoom, new Action('lights', [!emptyRoom.ligthsOn])]));
+                //idea.addItem(actionWait);
             } else {
                 idea.addItem(actionWait);
             }

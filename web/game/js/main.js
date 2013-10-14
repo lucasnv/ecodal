@@ -12,7 +12,7 @@ requirejs.config({
 });
 
 var manifest = [
-    {src: "/game/assets/runningGrant.png", id: "denizen"},
+    {src: "/game/assets/runningGrant.png", id: "grant"},
     {src: "/game/assets/monsterAIdle.png", id: "human_idle"},
     {src: "/game/assets/monsterARun.png", id: "human_run"},
     {src: "/game/assets/living1.jpg", id: "room1"},

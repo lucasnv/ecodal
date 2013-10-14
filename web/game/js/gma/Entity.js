@@ -19,6 +19,8 @@ define(['myclass'],
                     gesture: null
                 };
 
+                this.direction = 90;
+
                 this.look = look;
 
                 this.embody();
@@ -28,6 +30,8 @@ define(['myclass'],
                 console.log('Entity', '::', 'embody');
                 if (this.stage && this.look) {
                     this.stage.addChild(this.body);
+
+                    console.log('default gesture', this.look.defaultGesture);
 
                     if (this.look.defaultGesture) {
                         this.gesture(this.look.defaultGesture);
@@ -61,20 +65,17 @@ define(['myclass'],
             },
 
             gesture: function (name) {
-                if (!this.look.gestures[name]) {
-                    console.error('Entity', '::', 'gesture desconocida', name);
-                    return;
-                }
-
                 if (this.state.gesture == name) {
                     return;
                 }
 
                 this.state.gesture = name;
-                var gestureDef = this.look.gestures[name];
 
-                if (!this.look.sprites[gestureDef.sprite]) {
-                    console.err('Entity', '::', 'no se ha definido el sprite:', gestureDef.sprite)
+                var gestureDef = this.look.getGesture(name, this.direction);
+
+                if (!gestureDef) {
+                    console.error('Entity', '::', 'No se encontro el gesture', name, 'para la dirección', this.direction);
+                    return;
                 }
 
                 var sprite = this.look.sprites[gestureDef.sprite];
@@ -83,6 +84,14 @@ define(['myclass'],
                 this.body.addChild(sprite);
 
                 sprite.gotoAndPlay(gestureDef.animation);
+
+                var d = $.Deferred();
+
+                sprite.addEventListener('animationend', function () {
+                    d.resolve();
+                });
+
+                return d;
             },
 
             act: function (action) {
@@ -106,7 +115,7 @@ define(['myclass'],
                         d.resolve();
                     }
                 } else {
-                    console.err('Entity', '::', 'Acción desconocida: ', action.name);
+                    console.error('Entity', '::', 'Acción desconocida: ', action.name);
                     d.resolve();
                 }
 
@@ -139,6 +148,14 @@ define(['myclass'],
                 }, milliseconds);
 
                 return d.promise();
+            },
+
+            delay: function (milliseconds, action) {
+                var self = this;
+                var p1 = this.wait(milliseconds);
+                p1.then(function () {
+                    self.act(action);
+                });
             }
         });
     });

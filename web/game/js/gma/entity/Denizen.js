@@ -83,7 +83,10 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 var distance = Math.sqrt((dx * dx) + (dy * dy));
                 var time = Math.round(distance / this.speed);
 
-                this.gesture(this.body.x < x ? 'walkRight' : 'walkLeft');
+                if (this.body.x != x)
+                    this.direction = this.body.x < x ? 90 : -90;
+
+                this.gesture('walk');
 
                 createjs.Tween.get(this.body).to({x: x, y: y}, time)
                     .call(function () {

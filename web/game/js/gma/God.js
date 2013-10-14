@@ -22,7 +22,7 @@ define(
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
-                this.speedHuman = 0.3;
+                this.speedHuman = 0.5;
 
                 // Temporal para probar
                 this.rooms = [];
@@ -73,7 +73,7 @@ define(
 
                  human2.interpret(idea);*/
 
-                var roomStage = this.createStage(1000, 500, true);
+                var roomStage = this.createStage(1000, 500, false);
 
                 this.rooms.push(this.createRoom('room1', 0, 0, roomStage));
                 this.rooms.push(this.createRoom('room2', 500, 0, roomStage));
@@ -130,17 +130,20 @@ define(
                 var look = new Look({
                     idle: new createjs.Sprite(spriteSheet, 'idle')
                 }, {
-                    idle: {
-                        sprite: 'idle',
-                        animation: 'idle'
-                    }
+                    idle: [
+                        {
+                            direction: 90,
+                            sprite: 'idle',
+                            animation: 'idle'
+                        }
+                    ]
                 }, 'idle');
 
                 var room = new Room(stage, look);
                 room.body.x = x;
                 room.body.y = y;
                 room.gesture('idle');
-                room.render()
+                room.render();
 
                 return room;
             },
@@ -151,37 +154,97 @@ define(
                 var human = null;
 
                 for (var i = 0; i < cant; ++i) {
-                    var walkSpriteSheet = new createjs.SpriteSheet({
-                        "images": [Resource.loader.getResult("human_run")],
-                        "frames": {width: 64, height: 64, regX: 32, regY: 32},
-                        "animations": {"walk": [0, 9, "walk"]}
-                    });
 
-                    createjs.SpriteSheetUtils.addFlippedFrames(walkSpriteSheet, true, false, false);
+                    /*
+                     var walkSpriteSheet = new createjs.SpriteSheet({
+                     "images": [Resource.loader.getResult("human_run")],
+                     "frames": {width: 64, height: 64, regX: 32, regY: 32},
+                     "animations": {"walk": [0, 9, "walk"]}
+                     });
 
-                    var idleSpriteSheet = new createjs.SpriteSheet({
-                        "images": [Resource.loader.getResult("human_idle")],
-                        "frames": {width: 64, height: 64, regX: 32, regY: 32},
-                        "animations": {"idle": [0, 10, "idle"]}
-                    });
+                     createjs.SpriteSheetUtils.addFlippedFrames(walkSpriteSheet, true, false, false);
 
-                    // Human Look
-                    var look = new Look({
-                        walk: new createjs.Sprite(walkSpriteSheet, 'walk'),
-                        idle: new createjs.Sprite(idleSpriteSheet, 'idle')
-                    }, {
-                        idle: {
-                            sprite: 'idle',
-                            animation: 'idle'
-                        },
-                        walkRight: {
-                            sprite: 'walk',
-                            animation: 'walk_h'
-                        },
-                        walkLeft: {
-                            sprite: 'walk',
-                            animation: 'walk'
+                     var idleSpriteSheet = new createjs.SpriteSheet({
+                     "images": [Resource.loader.getResult("human_idle")],
+                     "frames": {width: 64, height: 64, regX: 32, regY: 32},
+                     "animations": {"idle": [0, 10, "idle"]}
+                     });
+
+                     // Human Look
+                     var look = new Look({
+                     walk: new createjs.Sprite(walkSpriteSheet, 'walk'),
+                     idle: new createjs.Sprite(idleSpriteSheet, 'idle')
+                     }, {
+                     idle: {
+                     sprite: 'idle',
+                     animation: 'idle'
+                     },
+                     walkRight: {
+                     sprite: 'walk',
+                     animation: 'walk_h'
+                     },
+                     walkLeft: {
+                     sprite: 'walk',
+                     animation: 'walk'
+                     }
+                     }, 'idle');
+                     */
+
+                    var data = new createjs.SpriteSheet({
+                        "images": [Resource.loader.getResult("grant")],
+                        "frames": {"regX": 82, "height": 292, "count": 64, "regY": 192, "width": 165},
+                        "animations": {
+                            "idle": [8, 9, "idle"],
+                            "walk": [0, 25, "walk"],
+                            "action": [26, 63, "idle", 2]
                         }
+                    });
+
+                    createjs.SpriteSheetUtils.addFlippedFrames(data, true, false, false);
+
+                    var grant = new createjs.Sprite(data, "run");
+                    grant.setTransform(-200, 90, 0.8, 0.8);
+                    grant.framerate = 30;
+
+                    var look = new Look({
+                        grant: grant
+                    }, {
+                        idle: [
+                            {
+                                direction: 90,
+                                sprite: 'grant',
+                                animation: 'idle'
+                            },
+                            {
+                                direction: -90,
+                                sprite: 'grant',
+                                animation: 'idle_h'
+                            }
+                        ],
+                        walk: [
+                            {
+                                direction: 90,
+                                sprite: 'grant',
+                                animation: 'walk'
+                            },
+                            {
+                                direction: -90,
+                                sprite: 'grant',
+                                animation: 'walk_h'
+                            }
+                        ],
+                        action: [
+                            {
+                                direction: 90,
+                                sprite: 'grant',
+                                animation: 'action'
+                            },
+                            {
+                                direction: -90,
+                                sprite: 'grant',
+                                animation: 'action_h'
+                            }
+                        ]
                     }, 'idle');
 
                     var conscience = new Conscience(this);
