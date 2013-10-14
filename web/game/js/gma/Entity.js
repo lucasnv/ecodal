@@ -4,10 +4,10 @@ define(['myclass'],
 
         return my.Class({
 
-            constructor: function (stage) {
+            constructor: function (stage, look) {
                 /* Attr*/
                 this.parent = null;
-                this.body = null;
+                this.body = new createjs.Container();
                 this.children = [];
                 /* this.x = 0;
                  this.y = 0;
@@ -18,8 +18,7 @@ define(['myclass'],
                     gesture: null
                 };
 
-                this.sprites = {};
-                this.gestures = {};
+                this.look = look;
             },
 
             /*  setPosition: function(x, y ,z){
@@ -40,8 +39,13 @@ define(['myclass'],
 
             //NO LA ENTIENDO
             embody: function () {
-                if (this.stage && this.body) {
+                if (this.stage && this.look) {
                     this.stage.addChild(this.body);
+
+                    if (this.look.defaultLook) {
+                        this.gesture(this.look.defaultLook);
+                    }
+
                     this.render();
                 }
             },
@@ -57,13 +61,13 @@ define(['myclass'],
                 }
 
                 this.state.gesture = name;
-                var gestureDef = this.gestures[name];
+                var gestureDef = this.look.gestures[name];
 
-                if (!this.sprites[gestureDef.sprite]) {
+                if (!this.look.sprites[gestureDef.sprite]) {
                     console.err('Entity', '::', 'no se ha definido el sprite:', gestureDef.sprite)
                 }
 
-                var sprite = this.sprites[gestureDef.sprite];
+                var sprite = this.look.sprites[gestureDef.sprite];
 
                 this.body.removeAllChildren();
                 this.body.addChild(sprite);
@@ -114,6 +118,17 @@ define(['myclass'],
             teleport: function (x, y) {
                 this.body.x = x;
                 this.body.y = y;
+            },
+
+            wait: function (milliseconds) {
+                console.log('Denizen', '::', 'wait', arguments);
+                var d = $.Deferred();
+
+                _.delay(function () {
+                    d.resolve();
+                }, milliseconds);
+
+                return d.promise();
             }
         });
     });
