@@ -2,7 +2,7 @@
  * Class World
  * @extend: Entity
  */
-define(['myclass', 'gma/Denizen'], function (my, Denizen) {
+define(['myclass', 'gma/entity/Denizen'], function (my, Denizen) {
 
 	"use strict";
 	
