@@ -24,7 +24,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
             };
 
             Denizen.Super.call(this, stage);                        
-
+            
             // Referencia bidireccional
             this.conscience.denizen = this;
 

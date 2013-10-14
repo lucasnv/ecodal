@@ -54,7 +54,7 @@ define(
             create: function () {
 
                 var home = new Home(/*homeStage*/);
-                this.createHuman(2, 'denizen', this.speedHuman, home);
+                this.createHuman(1, 'denizen', this.speedHuman, home);
 
               /* 
                 var idea = new Idea();

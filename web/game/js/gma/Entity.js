@@ -9,17 +9,17 @@ define(['myclass'],
             this.parent = null;
             this.body = null;
             this.children = [];
-            this.x = 0;
+           /* this.x = 0;
             this.y = 0;
-            this.z = 0;
+            this.z = 0;*/
             this.stage = stage;
         },
 
-        setPosition: function(x, y ,z){
+      /*  setPosition: function(x, y ,z){
             this.x = x;
             this.y = y;
             this.z = z;
-        },
+        },*/
 
         addChild: function (child) {
             child.parent = this;
