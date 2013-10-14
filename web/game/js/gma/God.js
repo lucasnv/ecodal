@@ -6,12 +6,13 @@ define(
         'gma/Conscience',
         'gma/entity/Denizen',
         'gma/entity/denizen/Human',
+        'gma/home/Room',
         'gma/Idea',
         'gma/Action',
         'gma/Look',
         'gma/Resource'
     ],
-    function (my, World, Home, Scene, Conscience, Denizen, Human, Idea, Action, Look, Resource) {
+    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Idea, Action, Look, Resource) {
         "use strict";
 
         return my.Class({
@@ -21,7 +22,10 @@ define(
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
-                this.speedHuman = 0.1;
+                this.speedHuman = 0.3;
+
+                // Temporal para probar
+                this.rooms = [];
             },
 
             createStage: function (width, height, autorender) {
@@ -55,9 +59,6 @@ define(
 
             create: function () {
 
-                var home = new Home(/*homeStage*/);
-                this.createHuman(20, this.speedHuman, home);
-
                 /*
                  var idea = new Idea();
                  idea.addItem(new Action('teleport', [200, 200]));
@@ -71,6 +72,77 @@ define(
                  ]));
 
                  human2.interpret(idea);*/
+
+                var roomStage = this.createStage(1000, 500, true);
+
+                this.rooms.push(this.createRoom('room1', 0, 0, roomStage));
+                this.rooms.push(this.createRoom('room2', 500, 0, roomStage));
+                this.rooms.push(this.createRoom('room3', 0, 250, roomStage));
+                this.rooms.push(this.createRoom('room4', 500, 250, roomStage));
+
+                var home = new Home(/*homeStage*/);
+                this.createHuman(3, this.speedHuman, home);
+            },
+
+            // Temporal para probar
+            getEmptyRoom: function (denizen) {
+                var emptyRoom = null;
+
+                // Buscar rooms vacios
+                var emptyRooms = _.filter(this.rooms, function (room) {
+                    return room.denizen == undefined;
+                });
+
+                // Buscar un room al azar entre los vacions
+                if (emptyRooms.length > 0) {
+                    var tmp = _.sample(emptyRooms, 1);
+                    emptyRoom = tmp[0];
+
+                    // Librerar los rooms previamente ocupados por el denizen
+                    _.each(this.rooms, function (room) {
+                        if (room.denizen == denizen) {
+                            room.denizen = undefined;
+                        }
+                    });
+
+                    // Marcar el room como ocupado por el denizen
+                    emptyRoom.denizen = denizen;
+                }
+
+                return emptyRoom;
+            },
+
+            clearRoom: function (denizen) {
+                _.each(this.rooms, function (room) {
+                    if (room.denizen == denizen) {
+                        room.denizen = undefined;
+                    }
+                });
+            },
+
+            createRoom: function (resourceName, x, y, stage) {
+                var spriteSheet = new createjs.SpriteSheet({
+                    "images": [Resource.loader.getResult(resourceName)],
+                    "frames": {width: 500, height: 250, regX: 0, regY: 0},
+                    "animations": {"idle": [0]}
+                });
+
+                var look = new Look({
+                    idle: new createjs.Sprite(spriteSheet, 'idle')
+                }, {
+                    idle: {
+                        sprite: 'idle',
+                        animation: 'idle'
+                    }
+                }, 'idle');
+
+                var room = new Room(stage, look);
+                room.body.x = x;
+                room.body.y = y;
+                room.gesture('idle');
+                room.render()
+
+                return room;
             },
 
             createHuman: function (cant, speed, source) {
@@ -82,7 +154,6 @@ define(
                     var walkSpriteSheet = new createjs.SpriteSheet({
                         "images": [Resource.loader.getResult("human_run")],
                         "frames": {width: 64, height: 64, regX: 32, regY: 32},
-                        // define two animations, run (loops, 1.5x speed) and jump (returns to run):
                         "animations": {"walk": [0, 9, "walk"]}
                     });
 
@@ -91,7 +162,6 @@ define(
                     var idleSpriteSheet = new createjs.SpriteSheet({
                         "images": [Resource.loader.getResult("human_idle")],
                         "frames": {width: 64, height: 64, regX: 32, regY: 32},
-                        // define two animations, run (loops, 1.5x speed) and jump (returns to run):
                         "animations": {"idle": [0, 10, "idle"]}
                     });
 

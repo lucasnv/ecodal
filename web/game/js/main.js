@@ -14,7 +14,11 @@ requirejs.config({
 var manifest = [
     {src: "/game/assets/runningGrant.png", id: "denizen"},
     {src: "/game/assets/monsterAIdle.png", id: "human_idle"},
-    {src: "/game/assets/monsterARun.png", id: "human_run"}
+    {src: "/game/assets/monsterARun.png", id: "human_run"},
+    {src: "/game/assets/living1.jpg", id: "room1"},
+    {src: "/game/assets/living2.jpg", id: "room2"},
+    {src: "/game/assets/living3.jpg", id: "room3"},
+    {src: "/game/assets/messy-room-02-500x250.jpg", id: "room4"}
 ];
 
 var Resources = {
