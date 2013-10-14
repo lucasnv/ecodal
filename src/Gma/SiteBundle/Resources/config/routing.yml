@@ -1,3 +1,19 @@
-gma_site_homepage:
+gma_site_home:
     pattern:  /
     defaults: { _controller: GmaSiteBundle:Default:index }
+
+gma_site_project:
+    pattern:  /proyecto
+    defaults: { _controller: GmaSiteBundle:Default:project }
+
+gma_site_academic:
+    pattern:  /academico
+    defaults: { _controller: GmaSiteBundle:Default:academic }
+
+gma_site_contact:
+    pattern:  /contacto
+    defaults: { _controller: GmaSiteBundle:Default:contact }
+
+gma_site_contact_process:
+    pattern:  /contacto/procesar
+    defaults: { _controller: GmaSiteBundle:Default:contactProcess }
