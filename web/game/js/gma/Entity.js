@@ -42,17 +42,19 @@ define(['myclass'],
                 if (this.stage && this.look) {
                     this.stage.addChild(this.body);
 
-                    if (this.look.defaultLook) {
-                        this.gesture(this.look.defaultLook);
+                    console.log('look', this.look);
+
+                    if (this.look.defaultGesture) {
+                        this.gesture(this.look.defaultGesture);
                     }
 
-                    this.render();
+                    //this.render();
                 }
             },
 
             gesture: function (name) {
-                if (!this.gestures[name]) {
-                    console.err('Entity', '::', 'gesture desconicida', name);
+                if (!this.look.gestures[name]) {
+                    console.error('Entity', '::', 'gesture desconocida', name);
                     return;
                 }
 

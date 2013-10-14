@@ -3,7 +3,7 @@
  * @Extend: Entity, Resource
  */
 define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
-    function (my, signals, Entity, Resource) {
+    function (my, Signal, Entity, Resource) {
         "use strict";
 
         var Denizen = my.Class(Entity, {
@@ -20,7 +20,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 this.conscience = conscience;
                 this.speed = speed;
                 this.on = {
-                    interpreted: new signals.Signal()
+                    interpreted: new Signal()
                 };
 
                 // Referencia bidireccional
@@ -88,8 +88,11 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 var distance = Math.sqrt((dx * dx) + (dy * dy));
                 var time = Math.round(distance / this.speed);
 
+                this.gesture(this.body.x < x ? 'walkRight' : 'walkLeft');
+
                 createjs.Tween.get(this.body).to({x: x, y: y}, time)
                     .call(function () {
+                        self.gesture('idle');
                         d.resolve();
                     })
                     .addEventListener("change", function () {
