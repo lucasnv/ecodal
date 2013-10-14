@@ -8,6 +8,7 @@ define(['myclass', 'gma/entity/Denizen'], function (my, Denizen) {
 	
     var Human = my.Class(Denizen, {
         constructor: function (conscience, stage, look, speed) {
+            console.log('Human', '::', 'constructor');
         	Human.Super.call(this, conscience, stage, look, speed);
         }
 

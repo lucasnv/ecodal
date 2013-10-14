@@ -9,12 +9,10 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
         var Denizen = my.Class(Entity, {
 
             constructor: function (conscience, stage, look, speed) {
-
+                console.log('Denizen', '::', 'constructor');
                 if (!conscience) {
                     throw new Error('No puede haber Denizen sin conciencia');
                 }
-
-                Denizen.Super.call(this, stage, look);
 
                 /* Attr */
                 this.conscience = conscience;
@@ -31,6 +29,10 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
 
                 // Cuando el denizen termino de procesar una idea...
                 this.on['interpreted'].add(this.onInterpreted, this);
+
+                Denizen.Super.call(this, stage, look);
+
+                this.conscience.think();
             },
 
             think: function () {
@@ -64,13 +66,6 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                 });
 
                 return chain;
-            },
-
-            embody: function () {
-                Denizen.Super.prototype.embody.call(this, arguments);
-
-                // Pensar
-                this.think();
             },
 
             move: function (x, y) {

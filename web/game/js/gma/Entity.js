@@ -5,6 +5,7 @@ define(['myclass'],
         return my.Class({
 
             constructor: function (stage, look) {
+                console.log('Entity', '::', 'constructor');
                 /* Attr*/
                 this.parent = null;
                 this.body = new createjs.Container();
@@ -19,6 +20,19 @@ define(['myclass'],
                 };
 
                 this.look = look;
+
+                this.embody();
+            },
+
+            embody: function () {
+                console.log('Entity', '::', 'embody');
+                if (this.stage && this.look) {
+                    this.stage.addChild(this.body);
+
+                    if (this.look.defaultGesture) {
+                        this.gesture(this.look.defaultGesture);
+                    }
+                }
             },
 
             /*  setPosition: function(x, y ,z){
@@ -28,28 +42,22 @@ define(['myclass'],
              },*/
 
             addChild: function (child) {
+                if (child.parent) {
+                    child.parent.removeChild(child);
+                }
                 child.parent = this;
-                child.embody();
                 this.children.push(child);
+            },
+
+            removeChild: function (child) {
+                var index = this.children.indexOf(child);
+                if (index > -1) {
+                    this.children.splice(index, 1);
+                }
             },
 
             delParent: function (child) {
                 child.parent = null;
-            },
-
-            //NO LA ENTIENDO
-            embody: function () {
-                if (this.stage && this.look) {
-                    this.stage.addChild(this.body);
-
-                    console.log('look', this.look);
-
-                    if (this.look.defaultGesture) {
-                        this.gesture(this.look.defaultGesture);
-                    }
-
-                    //this.render();
-                }
             },
 
             gesture: function (name) {
@@ -111,7 +119,7 @@ define(['myclass'],
             },
 
             render: function () {
-                if (this.stage && this.body) {
+                if (this.stage) {
                     this.stage.update();
                 }
             },
