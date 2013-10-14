@@ -12,18 +12,30 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.container = '#home_container';
             this.minLevel = 0;
             this.maxLevel = 100;
-            this.damage = 0; // daño que puede hacer a los denizen
+            this.damageLevel = 0; // daño que puede hacer a los denizen
             this.vitality = 0;
-            this.energy = 0;
-            this.water = 0;
-            this.recycling = 0;
+            this.energy = 200;
+            this.water = 200;
+            this.recycling = 200;
+            this.damageWater = 0;
+            this.damageEnergy = 0;
+            this.damageRecycling = 0;
             this.rooms = [];
             Home.Super.call(this, stage);
         },
 
         addRoom: function(room){
             this.rooms.push(room);
-        }
+        },
+
+        addDamage: function(damage){
+            this.damageLevel += damage;
+        },
+
+        removeDamage: function(damage){
+            this.damageLebel -= damage;
+        },
+
         setVitality: function(vitality) {
             $this.vitality = vitality;
         },
@@ -117,6 +129,15 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.show();
         },
 
+        damage: function(){
+            var me = this;
+            console.log('damage');
+            setTimeout( function(){
+                me.removePower(1,1,1);
+                me.damage();
+            },300);
+        },
+
         show: function(){
             var view = '<span class="glyphicon glyphicon-home"></span>' + this.getVitality() + '<br>';
 
@@ -125,6 +146,11 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             view += 'Reciclado: <span class="recycling_container">' + this.recycling + '</span><br>';
 
             $(this.container).html(view);
+        },
+
+        init: function(){
+            this.show();
+            this.damage();
         }
 
     });
