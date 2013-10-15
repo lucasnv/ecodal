@@ -75,15 +75,15 @@ define(
                  ]));
 
                  human2.interpret(idea);*/
-
+                var home = new Home(/*homeStage*/); 
                 var roomStage = this.createStage(1000, 500, false);
 
-                this.rooms.push(this.createRoom('room1', 0, 0, roomStage));
-                this.rooms.push(this.createRoom('room2', 500, 0, roomStage));
-                this.rooms.push(this.createRoom('room3', 0, 250, roomStage));
-                this.rooms.push(this.createRoom('room4', 500, 250, roomStage));
-
-                var home = new Home(/*homeStage*/);
+                this.rooms.push(this.createRoom('room1', 0, 0, roomStage, home));
+                this.rooms.push(this.createRoom('room2', 500, 0, roomStage, home));
+                this.rooms.push(this.createRoom('room3', 0, 250, roomStage, home));
+                this.rooms.push(this.createRoom('room4', 500, 250, roomStage, home));
+                
+                home.init();
                 this.createHuman(4, this.speedHuman, home);
             },
 
@@ -143,7 +143,7 @@ define(
                 });
             },
 
-            createRoom: function (resourceName, x, y, stage) {
+            createRoom: function (resourceName, x, y, stage, home) {
                 var spriteSheet = new createjs.SpriteSheet({
                     "images": [Resource.loader.getResult(resourceName)],
                     "frames": {width: 500, height: 250, regX: 0, regY: 0},
@@ -168,6 +168,8 @@ define(
                 room.gesture('idle');
                 room.render();
 
+                home.addRooms(room);
+                
                 return room;
             },
 

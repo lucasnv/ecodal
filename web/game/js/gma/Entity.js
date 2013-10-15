@@ -11,9 +11,6 @@ define(['myclass'],
                 this.body = new createjs.Container();
                 this.body.entity = this;
                 this.children = [];
-                /* this.x = 0;
-                 this.y = 0;
-                 this.z = 0;*/
                 this.stage = stage;
 
                 this.state = {
@@ -40,12 +37,6 @@ define(['myclass'],
                     }
                 }
             },
-
-            /*  setPosition: function(x, y ,z){
-             this.x = x;
-             this.y = y;
-             this.z = z;
-             },*/
 
             addChild: function (child) {
                 if (child.parent) {

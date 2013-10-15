@@ -49,9 +49,15 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'], function (my, signa
             // Cuando el denizen termino de procesar una idea...
             this.on['interpreted'].add(this.onInterpreted, this);
         },
+
+        toString: function(){
+            return 'denizen';
+        },
+
         think: function () {
             this.conscience.think();
         },
+        
         interpret: function (idea) {
             console.log('Denizen', '::', 'interpretando', 'idea:', idea);
             console.log('   ', 'cantidad de acciones:', idea.length());

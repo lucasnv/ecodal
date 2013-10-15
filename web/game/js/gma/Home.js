@@ -2,6 +2,12 @@
  * Class Home
  * @Extend: Entity
  */
+
+ //Falata implementar el danio a los denizen con damageLevel y lifeLevel
+ //para eso se puede recorrer los childs hasta encontrar del tipo denizen
+ //Falta implmenta que sucedera cuando lleguen a los topes
+ //Falta implementar visual de la casa
+
 define(['myclass', 'gma/Entity'], function (my, Entity) {
 
     "use strict";
@@ -10,30 +16,56 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
         constructor: function (stage) {
             this.container = '#home_container';
+            this.timeToDamage = 5000;
+            this.timeToLife = 10000;
             this.minLevel = 0;
-            this.maxLevel = 100;
-            this.damageLevel = 0; // daño que puede hacer a los denizen
+            this.maxLevel = 300;
+
+            //Danio o vida que se pueden hacer a los denizen
+            this.damageLevel = 0;
+            this.lifeLevel = 0;
+
+            //Vida por tipo de energia
+            this.giveLifeEnergy =1;
+            this.giveLifeWater = 1;
+            this.giveLifeRecycling = 1;
+
+            //Valores iniciales de vida
             this.vitality = 0;
             this.energy = 200;
             this.water = 200;
             this.recycling = 200;
-            this.damageWater = 0;
-            this.damageEnergy = 0;
-            this.damageRecycling = 0;
+
             this.rooms = [];
             Home.Super.call(this, stage);
         },
 
-        addRoom: function(room){
-            this.rooms.push(room);
+        addRooms: function(rooms){
+            var me = this;
+
+            if(_.isArray(rooms)){
+                _.each(rooms, function(value, key){
+                    me.rooms.push(value);
+                })
+            } else {
+                this.rooms.push(rooms);
+            }
         },
 
-        addDamage: function(damage){
+        addDamageLevel: function(damage){
             this.damageLevel += damage;
         },
 
         removeDamage: function(damage){
-            this.damageLebel -= damage;
+            this.damageLevel -= damage;
+        },
+
+        addLifeLevel: function(life){
+            this.lifeLevel += life;
+        },
+
+        removeLifeLevel: function(life){
+            this.lifeLevel -= life;
         },
 
         setVitality: function(vitality) {
@@ -131,11 +163,54 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
         damage: function(){
             var me = this;
-            console.log('damage');
+            var damageEnergy = 0;
+            var damageWater = 0;
+            var damageRecycling = 0;
+
+            _.each(this.rooms, function(room, key){
+                damageEnergy += room.power.energy;
+                damageWater += room.power.water;
+                damageRecycling += room.power.recycling;
+            });
+
+
             setTimeout( function(){
-                me.removePower(1,1,1);
+                me.removePower(damageWater, damageEnergy, damageRecycling);
                 me.damage();
-            },300);
+            },me.timeToDamage);
+        },
+
+        life: function(){
+            var me = this;
+            var lifeEnergy = 0;
+            var lifeWater = 0;
+            var lifeRecycling = 0;
+            var damageEnergy = 0;
+            var damageWater = 0;
+            var damageRecycling = 0;
+
+            _.each(this.rooms, function(room, key){
+                damageEnergy += room.power.energy;
+                damageWater += room.power.water;
+                damageRecycling += room.power.recycling;
+            });
+
+            if(damageEnergy == 0){
+                lifeEnergy = this.giveLifeEnergy;
+            }  
+
+            if(damageWater == 0 ){
+                lifeWater = this.giveLifeWater;
+            }
+
+            if(damageRecycling == 0 ){
+                lifeRecycling = this.giveLifeRecycling;
+            }
+
+            setTimeout( function(){
+                me.addPower(lifeWater, lifeEnergy, lifeRecycling);
+                me.life();
+            },me.timeToLife);
         },
 
         show: function(){
@@ -151,6 +226,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         init: function(){
             this.show();
             this.damage();
+            this.life();
         }
 
     });
