@@ -10,6 +10,10 @@ gma_site_academic:
     pattern:  /academico
     defaults: { _controller: GmaSiteBundle:Default:academic }
 
+gma_site_tips:
+    pattern:  /tips
+    defaults: { _controller: GmaSiteBundle:Default:tips }
+
 gma_site_contact:
     pattern:  /contacto
     defaults: { _controller: GmaSiteBundle:Default:contact }
