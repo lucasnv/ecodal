@@ -24,8 +24,8 @@ define(
                 this.stageCount = 0;
                 this.speedHuman = 0.5;
 
-                this.roomWidth = 480;
-                this.roomHeight = 360;
+                this.roomWidth = 500;
+                this.roomHeight = 250;
 
                 // Temporal para probar
                 this.rooms = [];
@@ -75,14 +75,14 @@ define(
                  ]));
 
                  human2.interpret(idea);*/
-                var home = new Home(/*homeStage*/);
-                var roomStage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, false);
+                var home = new Home(/*homeStage*/); 
+                var roomStage = this.createStage(1000, 500, false);
 
-                this.rooms.push(this.createRoom('cocina_sm', 0, 0, roomStage, home));
-                this.rooms.push(this.createRoom('cocina_sm', this.roomWidth, 0, roomStage, home));
-                this.rooms.push(this.createRoom('cocina_sm', 0, this.roomHeight, roomStage, home));
-                this.rooms.push(this.createRoom('cocina_sm', this.roomWidth, this.roomHeight, roomStage, home));
-
+                this.rooms.push(this.createRoom('room1', 0, 0, roomStage, home));
+                this.rooms.push(this.createRoom('room2', 500, 0, roomStage, home));
+                this.rooms.push(this.createRoom('room3', 0, 250, roomStage, home));
+                this.rooms.push(this.createRoom('room4', 500, 250, roomStage, home));
+                
                 home.init();
                 this.createHuman(1, this.speedHuman, home);
             },
@@ -146,7 +146,7 @@ define(
             createRoom: function (resourceName, x, y, stage, home) {
                 var spriteSheet = new createjs.SpriteSheet({
                     "images": [Resource.loader.getResult(resourceName)],
-                    "frames": {width: this.roomWidth, height: this.roomHeight, regX: 0, regY: 0},
+                    "frames": {width: 500, height: 250, regX: 0, regY: 0},
                     "animations": {"idle": [0]}
                 });
 
@@ -169,12 +169,12 @@ define(
                 room.render();
 
                 home.addRooms(room);
-
+                
                 return room;
             },
 
             createHuman: function (cant, speed, source) {
-                var stage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, true);
+                var stage = this.createStage(1000, 500, true);
                 var conscience = null;
                 var human = null;
 
@@ -223,7 +223,7 @@ define(
                         "animations": {
                             "idle": [8, 9, "idle"],
                             "walk": [0, 25, "walk"],
-                            "action": [26, 63, false, 2]
+                            "action": [26, 63, "idle", 2]
                         }
                     });
 

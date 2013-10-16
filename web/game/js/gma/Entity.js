@@ -130,8 +130,11 @@ define(['myclass'],
             },
 
             render: function () {
+                console.log('********************************************');
+                console.log('SOLUCIONAR BUG DE LINEA COMENTADA');
+                console.log('********************************************');
                 if (this.stage) {
-                    this.stage.update();
+                    //this.stage.update();
                 }
             },
 
