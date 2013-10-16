@@ -47,9 +47,10 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
             var actionTeleport = new Action('teleport', [Math.round(Math.random() * 1000), Math.round(Math.random() * 500)]);
             var actionMove = new Action('move', [Math.round(Math.random() * 1000), Math.round(Math.random() * 500)]);
-            var actionWait = new Action('wait', [2000]);
+            var actionWait = new Action('wait', [1000]);
             var actionAct = new Action('act', [actionTeleport]);
             var actionGesture = new Action('gesture', ['action']);
+            var actionWalk = new Action('gesture', ['walk']);
 
             //idea.addItem(actionMove);
             //idea.addItem(actionWait);
@@ -59,10 +60,30 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             var emptyRoom = this.god.getEmptyRoom(this.denizen);
 
             if (emptyRoom) {
-                idea.addItem(new Action('move', [emptyRoom.body.x + 500, emptyRoom.body.y + 80]));
-                idea.addItem(actionGesture);
-                idea.addItem(new Action('interact', [emptyRoom, new Action('lights', [!emptyRoom.ligthsOn])]));
-                idea.addItem(actionWait);
+                var actionEvaluate = new Action('evaluate', [function () {
+                    console.log('ROOM', this.ligthsOn);
+                    if (!this.ligthsOn) {
+                        return new Idea([
+                            new Action('interact', [this, new Action('lights', [true])]),
+                            actionWait
+                        ]);
+                    } else {
+                        return new Idea([
+                            actionGesture,
+                            new Action('interact', [this, new Action('lights', [false])]),
+                            actionWait
+                        ]);
+                    }
+                }, emptyRoom]);
+
+                idea.addItem(new Action('move', [emptyRoom.body.x + 400, emptyRoom.body.y + 140]));
+                //idea.addItem(actionGesture);
+                //idea.addItem(actionGesture);
+                //idea.addItem(new Action('interact', [emptyRoom, new Action('lights', [!emptyRoom.ligthsOn])]));
+                //idea.addItem(actionWait);
+                //idea.addItem(actionWalk);
+                //idea.addItem(actionWait);
+                idea.addItem(actionEvaluate);
             } else {
                 idea.addItem(actionWait);
             }

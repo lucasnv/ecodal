@@ -54,10 +54,6 @@ define(['myclass'],
             },
 
             gesture: function (name) {
-                if (this.state.gesture == name) {
-                    return;
-                }
-
                 this.state.gesture = name;
 
                 var gestureDef = this.look.getGesture(name, this.direction);
@@ -72,13 +68,16 @@ define(['myclass'],
                 this.body.removeAllChildren();
                 this.body.addChild(sprite);
 
-                sprite.gotoAndPlay(gestureDef.animation);
+                sprite.gotoAndStop(gestureDef.animation);
+                sprite.play();
 
                 var d = $.Deferred();
 
-                sprite.addEventListener('animationend', function () {
+                var onAnimationEnd = function (event) {
                     d.resolve();
-                });
+                };
+
+                sprite.on('animationend', onAnimationEnd, this, true);
 
                 return d;
             },
