@@ -17,13 +17,13 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         constructor: function (stage) {
             this.container = '#home_container';
             this.timeToDamage = 5000;
-            this.timeToLife = 10000;
+            this.timeToLife = 11000;
+            this.timeToDamageDenizen = 60000;
             this.minLevel = 0;
             this.maxLevel = 300;
 
-            //Danio o vida que se pueden hacer a los denizen
-            this.damageLevel = 0;
-            this.lifeLevel = 0;
+            //Daño o vida que se pueden hacer a los denizen
+            this.lifeDenizen = 0;
 
             //Vida por tipo de energia
             this.giveLifeEnergy =1;
@@ -37,6 +37,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.recycling = 200;
 
             this.rooms = [];
+            this.denizens = [];
             Home.Super.call(this, stage);
         },
 
@@ -52,12 +53,46 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             }
         },
 
-        addDamageLevel: function(damage){
-            this.damageLevel += damage;
+        addDenizens: function(denizens){
+            var me = this;
+
+            if(_.isArray(denizens)){
+                _.each(denizens, function(value, key){
+                    me.denizens.push(value);
+                })
+            } else {
+                this.rooms.push(denizens);
+            }
         },
 
-        removeDamage: function(damage){
-            this.damageLevel -= damage;
+        getMaxVitality: function(){
+            //Colocar vitalidad como un objeto esto es horrible
+            return 3 * this.maxLevel;
+        },
+
+        getDamageDenizen: function() {
+
+            var damage = Math.round((this.getMaxVitality() - this.getVitality()) / 10 );
+
+            while (damage > 10){
+                damage = Math.round(damage / 10 );
+            }
+
+            return damage;
+        },
+
+        damageDenizen : function(){
+            setTimeout(function(){
+                _.each(this.denizens, function(denizen, key){
+                    denizen.vitality -= this.getDamageDenizen();
+                });
+            },this.timeToDamageDenizen);            
+        },
+
+        lifeDenizen: function(life){
+            _.each(this.denizens, function(denizen, key){
+                denizen.vitality += life;
+            });
         },
 
         addLifeLevel: function(life){
@@ -118,21 +153,26 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
         removePower: function( water, energy, recycling){
             if(water){
-                console.log('remove water');
                 if(this.minLevel <= this.water - water){
                     this.removeWater(water);
+                } else {
+                    this.removeWater(this.water);
                 }
             }
 
             if(energy){
                 if(this.minLevel <= this.energy - energy){
                     this.removeEnergy(energy);
+                } else {
+                    this.removeEnergy(this.energy);
                 }
             }
 
             if(recycling){
                 if(this.minLevel <= this.recycling - recycling){
                     this.removeRecycling(recycling);
+                } else {
+                    this.removeRecycling(this.recycling);
                 }
             }
 
@@ -143,18 +183,24 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             if(water){
                 if(this.maxLevel >= this.water + water){
                     this.addWater(water);
+                } else {
+                    this.addWater(this.maxLevel - this.water);
                 }
             }
 
             if(energy){
                 if(this.maxLevel >= this.energy + energy){
                     this.addEnergy(energy);
+                } else {
+                    this.addEnergy(this.maxLevel - this.energy);
                 }
             }
 
             if(recycling){
                 if(this.maxLevel >= this.recycling + recycling){
                     this.addRecycling(recycling);
+                } else {
+                    this.addRecycling(this.maxLevel - this.recycling);
                 }
             }
 
@@ -168,6 +214,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             var damageRecycling = 0;
 
             _.each(this.rooms, function(room, key){
+                console.log(room.power);
                 damageEnergy += room.power.energy;
                 damageWater += room.power.water;
                 damageRecycling += room.power.recycling;
@@ -227,8 +274,8 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.show();
             this.damage();
             this.life();
+            this.damageDenizen();
         }
-
     });
 
     return Home;

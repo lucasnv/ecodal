@@ -15,6 +15,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
                 }
 
                 /* Attr */
+                this.vitality = 0;
                 this.conscience = conscience;
                 this.speed = speed;
                 this.on = {
@@ -36,6 +37,10 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
                 Denizen.Super.call(this, stage, look);
 
                 this.conscience.think();
+            },
+
+            setVitality: function(vitality){
+                this.vitality = vitality;
             },
 
             think: function () {
