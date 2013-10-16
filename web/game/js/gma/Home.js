@@ -17,13 +17,13 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         constructor: function (stage) {
             this.container = '#home_container';
             this.timeToDamage = 5000;
-            this.timeToLife = 10000;
+            this.timeToLife = 11000;
             this.minLevel = 0;
             this.maxLevel = 300;
 
-            //Danio o vida que se pueden hacer a los denizen
-            this.damageLevel = 0;
-            this.lifeLevel = 0;
+            //Daño o vida que se pueden hacer a los denizen
+            this.damageDenizen = 0;
+            this.lifeDenizen = 0;
 
             //Vida por tipo de energia
             this.giveLifeEnergy =1;
@@ -37,6 +37,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.recycling = 200;
 
             this.rooms = [];
+            this.denizen = [];
             Home.Super.call(this, stage);
         },
 
@@ -52,12 +53,18 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             }
         },
 
-        addDamageLevel: function(damage){
-            this.damageLevel += damage;
+        damageDenizen : function(){
+            _.each(this.denizen, function(denizen, key){
+                denizen.vitality -= this.damageDenizen;
+            });
         },
 
-        removeDamage: function(damage){
-            this.damageLevel -= damage;
+        addDamageDenizen: function(damage){
+            this.damageDenizen += damage;
+        },
+
+        removeDamageDenizen: function(damage){
+            this.damageDenizen -= damage;
         },
 
         addLifeLevel: function(life){
@@ -121,18 +128,24 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
                 console.log('remove water');
                 if(this.minLevel <= this.water - water){
                     this.removeWater(water);
+                } else {
+                    this.removeWater(this.water);
                 }
             }
 
             if(energy){
                 if(this.minLevel <= this.energy - energy){
                     this.removeEnergy(energy);
+                } else {
+                    this.removeEnergy(this.energy);
                 }
             }
 
             if(recycling){
                 if(this.minLevel <= this.recycling - recycling){
                     this.removeRecycling(recycling);
+                } else {
+                    this.removeRecycling(this.recycling);
                 }
             }
 
@@ -143,18 +156,24 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             if(water){
                 if(this.maxLevel >= this.water + water){
                     this.addWater(water);
+                } else {
+                    this.addWater(this.maxLevel - this.water);
                 }
             }
 
             if(energy){
                 if(this.maxLevel >= this.energy + energy){
                     this.addEnergy(energy);
+                } else {
+                    this.addEnergy(this.maxLevel - this.energy);
                 }
             }
 
             if(recycling){
                 if(this.maxLevel >= this.recycling + recycling){
                     this.addRecycling(recycling);
+                } else {
+                    this.addRecycling(this.maxLevel - this.recycling);
                 }
             }
 
@@ -226,6 +245,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         init: function(){
             this.show();
             this.damage();
+            this.damageDenizen
             this.life();
         }
 
