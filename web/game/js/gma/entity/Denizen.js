@@ -2,8 +2,8 @@
  * Class Denizen
  * @Extend: Entity, Resource
  */
-define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
-    function (my, Signal, Entity, Resource) {
+define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
+    function (my, Signal, Entity, Idea) {
         "use strict";
 
         var Denizen = my.Class(Entity, {
@@ -22,7 +22,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                     halted: new Signal()
                 };
 
-                this.memory = [];
+                this.memory = undefined;
 
                 // Referencia bidireccional
                 this.conscience.denizen = this;
@@ -62,16 +62,36 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
 
             /* Interpreta el conjunto de acciones que representan una idea*/
             interpret: function (idea) {
-
                 var self = this;
-                var chain = undefined;
 
                 if (idea.length() == 0) {
                     this.on['interpreted'].dispatch(idea);
                     return;
                 }
 
-                //Debo preguntar si alguien implanto una nueva idea (FALTA)
+                var chain = this.excecute(idea);
+
+                chain.then(function () {
+                    self.on['interpreted'].dispatch(idea);
+                });
+
+                this.memory = chain;
+
+                return chain;
+            },
+
+            /**
+             * Ejecuta las ideas
+             *
+             * @param idea
+             * @returns Deferred
+             */
+            excecute: function (idea) {
+                console.log('exce', idea);
+
+                var self = this;
+                var chain = undefined;
+
                 idea.each(function (action) {
                     if (!chain) {
                         chain = self.act(action);
@@ -89,13 +109,55 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Resource'],
                     }
                 });
 
-                chain.then(function () {
-                    self.on['interpreted'].dispatch(idea);
-                });
-
-                this.memory = chain;
-
                 return chain;
+            },
+
+            /**
+             * Evalúa una condición(función) en determinado contexto
+             */
+            evaluate: function (condition, context) {
+                var d = $.Deferred();
+
+                context = context || this;
+
+                if (_.isFunction(condition)) {
+                    var result = condition.call(context);
+
+                    // Si no hay resultado de la condicion
+                    if (result === undefined) {
+                        d.resolve();
+                    }
+
+                    // Si la respuesta es una idea
+                    if (result instanceof  Idea) {
+                        this.excecute(result).then(function () {
+                            d.resolve();
+                        });
+                        // Si la respuesta de la condición es una promesa
+                    } else if (_.isFunction(result.promise)) {
+                        result.then(function () {
+                            d.resolve();
+                        }, function () {
+                            d.reject();
+                        });
+                        // Si la respuesta es un booleano
+                    } else if (_.isBoolean(result)) {
+                        if (result) {
+                            d.resolve();
+                        } else {
+                            d.reject();
+                        }
+
+                        // SI la respuesta es un objeto
+                    } else {
+                        d.resolve(result);
+                    }
+                } else {
+                    console.error('Denizen', '::', 'la condición no es una función');
+                    d.reject();
+                }
+
+                return d;
             },
 
             move: function (x, y) {
