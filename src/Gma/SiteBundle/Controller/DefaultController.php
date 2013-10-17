@@ -30,4 +30,9 @@ class DefaultController extends Controller
     {
         return $this->render('GmaSiteBundle:Default:tips.html.twig',array('pageTips'=>true));
     }
+
+    public function selectAvatarAction()
+    {
+        return $this->render('GmaSiteBundle:Default:select-avatar.html.twig',array());
+    }
 }
