@@ -19,7 +19,8 @@ var manifest = [
     {src: "/game/assets/living1.jpg", id: "room1"},
     {src: "/game/assets/living2.jpg", id: "room2"},
     {src: "/game/assets/living3.jpg", id: "room3"},
-    {src: "/game/assets/messy-room-02-500x250.jpg", id: "room4"}
+    {src: "/game/assets/messy-room-02-500x250.jpg", id: "room4"},
+    {src: "/game/assets/light.png", id: "light"}
 ];
 
 var Resources = {

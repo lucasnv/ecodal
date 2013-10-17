@@ -7,12 +7,13 @@ define(
         'gma/entity/Denizen',
         'gma/entity/denizen/Human',
         'gma/home/Room',
+        'gma/home/room/Kitchen',
         'gma/Idea',
         'gma/Action',
         'gma/Look',
         'gma/Resource'
     ],
-    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Idea, Action, Look, Resource) {
+    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Kitchen, Idea, Action, Look, Resource) {
         "use strict";
 
         return my.Class({
@@ -84,7 +85,17 @@ define(
                 this.rooms.push(this.createRoom('cocina_sm', this.roomWidth, this.roomHeight, roomStage, home));
 
                 home.init();
-                this.createHuman(3, this.speedHuman, home);
+                this.createHuman(1, this.speedHuman, home);
+            },
+
+            getAvailableActivities: function () {
+                var activities = [];
+
+                _.each(this.rooms, function (room) {
+                    activities = activities.concat(room.getAvailableActivities());
+                });
+
+                return activities;
             },
 
             // Temporal para probar
@@ -162,9 +173,8 @@ define(
                     ]
                 }, 'idle');
 
-                var room = new Room(stage, look);
-                room.body.x = x;
-                room.body.y = y;
+                var room = new Kitchen(stage, look);
+                room.setPosition({x: x, y: y});
                 room.gesture('idle');
                 room.render();
 

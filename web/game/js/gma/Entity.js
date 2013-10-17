@@ -38,6 +38,19 @@ define(['myclass'],
                 }
             },
 
+            setPosition: function (position) {
+                this.body.x = position.x;
+                this.body.y = position.y;
+                this.update();
+            },
+
+            getPosition: function () {
+                return {
+                    x: this.x,
+                    y: this.y
+                }
+            },
+
             addChild: function (child) {
                 if (child.parent) {
                     child.parent.removeChild(child);
@@ -127,6 +140,10 @@ define(['myclass'],
             interact: function (target, action) {
                 console.log('Entity', '::', 'interactuando', 'acción:', action);
                 return target.act(action);
+            },
+
+            update: function () {
+                this.render();
             },
 
             render: function () {
