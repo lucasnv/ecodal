@@ -61,19 +61,15 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
             if (emptyRoom) {
                 var actionEvaluate = new Action('evaluate', [function () {
-                    console.log('ROOM', this.ligthsOn);
-                    if (!this.ligthsOn) {
-                        return new Idea([
-                            new Action('interact', [this, new Action('lights', [true])]),
-                            actionWait
-                        ]);
-                    } else {
-                        return new Idea([
-                            actionGesture,
-                            new Action('interact', [this, new Action('lights', [false])]),
-                            actionWait
-                        ]);
+                    var activities = this.getAvailableActivities();
+
+                    if (!_.isEmpty(activities)) {
+                        var activity = activities[0];
+                        activity.addOwner(self.denizen);
+                        activity.perform();
                     }
+                    console.log('Activities', activities);
+                    return true;
                 }, emptyRoom]);
 
                 idea.addItem(new Action('move', [emptyRoom.body.x + 400, emptyRoom.body.y + 140]));
@@ -84,6 +80,9 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                 //idea.addItem(actionWalk);
                 //idea.addItem(actionWait);
                 idea.addItem(actionEvaluate);
+                idea.addItem(actionWait);
+                idea.addItem(actionWait);
+                idea.addItem(actionWait);
             } else {
                 idea.addItem(actionWait);
             }
