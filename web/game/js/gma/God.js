@@ -84,7 +84,7 @@ define(
                 this.rooms.push(this.createRoom('cocina_sm', this.roomWidth, this.roomHeight, roomStage, home));
 
                 home.init();
-                this.createHuman(1, this.speedHuman, home);
+                this.createHuman(3, this.speedHuman, home);
             },
 
             // Temporal para probar
@@ -223,7 +223,7 @@ define(
                         "animations": {
                             "idle": [8, 9, "idle"],
                             "walk": [0, 25, "walk"],
-                            "action": [26, 63, false, 2]
+                            "action": [26, 63, false]
                         }
                     });
 
