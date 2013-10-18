@@ -11,15 +11,17 @@ define(
         'gma/Idea',
         'gma/Action',
         'gma/Look',
-        'gma/Resource'
+        'gma/Resource',
+        'gma/User'
     ],
-    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Kitchen, Idea, Action, Look, Resource) {
+    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Kitchen, Idea, Action, Look, Resource, User) {
         "use strict";
 
         return my.Class({
 
             constructor: function (config) {
                 /* Attr*/
+                console.log(config);
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
@@ -63,6 +65,8 @@ define(
 
             create: function () {
 
+                var user = new User(this.config.gender);
+                user.create();
                 /*
                  var idea = new Idea();
                  idea.addItem(new Action('teleport', [200, 200]));
@@ -76,6 +80,7 @@ define(
                  ]));
 
                  human2.interpret(idea);*/
+                //this.user.create(); 
                 var home = new Home(/*homeStage*/);
                 var roomStage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, false);
 

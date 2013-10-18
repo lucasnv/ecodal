@@ -5,19 +5,28 @@
 	<!-- Main component for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<h1>Guardianes del Medioambiente</h1>
+		<p>Seleccioná tu Super Heroe.</p>
 		<p>
-			<div class="thumbnail">
-				<img href="{{ asset('img/hombre.jpg') }}" width="250" height="400"  >
-			</div>
-			<div class="thumbnail">
-				<img href="{{ asset('img/mujer.jpg') }}" width="250" height="400" >
-			</div>
-		</p>
-		<p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-		<p>To see the difference between static and fixed top navbars, just scroll.</p>
-		<p class="text-center">
-			<a class="btn btn-lg btn-success" href="{{ url('gma_game_home') }}">JUGAR</a>
+			<table class="tbl-select-avatar">
+				<tr>
+					<td>
+						<a href="{{ url('gma_game_home', { 'gender': 'man' })}}" target="_blank" data-toggle="tooltip" title="Jugar con un hombre" >
+							<img src="{{ asset('img/hombre.jpg') }}" alt="Masculino" class="img-responsive img-circle clearfix img-avatar">
+						</a>
+					</td>
+					<td>
+						<a href="{{ url('gma_game_home', { 'gender': 'woman' })}}" target="_blank" data-toggle="tooltip" title="Jugar con una mujer" >
+							<img src="{{ asset('img/mujer.jpg') }}" alt="Femenino" class="img-responsive img-circle clearfix img-avatar">
+						</a>
+					</td>
+				</tr>
+			</table>		
 		</p>
 	</div>
 </div> <!-- /container --> 
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$('*[data-toggle="tooltip"]').tooltip();
+	});
+</script>
 {% endblock %}

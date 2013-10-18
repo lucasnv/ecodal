@@ -4,5 +4,5 @@ gma_site:
 
 gma_game:
     resource: "@GmaGameBundle/Resources/config/routing.yml"
-    prefix:   /game
+    prefix:   /juego
 

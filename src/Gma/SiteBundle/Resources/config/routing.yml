@@ -14,10 +14,6 @@ gma_site_tips:
     pattern:  /tips
     defaults: { _controller: GmaSiteBundle:Default:tips }
 
-gma_site_select_avatar:
-    pattern:  /select-avatar
-    defaults: { _controller: GmaSiteBundle:Default:selectAvatar }
-
 gma_site_contact:
     pattern:  /contacto
     defaults: { _controller: GmaSiteBundle:Default:contact }

@@ -8,6 +8,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('GmaGameBundle:Layout:layout.html.twig', array());
+        return $this->render('GmaGameBundle:Default:index.html.twig', array());
     }
 }

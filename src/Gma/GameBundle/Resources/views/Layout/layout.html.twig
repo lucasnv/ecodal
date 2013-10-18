@@ -2,32 +2,5 @@
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-10" id="gma_container">
-
-        </div>
-        <div class="col-md-2">Barra de control
-            <div id="user_container">usario</div>
-            <div id="online_container">online</div>
-            <div id="help_container"><a href="{{ url('gma_site_tips') }}" target="_blank">ayuda</a></div>
-            <div id="home_container"></div>
-        </div>
-    </div>
-{% endblock %}   
-
-{% block javascripts %}
-    <script src="{{ asset('/game/lib/underscore.js') }}"></script>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{ asset('/game/lib/jquery-2.0.3.min.js') }}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{ asset('/game/lib/bootstrap.min.js') }}"></script>
-
-    <script src="{{ asset('/game/lib/createjs-2013.09.25.min.js') }}"></script>
-
-    <script src="{{ asset('/game/lib/TweenMax.min.js') }}"></script>
-
-    <script src="{{ asset('/game/lib/require.js') }}"></script>
-
-    <script src="{{ asset('/game/js/main.js') }}"></script>
+    {% block content %} {% endblock %}
 {% endblock %}
