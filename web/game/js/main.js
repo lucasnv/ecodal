@@ -1,4 +1,4 @@
-jQuery(document).ready(function($){
+jQuery(document).ready(function ($) {
 
     $('*[data-toggle="tooltip"]').tooltip();
 
@@ -24,7 +24,8 @@ jQuery(document).ready(function($){
         {src: "/game/assets/living2.jpg", id: "room2"},
         {src: "/game/assets/living3.jpg", id: "room3"},
         {src: "/game/assets/messy-room-02-500x250.jpg", id: "room4"},
-        {src: "/game/assets/light.png", id: "light"}
+        {src: "/game/assets/light.png", id: "light"},
+        {src: "/game/assets/Sprite_01_Padre.png", id: "father"}
     ];
 
     var Resources = {
@@ -39,7 +40,6 @@ jQuery(document).ready(function($){
             Resource.loader = new createjs.LoadQueue();
             Resource.loader.installPlugin(createjs.Sound);
             Resource.loader.addEventListener('complete', function () {
-                console.log('TERMINO!');
                 d.resolve();
             });
 
@@ -54,15 +54,15 @@ jQuery(document).ready(function($){
     };
 
 
-    $('.init-game').on('click',function(event){
+    $('.init-game').on('click', function (event) {
 
         event.preventDefault();
-        
+
         var me = $(this);
 
-        $('#avatar-selected').hide('normal', function(){
+        $('#avatar-selected').hide('normal', function () {
 
-            $('#game-container').show('normal', function(){
+            $('#game-container').show('normal', function () {
                 preload().then(
                     function () {
                         console.log('main', '::', 'init');
@@ -70,7 +70,7 @@ jQuery(document).ready(function($){
                         var config = {
                             'gender': me.attr('data-gender')
                         };
-                        
+
                         require(['gma/God'], function (God) {
                             var god = new God(config);
                             god.create();

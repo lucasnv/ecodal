@@ -72,17 +72,23 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                     return true;
                 }, emptyRoom]);
 
-                idea.addItem(new Action('move', [emptyRoom.body.x + 400, emptyRoom.body.y + 140]));
+                //idea.addItem(new Action('move', [emptyRoom.body.x, emptyRoom.body.y]));
                 //idea.addItem(actionGesture);
                 //idea.addItem(actionGesture);
                 //idea.addItem(new Action('interact', [emptyRoom, new Action('lights', [!emptyRoom.ligthsOn])]));
                 //idea.addItem(actionWait);
                 //idea.addItem(actionWalk);
                 //idea.addItem(actionWait);
-                idea.addItem(actionEvaluate);
-                idea.addItem(actionWait);
-                idea.addItem(actionWait);
-                idea.addItem(actionWait);
+                //idea.addItem(actionEvaluate);
+                //idea.addItem(actionWait);
+                //idea.addItem(actionWait);
+                //idea.addItem(actionWait);
+                idea.addItem(
+                    new Action('teleport', [500, 200])
+                );
+                idea.addItem(
+                    new Action('halt')
+                );
             } else {
                 idea.addItem(actionWait);
             }

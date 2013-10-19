@@ -36,7 +36,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
 
                 Denizen.Super.call(this, stage, look);
 
-                this.conscience.think();
+                //this.conscience.think();
             },
 
             setVitality: function(vitality){
