@@ -10,7 +10,7 @@ define(
         return my.Class(Insignia, {
 
             constructor: function () {
-            	this.setImg = 'insignia-energy.png';
+            	this.img = 'insignia-energy.png';
             	this.cant = 0;
             },
 

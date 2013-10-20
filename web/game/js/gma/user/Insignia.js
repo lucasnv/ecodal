@@ -18,12 +18,16 @@ define(
             	this.cant += cant; 
             },
 
-            setImg: function(img){
-            	this.img = img;
+            remove: function(cant) {
+                this.cant -= cant;
             },
 
             getCant: function(){
                 return this.cant;
+            },
+
+            show: function(){
+                
             }
         });
     }
