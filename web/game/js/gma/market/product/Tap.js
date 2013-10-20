@@ -11,7 +11,7 @@ define(
 
             constructor: function (type, cost){
             	this.img = 'tap.png';
-            	this.cost = cost;
+            	this.cost = {'water':0, 'energy':0, 'recycling':0};
             },
         });
     }

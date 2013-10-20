@@ -70,6 +70,22 @@ define(
                     case 'recycling': console.log('alerta reciclado');
                         break;
                 }
+            },
+
+            canPay: function(cost){
+                var can = false;
+
+                if( (cost.water <= this.insignias.water.getCant()) && 
+                    (cost.energy <= this.insignias.energy.getCant()) && 
+                    (cost.recycling <= this.insignias.recycling.getCant()) ){
+                    can = true;
+                }
+
+                return can;
+            },
+
+            toString: function(){
+                return 'User';
             }
 
         });

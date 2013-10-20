@@ -14,7 +14,13 @@ define(
             },
 
             buy: function(user, product){
-
+                if( user.canPay(product.getCost()) ){
+                    //Descontar insignias al usuario
+                    //actualizar insignias
+                    return product;
+                } else {
+                    return false;
+                }
             },
 
             addProduct: function(product){
@@ -26,6 +32,10 @@ define(
                     this.products.push(product);
                 }                
             },
+
+            render: function(container){
+
+            }
 
 
         });

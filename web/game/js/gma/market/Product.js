@@ -11,14 +11,14 @@ define(
 
             constructor: function () {
             	this.img = '';
-            	this.cost = 0;//Tiene que ser un objeto
+            	this.cost = {'water':0, 'energy':0, 'recycling':0};
             },
 
             getCost: function(){
                 return this.cost;
             },
 
-            show: function(container){
+            render: function(container){
                 $(container).html('<img href="'+this.img+'" >');
             }
         });

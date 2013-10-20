@@ -26,8 +26,8 @@ define(
                 return this.cant;
             },
 
-            show: function(){
-                
+            render: function(container){
+                $(container).html(this.img);
             }
         });
     }

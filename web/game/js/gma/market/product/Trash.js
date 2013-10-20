@@ -11,7 +11,7 @@ define(
 
             constructor: function (type, cost){
             	this.img = this.getTrash(color);
-            	this.cost = cost;
+            	this.cost = {'water':0, 'energy':0, 'recycling':0};
             },
 
             getTrash: function(type){

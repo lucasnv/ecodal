@@ -15,6 +15,10 @@ define(
             	this.cant = 0;
             },
 
+            toString: function(){
+                return 'insigniaWater';
+            }
+
         });
     }
 )
