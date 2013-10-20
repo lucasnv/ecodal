@@ -17,6 +17,8 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
         },
         think: function () {
 
+            console.log('Conscience', '::', 'think');
+
             var self = this;
 
             //var time = 500 + Math.round(Math.random() * 500);
@@ -89,6 +91,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                 idea.addItem(
                     new Action('halt')
                 );
+                idea.addItem(actionWait);
             } else {
                 idea.addItem(actionWait);
             }

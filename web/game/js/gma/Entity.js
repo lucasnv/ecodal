@@ -113,7 +113,7 @@ define(['myclass'],
 
                     // Es una promesa?
                     if (promise && _.isFunction(promise.promise)) {
-                        promise.then(
+                        promise.done(
                             function () {
                                 clearAct();
                                 d.resolve();
@@ -199,7 +199,7 @@ define(['myclass'],
             delay: function (milliseconds, action) {
                 var self = this;
                 var p1 = this.wait(milliseconds);
-                p1.then(function () {
+                p1.done(function () {
                     self.act(action);
                 });
             }

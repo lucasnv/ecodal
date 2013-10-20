@@ -1,8 +1,9 @@
 {% extends 'GmaGameBundle:Layout:layout.html.twig' %}
 {% block content %}
     <div class="container">
-        <h1>Guardianes del medio ambiente</h1>
+        <!--<h1>Guardianes del medio ambiente</h1>-->
         <!-- Main component for a primary marketing message or call to action -->
+
         <div class="jumbotron" id="avatar-selected">
             <h1>Guardianes del Medioambiente</h1>
 
@@ -29,30 +30,19 @@
             </table>
             </p>
         </div>
+
         <div id="game-container" class="row">
             <div class="col-md-10" id="gma_container"></div>
-            <!--
-        <div class="col-md-2">
-        	<h2>Barra de control</h2>
-            <div id="user_container">usario</div>
-            <div id="online_container">online</div>
-            <div id="help_container"><a href="{{ url('gma_site_tips') }}" target="_blank">ayuda</a></div>
-            <div id="home_container"></div>
-        </div>
-        -->
+
+            <div class="col-md-2">
+                <h2>Barra de control</h2>
+
+                <div id="user_container">usario</div>
+                <div id="online_container">online</div>
+                <div id="help_container"><a href="{{ url('gma_site_tips') }}" target="_blank">ayuda</a></div>
+                <div id="home_container"></div>
+            </div>
+
         </div>
     </div>
-    {% block javascripts %}
-        <script src="{{ asset('/game/lib/underscore.js') }}"></script>
-        <script src="{{ asset('/game/lib/underscore.js') }}"></script>
-
-        <script src="{{ asset('/game/lib/createjs-2013.09.25.min.js') }}"></script>
-
-        <script src="{{ asset('/game/lib/TweenMax.min.js') }}"></script>
-
-        <script src="{{ asset('/game/lib/require.js') }}"></script>
-
-        <script src="{{ asset('/game/js/main.js') }}"></script>
-
-    {% endblock %}
 {% endblock %}
