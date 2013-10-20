@@ -86,7 +86,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                 //idea.addItem(actionWait);
                 //idea.addItem(actionWait);
                 idea.addItem(
-                    new Action('teleport', [500, 200])
+                    new Action('fly', [500, 200])
                 );
                 idea.addItem(
                     new Action('halt')

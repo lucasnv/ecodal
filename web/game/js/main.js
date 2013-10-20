@@ -21,7 +21,19 @@ var manifest = [
     {src: "/game/assets/living3.jpg", id: "room3"},
     {src: "/game/assets/messy-room-02-500x250.jpg", id: "room4"},
     {src: "/game/assets/light.png", id: "light"},
-    {src: "/game/assets/Sprite_01_Padre.png", id: "father"}
+    {src: "/game/assets/Sprite_01_Padre.png", id: "father"},
+
+    {src: "/game/assets/room/bano_sm.jpg", id: "banio_sm"},
+    {src: "/game/assets/room/bano_sm_off.jpg", id: "banio_sm_off"},
+
+    {src: "/game/assets/room/cuarto_sm.jpg", id: "cuarto_sm"},
+    {src: "/game/assets/room/cuarto_sm_off.jpg", id: "cuarto_sm_off"},
+
+    {src: "/game/assets/room/cocina_sm.jpg", id: "cocina_sm"},
+    {src: "/game/assets/room/cocina_sm_off.jpg", id: "cocina_sm_off"},
+
+    {src: "/game/assets/room/living_sm.jpg", id: "living_sm"},
+    {src: "/game/assets/room/living_sm_off.jpg", id: "living_sm_off"}
 ];
 
 var Resources = {

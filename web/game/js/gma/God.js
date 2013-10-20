@@ -25,7 +25,7 @@ define(
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
-                this.speedHuman = 0.1;
+                this.speedHuman = 0.5;
 
                 this.roomWidth = 480;
                 this.roomHeight = 360;
@@ -84,10 +84,10 @@ define(
                 var home = new Home(/*homeStage*/);
                 var roomStage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, false);
 
-                this.rooms.push(this.createRoom('cocina_sm', 0, 0, roomStage, home));
-                this.rooms.push(this.createRoom('cocina_sm', this.roomWidth, 0, roomStage, home));
+                this.rooms.push(this.createRoom('banio_sm', 0, 0, roomStage, home));
+                this.rooms.push(this.createRoom('cuarto_sm', this.roomWidth, 0, roomStage, home));
                 this.rooms.push(this.createRoom('cocina_sm', 0, this.roomHeight, roomStage, home));
-                this.rooms.push(this.createRoom('cocina_sm', this.roomWidth, this.roomHeight, roomStage, home));
+                this.rooms.push(this.createRoom('living_sm', this.roomWidth, this.roomHeight, roomStage, home));
 
                 home.init();
                 this.createHuman(1, this.speedHuman, home);
@@ -190,8 +190,6 @@ define(
 
             createHuman: function (cant, speed, source) {
                 var stage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, true);
-                var conscience = null;
-                var human = null;
 
                 var self = this;
 
@@ -383,8 +381,6 @@ define(
                         } else {
                             console.error('El denizen no tiene donde carse muerto');
                         }
-
-                        console.log(room);
                     });
 
                     source.addChild(human);
