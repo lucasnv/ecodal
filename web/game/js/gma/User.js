@@ -1,6 +1,10 @@
+/**
+ * Class User
+
+ */
 define(
-    ['myclass', 'gma/Resource'],
-    function (my, Resource) {
+    ['myclass', 'gma/Resource', 'gma/user/insignia/Water', 'gma/user/insignia/Energy', 'gma/user/insignia/Recycling'],
+    function (my, Resource, InsigniaWater, InsigniaEnergy, InsigniaRecycling ) {
         "use strict";
 
         return my.Class({
@@ -10,12 +14,7 @@ define(
                 this.container = '#user_container';
                 this.insignaContainer = '#insigna-container';
                 this.gender = gender;
-                this.insignia = {
-                    'water' : 0,
-                    'energy': 0,
-                    'recycling': 0
-                };
-
+                this.insignias = { 'water':new InsigniaWater(), 'energy': new InsigniaEnergy(), 'recycling': new InsigniaRecycling() };
                 this.create();
             },
 
@@ -41,10 +40,11 @@ define(
             },
 
             getInsignaContainer: function(){
+
                 return '<div id="insigna-container">'+
-                       '<p id="insigna-water">Agua: ' + this.insignia.water + '</p>' +
-                       '<p id="insigna-energy">Energia: ' + this.insignia.energy + '</p>' +
-                       '<p id="insigna-recycling">Reciclado: ' + this.insignia.recycling + '</p>' +
+                       '<p id="insigna-water">Agua: ' + this.insignias.water.getCant() + '</p>' +
+                       '<p id="insigna-energy">Energia: ' + this.insignias.energy.getCant() + '</p>' +
+                       '<p id="insigna-recycling">Reciclado: ' + this.insignias.recycling.getCant() + '</p>' +
                        '</div>';
             },
 
