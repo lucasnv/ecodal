@@ -16,13 +16,15 @@ define(
 
             add: function(cant) {
             	this.cant += cant; 
-            }
+            },
 
             setImg: function(img){
             	this.img = img;
-            }
-            
+            },
 
+            getCant: function(){
+                return this.cant;
+            }
         });
     }
 )

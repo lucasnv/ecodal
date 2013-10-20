@@ -3,11 +3,11 @@
  * 
  */
 define(
-    ['myclass', 'gma/Resource', 'gma/user/Insignia'],
-    function (my, Resource, Insignia) {
+    ['myclass', 'gma/user/Insignia'],
+    function (my, Insignia) {
         "use strict";
 
-        return my.Class({
+        return my.Class(Insignia, {
 
             constructor: function () {
             	this.setImg = 'insignia-recycling.png';
