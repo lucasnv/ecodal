@@ -1,6 +1,6 @@
 /**
- * Class Market
- * 
+ * Class Recycling
+ * @extend: Insignia
  */
 define(
     ['myclass', 'gma/user/Insignia'],

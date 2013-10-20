@@ -1,6 +1,6 @@
 /**
- * Class Market
- * 
+ * Class Energy
+ * @extend: Insignia
  */
 define(
     ['myclass', 'gma/user/Insignia'],
