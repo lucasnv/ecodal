@@ -1,6 +1,10 @@
+/**
+ * Class User
+
+ */
 define(
-    ['myclass', 'gma/Resource'],
-    function (my, Resource) {
+    ['myclass', 'gma/Resource', 'gma/Insigna', 'gma/insignia/Water', 'gma/insignia/Energy', 'gma/insignia/Recycling'],
+    function (my, Resource, Insigna, InsigniaWater, InsigniaEnergy, InsigniaRecycling ) {
         "use strict";
 
         return my.Class({
@@ -10,12 +14,7 @@ define(
                 this.container = '#user_container';
                 this.insignaContainer = '#insigna-container';
                 this.gender = gender;
-                this.insignia = {
-                    'water' : 0,
-                    'energy': 0,
-                    'recycling': 0
-                };
-
+                this.insignias = { 'water':new InsigniaWater(), 'energy': new InsigniaEnergy(), 'recycling': new InsigniaRecycling() };
                 this.create();
             },
 
