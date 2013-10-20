@@ -84,10 +84,10 @@ define(
                 var home = new Home(/*homeStage*/);
                 var roomStage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, false);
 
-                this.rooms.push(this.createRoom('cocina_sm', 0, 0, roomStage, home));
-                this.rooms.push(this.createRoom('cocina_sm', this.roomWidth, 0, roomStage, home));
+                this.rooms.push(this.createRoom('banio_sm', 0, 0, roomStage, home));
+                this.rooms.push(this.createRoom('cuarto_sm', this.roomWidth, 0, roomStage, home));
                 this.rooms.push(this.createRoom('cocina_sm', 0, this.roomHeight, roomStage, home));
-                this.rooms.push(this.createRoom('cocina_sm', this.roomWidth, this.roomHeight, roomStage, home));
+                this.rooms.push(this.createRoom('living_sm', this.roomWidth, this.roomHeight, roomStage, home));
 
                 home.init();
                 this.createHuman(1, this.speedHuman, home);
@@ -190,8 +190,6 @@ define(
 
             createHuman: function (cant, speed, source) {
                 var stage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, true);
-                var conscience = null;
-                var human = null;
 
                 var self = this;
 
@@ -231,59 +229,115 @@ define(
                      }
                      }, 'idle');
                      */
+                    /*
+                     var data = new createjs.SpriteSheet({
+                     "images": [Resource.loader.getResult("grant")],
+                     "frames": {"regX": 82, "height": 292, "count": 64, "regY": 192, "width": 165},
+                     "animations": {
+                     "idle": [8, 9, "idle"],
+                     "walk": [0, 25, "walk"],
+                     "action": [26, 63, false]
+                     }
+                     });
 
-                    var data = new createjs.SpriteSheet({
-                        "images": [Resource.loader.getResult("grant")],
-                        "frames": {"regX": 82, "height": 292, "count": 64, "regY": 192, "width": 165},
+                     createjs.SpriteSheetUtils.addFlippedFrames(data, true, false, false);
+
+                     var grant = new createjs.Sprite(data, "run");
+                     grant.setTransform(-200, 90, 0.8, 0.8);
+                     grant.framerate = 30;
+
+                     var look = new Look({
+                     grant: grant
+                     }, {
+                     idle: [
+                     {
+                     direction: 90,
+                     sprite: 'grant',
+                     animation: 'idle'
+                     },
+                     {
+                     direction: -90,
+                     sprite: 'grant',
+                     animation: 'idle_h'
+                     }
+                     ],
+                     walk: [
+                     {
+                     direction: 90,
+                     sprite: 'grant',
+                     animation: 'walk'
+                     },
+                     {
+                     direction: -90,
+                     sprite: 'grant',
+                     animation: 'walk_h'
+                     }
+                     ],
+                     action: [
+                     {
+                     direction: 90,
+                     sprite: 'grant',
+                     animation: 'action'
+                     },
+                     {
+                     direction: -90,
+                     sprite: 'grant',
+                     animation: 'action_h'
+                     }
+                     ]
+                     }, 'idle');
+                     */
+
+                    var fatherSpriteSheet = new createjs.SpriteSheet({
+                        "images": [Resource.loader.getResult("father")],
+                        "frames": {width: 199, height: 317, regX: 100, regY: 0},
                         "animations": {
-                            "idle": [8, 9, "idle"],
-                            "walk": [0, 25, "walk"],
-                            "action": [26, 63, false]
+                            "walk": [0, 6, "walk"],
+                            "idle": [3],
+                            "action": [4, 6, "idle"]
                         }
                     });
 
-                    createjs.SpriteSheetUtils.addFlippedFrames(data, true, false, false);
+                    createjs.SpriteSheetUtils.addFlippedFrames(fatherSpriteSheet, true, false, false);
 
-                    var grant = new createjs.Sprite(data, "run");
-                    grant.setTransform(-200, 90, 0.8, 0.8);
-                    grant.framerate = 30;
+                    var father = new createjs.Sprite(fatherSpriteSheet, "idle");
 
                     var look = new Look({
-                        grant: grant
+                        father: father
                     }, {
                         idle: [
                             {
                                 direction: 90,
-                                sprite: 'grant',
+                                sprite: 'father',
                                 animation: 'idle'
                             },
                             {
                                 direction: -90,
-                                sprite: 'grant',
+                                sprite: 'father',
                                 animation: 'idle_h'
                             }
                         ],
                         walk: [
                             {
                                 direction: 90,
-                                sprite: 'grant',
+                                sprite: 'father',
                                 animation: 'walk'
                             },
                             {
                                 direction: -90,
-                                sprite: 'grant',
+                                sprite: 'father',
                                 animation: 'walk_h'
                             }
                         ],
                         action: [
                             {
                                 direction: 90,
-                                sprite: 'grant',
+                                sprite: 'father',
                                 animation: 'action'
                             },
                             {
                                 direction: -90,
-                                sprite: 'grant',
+                                sprite: 'father',
                                 animation: 'action_h'
                             }
                         ]
@@ -292,7 +346,12 @@ define(
                     var conscience = new Conscience(this);
                     var human = new Human(conscience, stage, look, speed);
 
+                    human.body.addEventListener('click', function () {
+                        console.log('CLICK!!!!');
+                    });
+
                     human.body.addEventListener('mousedown', function (evt) {
+                        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
                         var body = evt.currentTarget;
                         body.offset = {x: body.x - evt.stageX, y: body.y - evt.stageY};
                         var denizen = body.entity;
@@ -322,8 +381,6 @@ define(
                         } else {
                             console.error('El denizen no tiene donde carse muerto');
                         }
-
-                        console.log(room);
                     });
 
                     source.addChild(human);

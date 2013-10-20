@@ -17,6 +17,8 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
         },
         think: function () {
 
+            console.log('Conscience', '::', 'think');
+
             var self = this;
 
             //var time = 500 + Math.round(Math.random() * 500);
@@ -72,16 +74,23 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                     return true;
                 }, emptyRoom]);
 
-                idea.addItem(new Action('move', [emptyRoom.body.x + 400, emptyRoom.body.y + 140]));
+                //idea.addItem(new Action('move', [emptyRoom.body.x, emptyRoom.body.y]));
                 //idea.addItem(actionGesture);
                 //idea.addItem(actionGesture);
                 //idea.addItem(new Action('interact', [emptyRoom, new Action('lights', [!emptyRoom.ligthsOn])]));
                 //idea.addItem(actionWait);
                 //idea.addItem(actionWalk);
                 //idea.addItem(actionWait);
-                idea.addItem(actionEvaluate);
-                idea.addItem(actionWait);
-                idea.addItem(actionWait);
+                //idea.addItem(actionEvaluate);
+                //idea.addItem(actionWait);
+                //idea.addItem(actionWait);
+                //idea.addItem(actionWait);
+                idea.addItem(
+                    new Action('fly', [500, 200])
+                );
+                idea.addItem(
+                    new Action('halt')
+                );
                 idea.addItem(actionWait);
             } else {
                 idea.addItem(actionWait);

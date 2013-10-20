@@ -39,7 +39,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
                 this.conscience.think();
             },
 
-            setVitality: function(vitality){
+            setVitality: function (vitality) {
                 this.vitality = vitality;
             },
 
@@ -48,21 +48,30 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
             },
 
             halt: function () {
+                var d = $.Deferred();
+
                 console.log('Denizen', '::', 'halt');
                 TweenMax.killTweensOf(this.body);
 
                 if (this.state.act) {
+                    console.log('Rejecting current act');
                     this.state.act.reject();
                     this.state.act = null;
                 }
 
                 if (this.memory) {
+                    console.log('Rejecting memory');
+
                     this.memory.reject();
                     this.gesture('idle');
                     this.memory = null;
                 }
 
                 this.on['halted'].dispatch(this);
+
+                d.reject();
+
+                return d;
             },
 
             /* Interpreta el conjunto de acciones que representan una idea*/
@@ -76,11 +85,12 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
 
                 var chain = this.excecute(idea);
 
-                chain.then(function () {
+                this.memory = chain;
+
+                chain.done(function () {
+                    console.log('Action chain completed');
                     self.on['interpreted'].dispatch(idea);
                 });
-
-                this.memory = chain;
 
                 return chain;
             },
@@ -103,9 +113,9 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
                     } else {
                         var d = $.Deferred();
 
-                        chain.then(function () {
+                        chain.done(function () {
                             var dd = self.act(action);
-                            dd.then(function () {
+                            dd.done(function () {
                                 d.resolve();
                             });
                         });
@@ -135,12 +145,12 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
 
                     // Si la respuesta es una idea
                     if (result instanceof  Idea) {
-                        this.excecute(result).then(function () {
+                        this.excecute(result).done(function () {
                             d.resolve();
                         });
                         // Si la respuesta de la condición es una promesa
                     } else if (_.isFunction(result.promise)) {
-                        result.then(function () {
+                        result.done(function () {
                             d.resolve();
                         }, function () {
                             d.reject();
@@ -172,7 +182,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
 
                 var self = this;
 
-                d.then(function () {
+                d.done(function () {
                     self.gesture('idle');
                 });
 
