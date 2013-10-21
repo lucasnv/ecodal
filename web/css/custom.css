@@ -1,5 +1,6 @@
 body {background: url(/img/fondo.jpg) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;}
-h1{font-family: Ranchers;}
+h1{font-family: Ranchers;font-size: 102px !important; margin-top: 5px;}
+.subtitle{font-size:32px; display:block; margin-top:5px;}
 .circle{display:block;width:200px;height:200px;border-radius:100px;border:4px double #ccc;font-size:40px;line-height:170px;text-align:center;text-decoration:none;text-shadow:0 1px 0 #fff;}
 .circle:hover{border:4px double;text-decoration:none;background:#4cae4c;}
 .tbl-select-avatar{margin:auto;width:540px;}
@@ -12,3 +13,4 @@ h1{font-family: Ranchers;}
 .green{color:#5cb85c;}
 .blue{color:#428bca;}
 .yellow{color:#f0ad4e;}
+.grey{color:#666;}
