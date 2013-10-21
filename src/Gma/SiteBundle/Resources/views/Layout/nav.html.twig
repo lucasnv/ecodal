@@ -11,23 +11,23 @@
 		<div class="navbar-collapse collapse">
 			<ul id="nav-main" class="nav navbar-nav">
 				<li class="{% if pageHome is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_home') }}"><span class="glyphicon glyphicon-home"> Inicio</span></a>
+					<a href="{{ url('gma_site_home') }}"><span class="glyphicon glyphicon-home"></span><span><strong>&nbsp;Inicio</strong></span></a>
 				</li>
 				<li class="{% if pageProject is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_project') }}"><span class="glyphicon glyphicon-bullhorn"> Proyecto</span></a>
+					<a href="{{ url('gma_site_project') }}"><span class="glyphicon glyphicon-bullhorn red"></span><span><strong>&nbsp;Proyecto</strong></span></a>
 				</li>
 				<li class="{% if pageTips is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_tips') }}"><span class="glyphicon glyphicon-ok"> Tips</span></a>
+					<a href="{{ url('gma_site_tips') }}"><span class="glyphicon glyphicon-ok blue"></span><span><strong>&nbsp;Tips</strong></span></a>
 				</li>
 				<li class="{% if pageAcademic is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_academic') }}"><span class="glyphicon glyphicon-book"> Académico</span></a>
+					<a href="{{ url('gma_site_academic') }}"><span class="glyphicon glyphicon-book yellow"></span><span><strong>&nbsp;Académico</strong></span></a>
 				</li>
 				<li class="{% if pageContact is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_contact') }}"><span class="glyphicon glyphicon-earphone"> Contactanos</span></a>
+					<a href="{{ url('gma_site_contact') }}"><span class="glyphicon glyphicon-earphone green"></span><span><strong>&nbsp;Contáctanos</strong></span></a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><img src="{{ asset('img/icono_facebook.png')}}" height="50" width="50"></li>
+				<li><img src="{{ asset('img/facebook.png')}}" style="margin-top:8px" height="35" width="35"></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
