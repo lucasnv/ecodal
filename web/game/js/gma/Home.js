@@ -260,11 +260,29 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         },
 
         show: function () {
-            var view = '<span class="glyphicon glyphicon-home"></span>' + this.getVitality() + '<br>';
+            var home ='<div class="progress">' +
+                                '<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'+this.getVitality()+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%">' +
+                                    '<span class="txt-grey">Reciclado</span>' +
+                                '</div>' +
+                            '</div>';
+            var recycling ='<div class="progress">' +
+                                '<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+this.recycling+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%">' +
+                                    '<span class="txt-grey">Reciclado</span>' +
+                                '</div>' +
+                            '</div>';
 
-            view += 'Agua: <span class="water_container">' + this.water + '</span><br>';
-            view += 'Energía: <span class="energy_container">' + this.energy + '</span><br>';
-            view += 'Reciclado: <span class="recycling_container">' + this.recycling + '</span><br>';
+            var water ='<div class="progress">' +
+                                '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+this.water+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 60%">' +
+                                    '<span class="txt-grey">Agua</span>' +
+                                '</div>' +
+                            '</div>';
+
+            var energy ='<div class="progress">' +
+                                '<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'+this.energy+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%">' +
+                                    '<span class="txt-grey">Energía</span>' +
+                                '</div>' +
+                            '</div>';
+            var view = home + energy + water + recycling;
 
             $(this.container).html(view);
         },

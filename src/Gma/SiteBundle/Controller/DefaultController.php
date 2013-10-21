@@ -30,9 +30,4 @@ class DefaultController extends Controller
     {
         return $this->render('GmaSiteBundle:Default:tips.html.twig',array('pageTips'=>true));
     }
-
-    public function dataAction()
-    {
-        return $this->render('GmaSiteBundle:Default:data.html.twig',array('pageData'=>true));
-    }
 }
