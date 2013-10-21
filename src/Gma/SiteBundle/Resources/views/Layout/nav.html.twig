@@ -14,7 +14,7 @@
 					<a href="{{ url('gma_site_home') }}"><span class="glyphicon glyphicon-home"></span><span><strong>&nbsp;Inicio</strong></span></a>
 				</li>
 				<li class="{% if pageProject is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_project') }}"><span class="glyphicon glyphicon-bullhorn red"></span><span><strong>&nbsp;Proyecto</strong></span></a>
+					<a href="{{ url('gma_site_project') }}"><span class="glyphicon glyphicon-bullhorn green"></span><span><strong>&nbsp;Proyecto</strong></span></a>
 				</li>
 				<li class="{% if pageTips is defined %}active{% endif %}">
 					<a href="{{ url('gma_site_tips') }}"><span class="glyphicon glyphicon-ok blue"></span><span><strong>&nbsp;Tips</strong></span></a>
@@ -22,8 +22,11 @@
 				<li class="{% if pageAcademic is defined %}active{% endif %}">
 					<a href="{{ url('gma_site_academic') }}"><span class="glyphicon glyphicon-book yellow"></span><span><strong>&nbsp;Académico</strong></span></a>
 				</li>
+				<li class="{% if pageData is defined %}active{% endif %}">
+					<a href="{{ url('gma_site_data') }}"><span class="glyphicon glyphicon-book green"></span><span><strong>&nbsp;Datos</strong></span></a>
+				</li>
 				<li class="{% if pageContact is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_contact') }}"><span class="glyphicon glyphicon-earphone green"></span><span><strong>&nbsp;Contáctanos</strong></span></a>
+					<a href="{{ url('gma_site_contact') }}"><span class="glyphicon glyphicon-earphone red"></span><span><strong>&nbsp;Contáctanos</strong></span></a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

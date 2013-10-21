@@ -14,6 +14,10 @@ gma_site_tips:
     pattern:  /tips
     defaults: { _controller: GmaSiteBundle:Default:tips }
 
+gma_site_data:
+    pattern:  /data
+    defaults: { _controller: GmaSiteBundle:Default:data }
+
 gma_site_contact:
     pattern:  /contacto
     defaults: { _controller: GmaSiteBundle:Default:contact }
