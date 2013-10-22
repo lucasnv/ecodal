@@ -3,6 +3,7 @@ define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power)
         constructor: function (stage, look) {
             Room.Super.call(this, stage, look);
 
+            this.denizens = [];
             this.activities = [];
             this.power = new Power();
 

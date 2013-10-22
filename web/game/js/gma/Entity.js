@@ -80,6 +80,8 @@ define(['myclass'],
 
                 var sprite = this.look.sprites[gestureDef.sprite];
 
+                sprite.setTransform(0, 0, this.direction < 0 ? -1 : 1);
+
                 this.body.removeAllChildren();
                 this.body.addChild(sprite);
 
