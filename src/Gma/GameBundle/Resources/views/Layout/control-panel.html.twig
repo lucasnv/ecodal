@@ -1,0 +1,28 @@
+<div class="control-panel col-md-2 text-center">
+    <div id="user_container">usario</div>
+    <div id="home_container"></div>
+
+    <!-- Tienda Virutal -->
+    <div id="online_container" class="circle bg-red" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title="">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+    </div>
+
+    <!-- Jugar Online -->
+    <div id="online_container" class="circle bg-green">
+        <span class="glyphicon glyphicon-globe"></span>
+    </div>
+
+    <!-- Ayuda -->
+    <div id="help_container" class="circle bg-blue">
+        <a href="{{ url('gma_site_tips') }}" target="_blank">
+            <span class="glyphicon glyphicon-question-sign"></span>
+        </a>
+    </div>    
+</div>
+<script type="text/javascripts">
+    jQuery(document).ready(function($){
+        console.log('llego****************************************************');
+        var options = {trigger:'hover'};
+        $('*[data-toggle="popover"]').popover(options);
+    });
+</script>
