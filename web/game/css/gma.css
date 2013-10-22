@@ -11,7 +11,7 @@ canvas {
 .bg-blue:hover{background-color:#357ebd;}
 .bg-red{background-color:#d9534f;}
 .bg-red:hover{background-color:#ac2925;}
-
+.progress{width:110px !important; height: 10px; margin:0 auto; margin-top:10px; margin-bottom:10px;} 
 .control-panel{background-color: rgba(255, 197, 42, 0.9); border-radius:8px;border:2px solid #fff;}
 #gma_container {
     position: relative;
