@@ -1,6 +1,6 @@
 /**
  * Class User
-
+ * @extended: InsigniaWater, InsigniaEnergy, InsigniaRecycling
  */
 define(
     ['myclass', 'gma/Resource', 'gma/user/insignia/Water', 'gma/user/insignia/Energy', 'gma/user/insignia/Recycling'],
@@ -24,11 +24,11 @@ define(
 
             addInsigna: function(type, cant){
                 switch(type){
-                    case 'water': this.insignia.water += cant;
+                    case 'water': this.insignias.water.add(cant);
                         break;
-                    case 'energy': this.insignia.energy += cant;
+                    case 'energy': this.insignias.energy.add(cant);
                         break;
-                    case 'recycling': this.insignia.recycling += cant;
+                    case 'recycling': this.insignias.recycling.add(cant);
                         break;
                 }
                 this.updateInsigna();
@@ -51,11 +51,11 @@ define(
             //Debe mostrar la imagen de la alerta
             removeInsigna: function(type, cant){
                 switch(type){
-                    case 'water': this.insignia.water -= cant;
+                    case 'water': this.insignias.water.remove(cant);
                         break;
-                    case 'energy': this.insignia.energy -= cant;
+                    case 'energy': this.insignias.energy.remove(cant);
                         break;
-                    case 'recycling': this.insignia.recycling -= cant;
+                    case 'recycling': this.insignias.recycling.remove(cant);
                         break;
                 }
                 this.updateInsigna();
@@ -70,6 +70,22 @@ define(
                     case 'recycling': console.log('alerta reciclado');
                         break;
                 }
+            },
+
+            canPay: function(cost){
+                var can = false;
+
+                if( (cost.water <= this.insignias.water.getCant()) && 
+                    (cost.energy <= this.insignias.energy.getCant()) && 
+                    (cost.recycling <= this.insignias.recycling.getCant()) ){
+                    can = true;
+                }
+
+                return can;
+            },
+
+            toString: function(){
+                return 'User';
             }
 
         });

@@ -1,6 +1,6 @@
 /**
- * Class Market
- * 
+ * Class Recycling
+ * @extend: Insignia
  */
 define(
     ['myclass', 'gma/user/Insignia'],
@@ -10,10 +10,13 @@ define(
         return my.Class(Insignia, {
 
             constructor: function () {
-            	this.setImg = 'insignia-recycling.png';
+            	this.img = 'insignia-recycling.png';
             	this.cant = 0;
             },
 
+            toString: function(){
+                return 'insigniaRecycling';
+            }
         });
     }
 )

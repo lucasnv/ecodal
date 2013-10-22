@@ -33,16 +33,7 @@
 
         <div id="game-container" class="row">
             <div class="col-md-10" id="gma_container"></div>
-
-            <div class="col-md-2">
-                <h2>Barra de control</h2>
-
-                <div id="user_container">usario</div>
-                <div id="online_container">online</div>
-                <div id="help_container"><a href="{{ url('gma_site_tips') }}" target="_blank">ayuda</a></div>
-                <div id="home_container"></div>
-            </div>
-
+            {% include 'GmaGameBundle:Layout:control-panel.html.twig' %}
         </div>
     </div>
 {% endblock %}

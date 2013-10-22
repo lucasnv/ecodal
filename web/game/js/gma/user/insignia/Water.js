@@ -1,5 +1,6 @@
 /**
- * Class Market
+ * Class Water
+ * @extend: Insignia
  * 
  */
 define(
@@ -10,9 +11,13 @@ define(
         return my.Class(Insignia, {
 
             constructor: function () {
-            	this.setImg = 'insignia-water.png';
+            	this.img = 'insignia-water.png';
             	this.cant = 0;
             },
+
+            toString: function(){
+                return 'insigniaWater';
+            }
 
         });
     }
