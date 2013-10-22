@@ -15,7 +15,7 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
     var Home = my.Class(Entity, {
 
         constructor: function (stage) {
-            this.container = '#home_container_vitality';
+            this.container = '#home_container_status';
             this.timeToDamage = 5000;
             this.timeToLife = 11000;
             this.timeToDamageDenizen = 60000;
@@ -260,24 +260,28 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         },
 
         show: function () {
-            var home ='<div class="progress">' +
+            var home = 'Casa' +
+                       '<div class="progress">' +
                             '<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'+this.getVitality()+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%"></div>' +
                        '</div>';
 
-            var recycling = '<div class="progress">' +                            
+            var recycling = 'Reciclado' +
+                            '<div class="progress">' +                            
                                 '<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+this.recycling+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%"></div>' +
                             '</div>';
 
-            var water ='<div class="progress">' +
+            var water = 'Agua' +
+                        '<div class="progress">' +
                            '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+this.water+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 60%"></div>' +
                         '</div>';
 
-            var energy ='<div class="progress">' +
+            var energy = 'Energía' +
+                        '<div class="progress">' +
                             '<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'+this.energy+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%"></div>' +
                         '</div>';
             var view = home + energy + water + recycling;
 
-            $(this.container).html(view);
+            $(this.container).attr('data-content', view);
         },
 
         init: function () {
