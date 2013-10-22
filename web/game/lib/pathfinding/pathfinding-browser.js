@@ -1,10 +1,10 @@
 /**
- *    ____       _   _     _____ _           _ _                _         
- *   |  _ \ __ _| |_| |__ |  ___(_)_ __   __| (_)_ __   __ _   (_)___     
- *   | |_) / _` | __| '_ \| |_  | | '_ \ / _` | | '_ \ / _` |  | / __|    
- *   |  __/ (_| | |_| | | |  _| | | | | | (_| | | | | | (_| |_ | \__ \    
- *   |_|   \__,_|\__|_| |_|_|   |_|_| |_|\__,_|_|_| |_|\__, (_)/ |___/    
- *                                                     |___/ |__/         
+ *    ____       _   _     _____ _           _ _                _
+ *   |  _ \ __ _| |_| |__ |  ___(_)_ __   __| (_)_ __   __ _   (_)___
+ *   | |_) / _` | __| '_ \| |_  | | '_ \ / _` | | '_ \ / _` |  | / __|
+ *   |  __/ (_| | |_| | | |  _| | | | | | (_| | | | | | (_| |_ | \__ \
+ *   |_|   \__,_|\__|_| |_|_|   |_|_| |_|\__,_|_|_| |_|\__, (_)/ |___/
+ *                                                     |___/ |__/
  *   https://github.com/qiao/PathFinding.js
  */
 (function(e){if("function"==typeof bootstrap)bootstrap("pf",e);else if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else if("undefined"!=typeof ses){if(!ses.ok())return;ses.makePF=e}else"undefined"!=typeof window?window.PF=e():global.PF=e()})(function(){var define,ses,bootstrap,module,exports;
@@ -18,7 +18,7 @@ module.exports = require('./lib/heap');
 
   floor = Math.floor, min = Math.min;
 
-  /* 
+  /*
   Default comparison function to be used
   */
 
@@ -33,11 +33,11 @@ module.exports = require('./lib/heap');
     return 0;
   };
 
-  /* 
+  /*
   Insert item x in list a, and keep it sorted assuming a is sorted.
-  
+
   If x is already in a, insert it to the right of the rightmost x.
-  
+
   Optional args lo (default 0) and hi (default a.length) bound the slice
   of a to be searched.
   */
@@ -104,8 +104,8 @@ module.exports = require('./lib/heap');
 
   /*
   Pop and return the current smallest value, and add the new item.
-  
-  This is more efficient than heappop() followed by heappush(), and can be 
+
+  This is more efficient than heappop() followed by heappush(), and can be
   more appropriate when using a fixed size heap. Note that the value
   returned may be larger than item! That constrains reasonable use of
   this routine unless written as part of a conditional replacement:
@@ -674,8 +674,8 @@ module.exports = {
 
 },{}],6:[function(require,module,exports){
 /**
- * A node in grid. 
- * This class holds some basic information about a node and custom 
+ * A node in grid.
+ * This class holds some basic information about a node and custom
  * attributes may be added, depending on the algorithms' needs.
  * @constructor
  * @param {number} x - The x coordinate of the node on the grid.
@@ -780,7 +780,7 @@ function getLine(x0, y0, x1, y1) {
         if (x0 === x1 && y0 === y1) {
             break;
         }
-        
+
         e2 = 2 * err;
         if (e2 > -dy) {
             err = err - dy;
@@ -865,7 +865,7 @@ var Heuristic  = require('../core/Heuristic');
  * @param {boolean} opt.dontCrossCorners Disallow diagonal movement touching block corners.
  * @param {function} opt.heuristic Heuristic function to estimate the distance
  *     (defaults to manhattan).
- * @param {integer} opt.weight Weight to apply to the heuristic to allow for suboptimal paths, 
+ * @param {integer} opt.weight Weight to apply to the heuristic to allow for suboptimal paths,
  *     in order to speed up the search.
  */
 function AStarFinder(opt) {
@@ -997,7 +997,7 @@ var Heuristic  = require('../core/Heuristic');
  * @param {boolean} opt.dontCrossCorners Disallow diagonal movement touching block corners.
  * @param {function} opt.heuristic Heuristic function to estimate the distance
  *     (defaults to manhattan).
- * @param {integer} opt.weight Weight to apply to the heuristic to allow for suboptimal paths, 
+ * @param {integer} opt.weight Weight to apply to the heuristic to allow for suboptimal paths,
  *     in order to speed up the search.
  */
 function BiAStarFinder(opt) {
@@ -1349,7 +1349,7 @@ BreadthFirstFinder.prototype.findPath = function(startX, startY, endX, endY, gri
             neighbor.parent = node;
         }
     }
-    
+
     // fail to find the path
     return [];
 };
@@ -1691,11 +1691,11 @@ JumpPointFinder.prototype._jump = function(x, y, px, py) {
     if (!grid.isWalkableAt(x, y)) {
         return null;
     }
-    
+
     if(this.trackJumpRecursion === true) {
         grid.getNodeAt(x, y).tested = true;
     }
-    
+
     if (grid.getNodeAt(x, y) === this.endNode) {
         return [x, y];
     }
@@ -1819,7 +1819,7 @@ JumpPointFinder.prototype._findNeighbors = function(node) {
             neighbors.push([neighborNode.x, neighborNode.y]);
         }
     }
-    
+
     return neighbors;
 };
 
