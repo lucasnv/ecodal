@@ -3,26 +3,25 @@
     <div id="home_container"></div>
 
     <!-- Tienda Virutal -->
-    <div id="online_container" class="circle bg-red" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title="">
+    <div id="online_container" class="circle bg-red" data-toggle="popover" data-content="<b>Canjear en la tienda</b> insignias por artículos que mejoren mi casa.">
         <span class="glyphicon glyphicon-shopping-cart"></span>
     </div>
 
     <!-- Jugar Online -->
-    <div id="online_container" class="circle bg-green">
+    <div id="online_container" class="circle bg-green" data-toggle="popover" data-content="<b>Jugar con mis amigos.</b>">
         <span class="glyphicon glyphicon-globe"></span>
     </div>
 
     <!-- Ayuda -->
-    <div id="help_container" class="circle bg-blue">
+    <div id="help_container" class="circle bg-blue"  data-toggle="popover" data-content="Necesito más <b>ayuda</b>.">
         <a href="{{ url('gma_site_tips') }}" target="_blank">
             <span class="glyphicon glyphicon-question-sign"></span>
         </a>
     </div>    
 </div>
-<script type="text/javascripts">
+<script type="text/javascript">
     jQuery(document).ready(function($){
-        console.log('llego****************************************************');
-        var options = {trigger:'hover'};
+        var options = {container:'body',trigger:'hover', placement:'left', html:true};
         $('*[data-toggle="popover"]').popover(options);
     });
 </script>
