@@ -7,22 +7,17 @@ requirejs.config({
         test: 'game/js/test',
         jquery: 'game/lib/jquery-proxy',
         myclass: 'game/lib/my.class.min',
-        signals: 'game/lib/signals.min'
+        signals: 'game/lib/signals.min',
+        pathfinding: 'game/lib/pathfinding/pathfinding-browser'
     }
 });
 
 var manifest = [
-    {src: "/game/assets/runningGrant.png", id: "grant"},
-    {src: "/game/assets/monsterAIdle.png", id: "human_idle"},
-    {src: "/game/assets/monsterARun.png", id: "human_run"},
-    {src: "/game/assets/cocina_sm.jpg", id: "cocina_sm"},
-    {src: "/game/assets/living1.jpg", id: "room1"},
-    {src: "/game/assets/living2.jpg", id: "room2"},
-    {src: "/game/assets/living3.jpg", id: "room3"},
-    {src: "/game/assets/messy-room-02-500x250.jpg", id: "room4"},
     {src: "/game/assets/light.png", id: "light"},
-    {src: "/game/assets/Sprite_01_Padre.png", id: "father"},
+    // Denizen
+    {src: "/game/assets/denizen/padre.png", id: "father"},
 
+    // Room
     {src: "/game/assets/room/bano_sm.jpg", id: "banio_sm"},
     {src: "/game/assets/room/bano_sm_off.jpg", id: "banio_sm_off"},
 
@@ -62,7 +57,7 @@ var preload = function () {
 };
 
 
-preload().then(
+preload().done(
     function () {
         console.log('main', '::', 'init');
 

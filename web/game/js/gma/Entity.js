@@ -46,8 +46,8 @@ define(['myclass'],
 
             getPosition: function () {
                 return {
-                    x: this.x,
-                    y: this.y
+                    x: this.body.x,
+                    y: this.body.y
                 }
             },
 
@@ -67,24 +67,26 @@ define(['myclass'],
             },
 
             gesture: function (name) {
+                var d = $.Deferred();
+
                 this.state.gesture = name;
 
                 var gestureDef = this.look.getGesture(name, this.direction);
 
                 if (!gestureDef) {
                     console.error('Entity', '::', 'No se encontro el gesture', name, 'para la dirección', this.direction);
-                    return;
+                    d.reject();
                 }
 
                 var sprite = this.look.sprites[gestureDef.sprite];
+
+                sprite.setTransform(0, 0, this.direction < 0 ? -1 : 1);
 
                 this.body.removeAllChildren();
                 this.body.addChild(sprite);
 
                 sprite.gotoAndStop(gestureDef.animation);
                 sprite.play();
-
-                var d = $.Deferred();
 
                 var onAnimationEnd = function (event) {
                     d.resolve();

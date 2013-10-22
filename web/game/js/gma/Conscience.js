@@ -92,11 +92,13 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                     new Action('halt')
                 );
                 idea.addItem(actionWait);
+
             } else {
                 idea.addItem(actionWait);
             }
 
-            self.on.thought.dispatch(idea);
+            //self.on.thought.dispatch(idea);
+            //self.on.thought.dispatch(idea);
         }
     });
 
