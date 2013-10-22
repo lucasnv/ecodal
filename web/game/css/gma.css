@@ -4,6 +4,7 @@ canvas {
 }
 .circle{margin:0 auto; margin-top:10px; margin-bottom:10px;color:#fff !important;display:block;width:80px;height:80px;border-radius:40px;border:5px solid #fff;font-size:26px;line-height:73px;text-align:center;text-decoration:none;cursor:pointer;}
 .circle a{color:#fff !important;}
+.circle-home{width:110px;height:110px;border-radius:55px;line-height:93px;}
 .circle:hover{text-decoration:none;}
 .bg-green{background-color:#5cb85c;}
 .bg-green:hover{background-color:#4cae4c;}
@@ -13,7 +14,6 @@ canvas {
 .bg-red:hover{background-color:#ac2925;}
 .progress{width:160px !important; height: 20px; margin:0 auto; margin-top:2px; margin-bottom:10px;} 
 .control-panel{background-color: rgba(255, 197, 42, 0.9); border-radius:8px;border:2px solid #fff;}
-#home_container_status{cursor:pointer;}
 #gma_container {
     position: relative;
 }
