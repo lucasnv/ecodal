@@ -260,28 +260,32 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         },
 
         show: function () {
-            var home = 'Casa' +
+            /*var home = 'Casa' +
                        '<div class="progress">' +
-                            '<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'+this.getVitality()+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%"></div>' +
+                            '<div id="home-vitality" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'+this.getVitality()+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'"></div>' +
                        '</div>';
 
             var recycling = 'Reciclado' +
                             '<div class="progress">' +                            
-                                '<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+this.recycling+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%"></div>' +
+                                '<div id="home-recyling-vitality" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+this.recycling+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'"></div>' +
                             '</div>';
 
             var water = 'Agua' +
                         '<div class="progress">' +
-                           '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+this.water+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 60%"></div>' +
+                           '<div id="home-water-vitality" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+this.water+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'"></div>' +
                         '</div>';
 
             var energy = 'Energía' +
                         '<div class="progress">' +
-                            '<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'+this.energy+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'" style="width: 40%"></div>' +
+                            '<div id="home-energy-vitality" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'+this.energy+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'"></div>' +
                         '</div>';
-            var view = home + energy + water + recycling;
-
-            $(this.container).attr('data-content', view);
+            var view = home + energy + water + recycling;*/
+            var me = this;
+            //falta pasarlo a %
+            $('#home-vitality').css({width: me.getVitality()});
+            $('#home-water-vitality').css({width: me.water});
+            $('#home-energy-vitality').css({width:me.energy});
+            $('#home-recyling-vitality').css({width:me.recycling});
         },
 
         init: function () {
