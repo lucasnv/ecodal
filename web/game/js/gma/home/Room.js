@@ -5,6 +5,8 @@ define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power)
 
             this.activities = [];
             this.power = new Power();
+
+            this.connections = [];
         },
 
         toString: function () {
@@ -19,6 +21,17 @@ define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power)
             return _.filter(this.activities, function (activity) {
                 return activity.isAvailable();
             });
+        },
+
+        addConnection: function (room, coordinates) {
+            this.connections.push({
+                room: room,
+                coordinates: coordinates
+            });
+        },
+
+        getConnection: function (room) {
+            return _.findWhere(this.connections, {room: room});
         }
     });
 

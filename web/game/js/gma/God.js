@@ -12,9 +12,10 @@ define(
         'gma/Action',
         'gma/Look',
         'gma/Resource',
-        'gma/User'
+        'gma/User',
+        'pathfinding'
     ],
-    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Kitchen, Idea, Action, Look, Resource, User) {
+    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Kitchen, Idea, Action, Look, Resource, User, PF) {
         "use strict";
 
         return my.Class({
@@ -22,16 +23,28 @@ define(
             constructor: function (config) {
                 /* Attr*/
                 console.log(config);
+                this.stage = null;
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
                 this.speedHuman = 0.5;
 
-                this.roomWidth = 480;
-                this.roomHeight = 360;
+                this.roomWidth = 360;
+                this.roomHeight = 270;
 
-                // Temporal para probar
+                this.floorOffset = -10;
+
                 this.rooms = [];
+
+                this.roomConnections = [];
+
+                this.worldMatrix = [];
+
+                this.init();
+            },
+
+            init: function () {
+                this.stage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, true);
             },
 
             createStage: function (width, height, autorender) {
@@ -82,15 +95,146 @@ define(
                  human2.interpret(idea);*/
                 //this.user.create(); 
                 var home = new Home(/*homeStage*/);
-                var roomStage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, false);
 
-                this.rooms.push(this.createRoom('banio_sm', 0, 0, roomStage, home));
-                this.rooms.push(this.createRoom('cuarto_sm', this.roomWidth, 0, roomStage, home));
-                this.rooms.push(this.createRoom('cocina_sm', 0, this.roomHeight, roomStage, home));
-                this.rooms.push(this.createRoom('living_sm', this.roomWidth, this.roomHeight, roomStage, home));
+                var bathroom = this.createRoom('banio_sm', 0, 0, home);
+                var bedroom = this.createRoom('cuarto_sm', this.roomWidth, 0, home);
+                var kitchen = this.createRoom('cocina_sm', 0, this.roomHeight, home);
+                var livingroom = this.createRoom('living_sm', this.roomWidth, this.roomHeight, home);
+
+
+                this.rooms.push(bathroom);
+                this.rooms.push(bedroom);
+                this.rooms.push(kitchen);
+                this.rooms.push(livingroom);
+
+                this.worldMatrix = [
+                    [bathroom, bedroom],
+                    [false, true],
+                    [kitchen, livingroom]
+                ];
+
+                bathroom.addConnection(bedroom, {
+                    x: bathroom.getPosition().x + this.roomWidth,
+                    y: bathroom.getPosition().y + this.roomHeight + this.floorOffset
+                });
+
+                bedroom.addConnection(bathroom, {
+                    x: bedroom.getPosition().x,
+                    y: bedroom.getPosition().y + this.roomHeight + this.floorOffset
+                });
+
+                bedroom.addConnection(livingroom, [
+                    {
+                        x: bedroom.getPosition().x + 20,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset
+                    },
+                    {
+                        x: bedroom.getPosition().x + 20,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset - 20
+                    },
+                    {
+                        x: livingroom.getPosition().x + 20,
+                        y: livingroom.getPosition().y + this.roomHeight + this.floorOffset
+                    }
+                ]);
+
+                livingroom.addConnection(bedroom, [
+                    {
+                        x: livingroom.getPosition().x + 20,
+                        y: livingroom.getPosition().y + this.roomHeight + this.floorOffset
+                    },
+                    {
+                        x: bedroom.getPosition().x + 20,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset - 20
+                    },
+                    {
+                        x: bedroom.getPosition().x + 20,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset
+                    }
+                ]);
+
+                livingroom.addConnection(kitchen, {
+                    x: livingroom.getPosition().x,
+                    y: livingroom.getPosition().y + this.roomHeight + this.floorOffset
+                });
+
+                kitchen.addConnection(livingroom, {
+                    x: kitchen.getPosition().x,
+                    y: kitchen.getPosition().y + this.roomHeight + this.floorOffset
+                });
 
                 home.init();
                 this.createHuman(1, this.speedHuman, home);
+            },
+
+            findPath: function (room1, room2) {
+                var matrix = this.worldToMatrix();
+
+                console.log('matrix', matrix);
+
+                var room1Coord = this.roomToWorldCoordinates(room1);
+                var room2Coord = this.roomToWorldCoordinates(room2);
+
+                console.log('room1', room1Coord);
+                console.log('room2', room2Coord);
+
+                var grid = new PF.Grid(matrix[0].length, matrix.length, matrix);
+
+                var finder = new PF.AStarFinder();
+
+                var args = room1Coord.concat(room2Coord);
+                args.push(grid);
+
+
+                //var path = finder.findPath.apply(finder, args);
+                var path = finder.findPath(1, 2, 4, 2, grid);
+
+                console.log('path', path);
+            },
+
+            worldToMatrix: function () {
+                var matrix = [];
+
+                _.each(this.worldMatrix, function (row) {
+                    var parsedRow = [];
+                    _.each(row, function (col) {
+                        parsedRow.push(col !== false ? 0 : 1);
+                    });
+
+                    matrix.push(parsedRow);
+                });
+
+                return matrix;
+            },
+
+            roomToWorldCoordinates: function (room) {
+                var roomRow = undefined;
+                var roomCol = undefined;
+
+                var rowCount = this.worldMatrix.length;
+
+                for (var i = 0; i < rowCount; i++) {
+                    var row = this.worldMatrix[i];
+
+                    if (_.contains(row, room)) {
+                        roomRow = i;
+                        var colCount = row.length;
+
+                        for (var j = 0; j < colCount; j++) {
+                            if (row[j] == room) {
+                                roomCol = j;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                if (roomRow === undefined || roomCol === undefined) {
+                    throw new Error('No se encontro el room en la matriz');
+                }
+
+                return [roomCol, roomRow];
             },
 
             getAvailableActivities: function () {
@@ -159,7 +303,7 @@ define(
                 });
             },
 
-            createRoom: function (resourceName, x, y, stage, home) {
+            createRoom: function (resourceName, x, y, home) {
                 var spriteSheet = new createjs.SpriteSheet({
                     "images": [Resource.loader.getResult(resourceName)],
                     "frames": {width: this.roomWidth, height: this.roomHeight, regX: 0, regY: 0},
@@ -178,10 +322,19 @@ define(
                     ]
                 }, 'idle');
 
-                var room = new Kitchen(stage, look);
+                var room = new Kitchen(this.stage, look);
                 room.setPosition({x: x, y: y});
                 room.gesture('idle');
                 room.render();
+
+                console.log('Room', room.body);
+                room.body.addEventListener('mousedown', function (event) {
+                    console.log('CLICK', room);
+                }, true);
+
+                room.body.onClick = function () {
+                    console.log('click');
+                };
 
                 home.addRooms(room);
 
@@ -189,108 +342,12 @@ define(
             },
 
             createHuman: function (cant, speed, source) {
-                var stage = this.createStage(this.roomWidth * 2, this.roomHeight * 2, true);
-
                 var self = this;
 
                 for (var i = 0; i < cant; ++i) {
-
-                    /*
-                     var walkSpriteSheet = new createjs.SpriteSheet({
-                     "images": [Resource.loader.getResult("human_run")],
-                     "frames": {width: 64, height: 64, regX: 32, regY: 32},
-                     "animations": {"walk": [0, 9, "walk"]}
-                     });
-
-                     createjs.SpriteSheetUtils.addFlippedFrames(walkSpriteSheet, true, false, false);
-
-                     var idleSpriteSheet = new createjs.SpriteSheet({
-                     "images": [Resource.loader.getResult("human_idle")],
-                     "frames": {width: 64, height: 64, regX: 32, regY: 32},
-                     "animations": {"idle": [0, 10, "idle"]}
-                     });
-
-                     // Human Look
-                     var look = new Look({
-                     walk: new createjs.Sprite(walkSpriteSheet, 'walk'),
-                     idle: new createjs.Sprite(idleSpriteSheet, 'idle')
-                     }, {
-                     idle: {
-                     sprite: 'idle',
-                     animation: 'idle'
-                     },
-                     walkRight: {
-                     sprite: 'walk',
-                     animation: 'walk_h'
-                     },
-                     walkLeft: {
-                     sprite: 'walk',
-                     animation: 'walk'
-                     }
-                     }, 'idle');
-                     */
-                    /*
-                     var data = new createjs.SpriteSheet({
-                     "images": [Resource.loader.getResult("grant")],
-                     "frames": {"regX": 82, "height": 292, "count": 64, "regY": 192, "width": 165},
-                     "animations": {
-                     "idle": [8, 9, "idle"],
-                     "walk": [0, 25, "walk"],
-                     "action": [26, 63, false]
-                     }
-                     });
-
-                     createjs.SpriteSheetUtils.addFlippedFrames(data, true, false, false);
-
-                     var grant = new createjs.Sprite(data, "run");
-                     grant.setTransform(-200, 90, 0.8, 0.8);
-                     grant.framerate = 30;
-
-                     var look = new Look({
-                     grant: grant
-                     }, {
-                     idle: [
-                     {
-                     direction: 90,
-                     sprite: 'grant',
-                     animation: 'idle'
-                     },
-                     {
-                     direction: -90,
-                     sprite: 'grant',
-                     animation: 'idle_h'
-                     }
-                     ],
-                     walk: [
-                     {
-                     direction: 90,
-                     sprite: 'grant',
-                     animation: 'walk'
-                     },
-                     {
-                     direction: -90,
-                     sprite: 'grant',
-                     animation: 'walk_h'
-                     }
-                     ],
-                     action: [
-                     {
-                     direction: 90,
-                     sprite: 'grant',
-                     animation: 'action'
-                     },
-                     {
-                     direction: -90,
-                     sprite: 'grant',
-                     animation: 'action_h'
-                     }
-                     ]
-                     }, 'idle');
-                     */
-
                     var fatherSpriteSheet = new createjs.SpriteSheet({
                         "images": [Resource.loader.getResult("father")],
-                        "frames": {width: 199, height: 317, regX: 100, regY: 0},
+                        "frames": {width: 100, height: 155, regX: 50, regY: 155},
                         "animations": {
                             "walk": [0, 6, "walk"],
                             "idle": [3],
@@ -344,14 +401,10 @@ define(
                     }, 'idle');
 
                     var conscience = new Conscience(this);
-                    var human = new Human(conscience, stage, look, speed);
+                    var human = new Human(conscience, this.stage, look, speed);
 
-                    human.body.addEventListener('click', function () {
-                        console.log('CLICK!!!!');
-                    });
 
                     human.body.addEventListener('mousedown', function (evt) {
-                        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
                         var body = evt.currentTarget;
                         body.offset = {x: body.x - evt.stageX, y: body.y - evt.stageY};
                         var denizen = body.entity;
@@ -372,11 +425,18 @@ define(
 
                         var room = self.getRoomByCoordinates(evt.stageX, evt.stageY);
 
+                        self.findPath(self.rooms[0], self.rooms[3]);
+
                         if (room) {
                             self.occupyRoom(room, denizen);
+
+                            console.log(room.getPosition());
+
                             denizen.interpret(new Idea([
-                                new Action('fly', [denizen.body.x, room.body.y + 80]),
-                                new Action('wait', [2000])
+                                new Action('fly', [
+                                    denizen.body.x, room.getPosition().y + self.roomHeight + self.floorOffset
+                                ]),
+                                new Action('halt', [2000])
                             ]));
                         } else {
                             console.error('El denizen no tiene donde carse muerto');
