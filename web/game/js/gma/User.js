@@ -19,7 +19,7 @@ define(
             },
 
             create: function (){
-                $(this.container).html('<h3>Usuario</h3><p id="img-user">Tipo: ' + this.gender + '</p>'+ this.getInsignaContainer());
+                //$(this.container).html('<h3>Usuario</h3><p id="img-user">Tipo: ' + this.gender + '</p>'+ this.getInsignaContainer());
             },
 
             addInsigna: function(type, cant){
@@ -36,7 +36,7 @@ define(
 
             //Actualizar la cantidad de insigias cuando se agregan o se quitan
             updateInsigna:function(){
-                $(this.insignaContainer).html(this.getInsignaContainer());
+                //$(this.insignaContainer).html(this.getInsignaContainer());
             },
 
             getInsignaContainer: function(){
