@@ -7,27 +7,27 @@ define(
         'gma/entity/Denizen',
         'gma/entity/denizen/Human',
         'gma/home/Room',
-        'gma/home/room/Kitchen',
         'gma/Idea',
         'gma/Action',
         'gma/Look',
         'gma/Resource',
         'gma/User',
-        'pathfinding'
+        'pathfinding',
+        'gma/activity/Light'
     ],
-    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Kitchen, Idea, Action, Look, Resource, User, PF) {
+    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Idea, Action, Look, Resource, User, PF, LightActivity) {
         "use strict";
 
         return my.Class({
 
             constructor: function (config) {
                 /* Attr*/
-                console.log(config);
+                console.log('God', '::', 'config', config);
                 this.stage = null;
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
-                this.speedHuman = 0.2;
+                this.speedHuman = 0.1;
 
                 this.roomWidth = 360;
                 this.roomHeight = 270;
@@ -167,7 +167,9 @@ define(
                 home.init();
 
                 var padre = this.createHuman(this.speedHuman);
-                padre.setPosition({x: 360, y: 260});
+                padre.setPosition(this.getRoomCenter(livingroom));
+                padre.think();
+
                 this.denizens.push(padre);
             },
 
@@ -317,6 +319,21 @@ define(
                 return null;
             },
 
+            getRoomByDenizen: function (denizen) {
+                var pos = denizen.getPosition();
+
+                return this.getRoomByCoordinates(pos.x, pos.y);
+            },
+
+            getRoomCenter: function (room) {
+                var pos = room.getPosition();
+
+                return {
+                    x: pos.x + Math.round(this.roomWidth * 0.5),
+                    y: pos.y + this.roomHeight + this.floorOffset
+                }
+            },
+
             occupyRoom: function (room, denizen) {
                 this.clearRoom(denizen);
                 room.denizens.push(denizen);
@@ -337,11 +354,22 @@ define(
                 var spriteSheet = new createjs.SpriteSheet({
                     "images": [Resource.loader.getResult(resourceName)],
                     "frames": {width: this.roomWidth, height: this.roomHeight, regX: 0, regY: 0},
-                    "animations": {"idle": [0]}
+                    "animations": {
+                        "idle": 0
+                    }
+                });
+
+                var offSpriteSheet = new createjs.SpriteSheet({
+                    "images": [Resource.loader.getResult(resourceName + '_off')],
+                    "frames": {width: this.roomWidth, height: this.roomHeight, regX: 0, regY: 0},
+                    "animations": {
+                        "off": 0
+                    }
                 });
 
                 var look = new Look({
-                    idle: new createjs.Sprite(spriteSheet, 'idle')
+                    idle: new createjs.Sprite(spriteSheet, 'idle'),
+                    off: new createjs.Sprite(offSpriteSheet, 'off')
                 }, {
                     idle: [
                         {
@@ -349,13 +377,21 @@ define(
                             sprite: 'idle',
                             animation: 'idle'
                         }
+                    ],
+                    off: [
+                        {
+                            direction: 90,
+                            sprite: 'off',
+                            animation: 'off'
+                        }
                     ]
-                }, 'idle');
+                }, 'off');
 
-                var room = new Kitchen(this.stage, look);
+                var room = new Room(this.stage, look);
                 room.setPosition({x: x, y: y});
-                room.gesture('idle');
-                room.render();
+                room.gesture('off');
+
+                room.addActivity(new LightActivity('light'));
 
                 room.body.addEventListener('click', function (event) {
                     _.each(self.denizens, function (denizen) {
@@ -371,6 +407,7 @@ define(
 
                         var idea = new Idea(actions);
 
+                        denizen.halt();
                         denizen.interpret(idea);
                     });
                 }, true);

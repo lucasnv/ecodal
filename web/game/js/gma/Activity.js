@@ -1,14 +1,15 @@
 define(['myclass', 'signals'], function (my, signals) {
     return my.Class({
-        constructor: function (name, room) {
+        constructor: function (name) {
             this.name = name;
-            this.room = room;
+            this.room = undefined;
             this.owner = undefined;
             this.inProgress = false;
-            this.on = {
-                started: new signals.Signal(),
-                resolved: new signals.Signal()
-            };
+            this.resolved = true;
+        },
+
+        init: function (room) {
+            this.room = room;
         },
 
         isAvailable: function () {
@@ -17,6 +18,10 @@ define(['myclass', 'signals'], function (my, signals) {
 
         isInProgress: function () {
             return this.inProgress;
+        },
+
+        isResolved: function () {
+            return this.resolved;
         },
 
         addOwner: function (denizen) {
@@ -28,11 +33,11 @@ define(['myclass', 'signals'], function (my, signals) {
         },
 
         perform: function () {
-            this.on['started'].dispatch(this);
-        },
+            var d = $.Deferred();
 
-        resolve: function() {
-            this.on['resolved'].dispatch(this);
+            d.resolve();
+
+            return d;
         }
 
     });

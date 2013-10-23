@@ -30,8 +30,6 @@ define(['myclass'],
                 if (this.stage && this.look) {
                     this.stage.addChild(this.body);
 
-                    console.log('default gesture', this.look.defaultGesture);
-
                     if (this.look.defaultGesture) {
                         this.gesture(this.look.defaultGesture);
                     }

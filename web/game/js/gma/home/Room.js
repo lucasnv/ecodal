@@ -15,6 +15,7 @@ define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power)
         },
 
         addActivity: function (activity) {
+            activity.init(this);
             this.activities.push(activity);
         },
 
@@ -22,6 +23,14 @@ define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power)
             return _.filter(this.activities, function (activity) {
                 return activity.isAvailable();
             });
+        },
+
+        getActivity: function (name) {
+            return _.findWhere(this.activities, {name: name});
+        },
+
+        hasActivity: function (name) {
+            return !!_.findWhere(this.activities, {name: name});
         },
 
         addConnection: function (room, coordinates) {
@@ -33,6 +42,16 @@ define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power)
 
         getConnection: function (room) {
             return _.findWhere(this.connections, {room: room});
+        },
+
+        performActivity: function (name, params) {
+            var activity = this.getActivity(name);
+
+            if (activity) {
+                return activity.perform(params);
+            }
+
+            return null;
         }
     });
 

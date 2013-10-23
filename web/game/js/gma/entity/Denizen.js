@@ -36,7 +36,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
 
                 Denizen.Super.call(this, stage, look);
 
-                this.conscience.think();
+                //this.think();
             },
 
             setVitality: function (vitality) {
@@ -88,7 +88,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
                 this.memory = chain;
 
                 chain.done(function () {
-                    console.log('Action chain completed');
+                    console.log('Denizen', '::', 'Action chain completed');
                     self.on['interpreted'].dispatch(idea);
                 });
 
@@ -102,7 +102,7 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
              * @returns Deferred
              */
             excecute: function (idea) {
-                console.log('exce', idea);
+                console.log('Denizen', '::', 'excecute', idea);
 
                 var self = this;
                 var chain = undefined;
