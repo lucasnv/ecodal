@@ -1,29 +1,32 @@
-<div class="control-panel col-md-2 text-center">
-    <div id="user_container">usario</div>
+<div class="row">
+    <div class="control-panel col-md-2 text-center">
+        <div id="user_container" class="circle circle-user">
+            <img id="home_container_status" src="{{ asset('game/assets/avatar-nene.png')}}" width="70" data-toggle="popover" data-content='{% include 'GmaGameBundle:Layout:home-vitality.html.twig' %}' >
+        </div>
+        <!-- Tienda Virutal -->
+        <div id="online_container" class="circle bg-red" data-toggle="popover" data-content="<b>Canjear en la tienda</b> insignias por artículos que mejoren mi casa.">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+        </div>
 
-    <!-- Tienda Virutal -->
-    <div id="online_container" class="circle bg-red" data-toggle="popover" data-content="<b>Canjear en la tienda</b> insignias por artículos que mejoren mi casa.">
-        <span class="glyphicon glyphicon-shopping-cart"></span>
+        <!-- Jugar Online -->
+        <div id="online_container" class="circle bg-green" data-toggle="popover" data-content="<b>Jugar con mis amigos.</b>">
+            <span class="glyphicon glyphicon-globe"></span>
+        </div>
+
+        <!-- Ayuda -->
+        <div id="help_container" class="circle bg-blue"  data-toggle="popover" data-content="Necesito más <b>ayuda</b>.">
+            <a href="{{ url('gma_site_tips') }}" target="_blank">
+                <span class="glyphicon glyphicon-question-sign"></span>
+            </a>
+        </div>  
+
+        <!-- Casa -->
+        <div id="home_container" class="circle circle-home">
+            <img id="home_container_status" src="{{ asset('game/assets/avatar-hose.png')}}" width="60" data-toggle="popover" data-content='{% include 'GmaGameBundle:Layout:home-vitality.html.twig' %}' >
+        </div>  
+        <br>
     </div>
-
-    <!-- Jugar Online -->
-    <div id="online_container" class="circle bg-green" data-toggle="popover" data-content="<b>Jugar con mis amigos.</b>">
-        <span class="glyphicon glyphicon-globe"></span>
-    </div>
-
-    <!-- Ayuda -->
-    <div id="help_container" class="circle bg-blue"  data-toggle="popover" data-content="Necesito más <b>ayuda</b>.">
-        <a href="{{ url('gma_site_tips') }}" target="_blank">
-            <span class="glyphicon glyphicon-question-sign"></span>
-        </a>
-    </div>  
-
-    <!-- Casa -->
-    <div id="home_container" class="circle circle-home">
-        <img id="home_container_status" src="{{ asset('game/assets/avatar-hose.png')}}" width="60" data-toggle="popover" data-content='{% include 'GmaGameBundle:Layout:home-vitality.html.twig' %}' >
-    </div>  
-    <br>
-</div>
+</div>    
 <script type="text/javascript">
     jQuery(document).ready(function($){
         var options = {container:'body',trigger:'hover', placement:'left', html:true};

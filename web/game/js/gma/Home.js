@@ -32,9 +32,9 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
             //Valores iniciales de vida
             this.vitality = 0;
-            this.energy = 200;
-            this.water = 200;
-            this.recycling = 200;
+            this.energy = 150;
+            this.water = 150;
+            this.recycling = 150;
 
             this.rooms = [];
             this.denizens = [];
@@ -104,19 +104,31 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         },
 
         setVitality: function (vitality) {
-            $this.vitality = vitality;
+            this.vitality = vitality;
         },
 
         setEnergy: function (energy) {
-            $this.energy = energy;
+            this.energy = energy;
+        },
+
+        getEnergy: function(){
+            return this.energy;
         },
 
         setWater: function (water) {
-            $this.water = water;
+            this.water = water;
+        },
+
+        getWater: function(){
+            return this.water;
         },
 
         setRecycling: function (recycling) {
-            $this.recycling = recycling;
+            this.recycling = recycling;
+        },
+
+        getRecycling: function (recycling) {
+            return this.recycling;
         },
 
         addEnergy: function (energy) {
@@ -141,10 +153,6 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
 
         removeRecycling: function (recycling) {
             this.recycling -= recycling;
-        },
-
-        getRecycling: function (recycling) {
-            this.recycling += recycling;
         },
 
         getVitality: function () {
@@ -282,10 +290,10 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             var view = home + energy + water + recycling;*/
             var me = this;
             //falta pasarlo a %
-            $('#home-vitality').css({width: me.getVitality()});
-            $('#home-water-vitality').css({width: me.water});
-            $('#home-energy-vitality').css({width:me.energy});
-            $('#home-recyling-vitality').css({width:me.recycling});
+            $('#home-vitality').css({width: '10%'});
+            $('#home-water-vitality').css({width: '10%'});
+            $('#home-energy-vitality').css({width: '10%'});
+            $('#home-recyling-vitality').css({width: '10%'});
         },
 
         init: function () {

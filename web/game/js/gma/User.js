@@ -15,11 +15,11 @@ define(
                 this.insignaContainer = '#insigna-container';
                 this.gender = gender;
                 this.insignias = { 'water':new InsigniaWater(), 'energy': new InsigniaEnergy(), 'recycling': new InsigniaRecycling() };
-                this.create();
+                //this.create();
             },
 
             create: function (){
-                $(this.container).html('<h3>Usuario</h3><p id="img-user">Tipo: ' + this.gender + '</p>'+ this.getInsignaContainer());
+                //$(this.container).html('<h3>Usuario</h3><p id="img-user">Tipo: ' + this.gender + '</p>'+ this.getInsignaContainer());
             },
 
             addInsigna: function(type, cant){
