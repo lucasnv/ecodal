@@ -15,7 +15,7 @@ define(
                 this.insignaContainer = '#insigna-container';
                 this.gender = gender;
                 this.insignias = { 'water':new InsigniaWater(), 'energy': new InsigniaEnergy(), 'recycling': new InsigniaRecycling() };
-                this.create();
+                //this.create();
             },
 
             create: function (){
@@ -36,7 +36,7 @@ define(
 
             //Actualizar la cantidad de insigias cuando se agregan o se quitan
             updateInsigna:function(){
-                //$(this.insignaContainer).html(this.getInsignaContainer());
+                $(this.insignaContainer).html(this.getInsignaContainer());
             },
 
             getInsignaContainer: function(){
