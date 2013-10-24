@@ -4,7 +4,7 @@
         {% include 'GmaGameBundle:Layout:user.html.twig' %}
 
         <!-- Tienda Virutal -->
-        <div id="online_container" class="circle bg-red" data-toggle="popover" data-content="<b>Canjear en la tienda</b> insignias por artículos que mejoren mi casa.">
+        <div id="online_container" class="circle bg-red" data-toggle="popover" data-content="Quiero <b>canjear en la tienda</b> insignias por artículos que mejoren mi casa.">
             <span class="glyphicon glyphicon-shopping-cart"></span>
         </div>
 
@@ -24,3 +24,9 @@
         {% include 'GmaGameBundle:Layout:home.html.twig' %}
     </div>
 </div>    
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+        var options = {container:'body',trigger:'hover', placement:'left', html:true};
+        $('*[data-toggle="popover"]').popover(options);
+    });
+</script>

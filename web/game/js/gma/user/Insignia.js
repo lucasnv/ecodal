@@ -19,7 +19,21 @@ define(
             },
 
             remove: function(cant) {
-                this.cant -= cant;
+
+                if(this.cant-cant >= 0){
+                    this.cant -= cant;
+                } else {
+                    this.cant = 0;
+                }                
+            },
+
+            setCant: function(cant){
+
+                if( cant<0 ){
+                    cant = 0;
+                }
+
+                this.cant = cant;
             },
 
             getCant: function(){

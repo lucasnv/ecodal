@@ -7,17 +7,19 @@ define(
     function (my, Insignia) {
         "use strict";
 
-        return my.Class(Insignia, {
+        var insignia =  my.Class(Insignia, {
 
             constructor: function () {
+                insignia.Super.call(this);
             	this.img = 'insignia-recycling.png';
-            	this.cant = 0;
             },
 
             toString: function(){
                 return 'insigniaRecycling';
             }
         });
+
+        return insignia;
     }
 )
 ;

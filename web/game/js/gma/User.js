@@ -15,10 +15,14 @@ define(
                 this.insignaContainer = '#insigna-container';
                 this.gender = gender;
                 this.insignias = { 'water':new InsigniaWater(), 'energy': new InsigniaEnergy(), 'recycling': new InsigniaRecycling() };
-                //this.create();
+
+                this.insignias.water.setCant(100);
+                this.insignias.energy.setCant(100);
+                this.insignias.recycling.setCant(100);
             },
 
             create: function (){
+                this.updateInsignia();
                 //$(this.container).html('<h3>Usuario</h3><p id="img-user">Tipo: ' + this.gender + '</p>'+ this.getInsignaContainer());
             },
 
@@ -31,12 +35,15 @@ define(
                     case 'recycling': this.insignias.recycling.add(cant);
                         break;
                 }
-                this.updateInsigna();
+                this.updateInsignia();
             },
 
             //Actualizar la cantidad de insigias cuando se agregan o se quitan
-            updateInsigna:function(){
-                $(this.insignaContainer).html(this.getInsignaContainer());
+            updateInsignia:function(){
+                var me = this;
+                $('.cant-insignia-water').html(me.insignias.water.getCant());
+                $('.cant-insignia-energy').html(me.insignias.energy.getCant());
+                $('.cant-insignia-recycling').html(me.insignias.recycling.getCant());
             },
 
             getInsignaContainer: function(){
@@ -58,7 +65,7 @@ define(
                     case 'recycling': this.insignias.recycling.remove(cant);
                         break;
                 }
-                this.updateInsigna();
+                this.updateInsignia();
             },
 
             showAlert: function(type){
