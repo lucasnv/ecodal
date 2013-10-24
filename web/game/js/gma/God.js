@@ -27,12 +27,18 @@ define(
                 this.container = '#gma_container';
                 this.config = config;
                 this.stageCount = 0;
-                this.speedHuman = 0.1;
+                this.speedHuman = 0.15;
 
                 this.roomWidth = 360;
                 this.roomHeight = 270;
+                this.roomPadding = 50;
 
                 this.floorOffset = -10;
+
+                this.dialogIconWidth = 50;
+                this.dialogIconHeight = 50;
+                this.dialogIconMargin = 20;
+                this.dialogPadding = 10;
 
                 this.denizens = [];
                 this.rooms = [];
@@ -40,6 +46,8 @@ define(
                 this.roomConnections = [];
 
                 this.worldMatrix = [];
+
+                this.dialogs = [];
 
                 this.init();
             },
@@ -170,7 +178,17 @@ define(
                 padre.setPosition(this.getRoomCenter(livingroom));
                 padre.think();
 
-                this.denizens.push(padre);
+                var mother = this.createHuman(this.speedHuman);
+                mother.setPosition(this.getRoomCenter(bathroom));
+                mother.think();
+
+                this.denizens.push(mother);
+
+                var kid = this.createHuman(this.speedHuman);
+                kid.setPosition(this.getRoomCenter(bedroom));
+                kid.think();
+
+                this.denizens.push(kid);
             },
 
             findPath: function (room1, room2) {
@@ -213,10 +231,7 @@ define(
                 });
 
                 if (!_.isEmpty(coordinates)) {
-                    coordinates.push({
-                        x: room2.getPosition().x + Math.round(self.roomWidth * 0.5),
-                        y: room2.getPosition().y + self.roomHeight + self.floorOffset
-                    });
+                    coordinates.push(this.getRoomCenter(room2));
                 }
 
                 return coordinates;
@@ -329,7 +344,7 @@ define(
                 var pos = room.getPosition();
 
                 return {
-                    x: pos.x + Math.round(this.roomWidth * 0.5),
+                    x: pos.x + this.roomPadding + Math.round(Math.random() * (this.roomWidth - 2 * this.roomPadding)),
                     y: pos.y + this.roomHeight + this.floorOffset
                 }
             },
@@ -417,6 +432,80 @@ define(
                 return room;
             },
 
+            openDialog: function (denizen) {
+                var self = this;
+
+                var d = $.Deferred();
+
+                this.closeDialog(denizen);
+
+                var room = this.getRoomByDenizen(denizen);
+                var activities = room.getActivities();
+
+                var dialog = new createjs.Container();
+
+                _.each(activities, function (activity, index) {
+                    var icon = new createjs.Bitmap(Resource.loader.getResult(activity.icon));
+                    icon.name = activity.name;
+                    icon.x = self.dialogPadding + (self.dialogIconWidth * index + self.dialogIconMargin * index);
+                    icon.y = self.dialogPadding;
+
+                    icon.on('click', function () {
+                        self.closeDialog(denizen);
+                        d.resolve(activity);
+                    });
+
+                    dialog.addChild(icon);
+                });
+
+                var iconCount = activities.length;
+
+                var _w = this.dialogPadding * 2 + iconCount * this.dialogIconWidth + (iconCount - 1) * this.dialogIconMargin;
+                var _h = this.dialogPadding * 2 + this.dialogIconHeight;
+
+                var background = new createjs.Shape();
+
+                background.graphics.beginFill('#ffffff').drawRoundRect(0, 0, _w, _h, 10);
+
+                dialog.addChildAt(background, 0);
+
+                this.dialogs.push({
+                    dialog: dialog,
+                    denizen: denizen
+                });
+
+                this.stage.addChild(dialog);
+
+                var pos = denizen.getPosition();
+                var denizenBounds = denizen.body.getBounds();
+                var dialogBounds = dialog.getBounds();
+
+
+                dialog.x = pos.x - (2 * this.dialogPadding) - (Math.round(dialogBounds.width * 0.5));
+                dialog.y = pos.y - denizenBounds.height - dialogBounds.height - (2 * this.dialogPadding);
+
+                console.log('width', dialogBounds);
+
+
+                return d;
+            },
+
+            closeDialog: function (denizen) {
+                var dialog = _.findWhere(this.dialogs, {denizen: denizen});
+
+                console.log('dialog', dialog);
+
+                if (dialog) {
+                    this.stage.removeChild(dialog.dialog);
+
+                    var index = this.dialogs.indexOf(dialog);
+
+                    if (index > -1) {
+                        this.dialogs.splice(index, 1);
+                    }
+                }
+            },
+
             createHuman: function (speed) {
                 var self = this;
 
@@ -484,6 +573,8 @@ define(
                     var denizen = body.entity;
                     denizen.halt();
 
+                    self.closeDialog(denizen);
+
                     self.clearRoom(denizen);
                 });
 
@@ -507,9 +598,22 @@ define(
                                 denizen.getPosition().x, room.getPosition().y + self.roomHeight + self.floorOffset
                             ])
                         ];
-                        actions.push(new Action('halt'));
 
-                        denizen.interpret(new Idea(actions));
+                        denizen.excecute(new Idea(actions)).done(function () {
+                            denizen.halt();
+
+                            var d = self.openDialog(denizen);
+
+                            d.done(function (activity) {
+                                activity.perform();
+                                denizen.think();
+                            });
+
+                            d.fail(function () {
+                                denizen.think();
+                            });
+
+                        });
                     } else {
                         console.error('El denizen no tiene donde carse muerto');
                     }

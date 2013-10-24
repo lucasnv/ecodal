@@ -102,42 +102,46 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
             var room = this.god.getRoomByCoordinates(this.denizen.getPosition().x, this.denizen.getPosition().y);
 
-            if (room && room.hasActivity('light')) {
-
-                var lightActivity = room.getActivity('light');
-                if (lightActivity.isResolved())
-                    lightActivity.perform();
-
+            if (room) {
                 var activities = this.god.getAvailableActivities();
                 if (!_.isEmpty(activities)) {
                     var activity = activities[0];
                     var targetRoom = activity.room;
 
                     this.getWalkIdea(room, targetRoom, idea);
+                    this.getLightIdea(targetRoom, idea);
 
                     activity.addOwner(self.denizen);
 
                     idea.addItem(new Action('interact', [
                         targetRoom,
-                        new Action('performActivity')
+                        new Action('performActivity', [activity.name])
                     ]));
 
-                    idea.addItem(new Action('wait', [2000]));
+                    this.getRandomWaitIdea(idea);
                 } else {
-                    idea.addItem(new Action('wait', [1000 + Math.random() * 2000]));
+                    this.getRandomWaitIdea(idea);
 
                     var emptyRoom = this.god.getEmptyRoom(this.denizen);
 
                     if (emptyRoom) {
                         this.getWalkIdea(room, emptyRoom, idea);
+                        this.getLightIdea(emptyRoom, idea);
                     }
                 }
             } else {
-
-                idea.addItem(new Action('wait', [2000]));
+                this.getRandomWaitIdea(idea);
             }
 
             self.on.thought.dispatch(idea);
+        },
+
+        getContext: function () {
+            var room = this.god.getRoomByDenizen(this.denizen);
+
+            return {
+                room: room
+            };
         },
 
         getWalkIdea: function (startRoom, endRoom, idea) {
@@ -150,6 +154,35 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             });
 
             return idea;
+        },
+
+        getLightIdea: function (room, idea) {
+            idea = idea || new Idea();
+
+            if (room.hasActivity('light')) {
+                idea.addItem(new Action('evaluate', [function () {
+                    var lightActivity = room.getActivity('light');
+                    if (lightActivity.isResolved()) {
+                        lightActivity.perform();
+                    }
+                    return true;
+                }]));
+            }
+
+            return idea;
+        },
+
+        getRandomWaitIdea: function (idea, minWait, maxWait) {
+            idea = idea || new Idea();
+            minWait = minWait || 1000;
+            maxWait = maxWait || 5000;
+
+            var waitDiff = maxWait - minWait;
+            if (waitDiff < minWait) {
+                waitDiff = 0;
+            }
+
+            return idea.addItem(new Action('wait', [minWait + Math.round(Math.random() * waitDiff)]));
         }
     });
 

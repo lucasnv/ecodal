@@ -2,6 +2,8 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
     var Light = my.Class(Activity, {
         constructor: function (name) {
             Light.Super.call(this, name);
+
+            this.icon = 'icon_light';
         },
 
         init: function (room) {
@@ -20,6 +22,8 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
             this.resolved = !this.resolved;
 
             d.resolve();
+
+            this.on['perform'].dispatch(this);
 
             return d;
         }

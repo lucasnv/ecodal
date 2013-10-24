@@ -28,7 +28,9 @@ var manifest = [
     {src: "/game/assets/room/cocina_sm_off.jpg", id: "cocina_sm_off"},
 
     {src: "/game/assets/room/living_sm.jpg", id: "living_sm"},
-    {src: "/game/assets/room/living_sm_off.jpg", id: "living_sm_off"}
+    {src: "/game/assets/room/living_sm_off.jpg", id: "living_sm_off"},
+
+    {src: "/game/assets/activity/icon_light.png", id: "icon_light"}
 ];
 
 var Resources = {

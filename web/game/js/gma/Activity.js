@@ -6,6 +6,11 @@ define(['myclass', 'signals'], function (my, signals) {
             this.owner = undefined;
             this.inProgress = false;
             this.resolved = true;
+            this.icon = '';
+
+            this.on = {
+                perform: new signals.Signal()
+            }
         },
 
         init: function (room) {
@@ -36,6 +41,8 @@ define(['myclass', 'signals'], function (my, signals) {
             var d = $.Deferred();
 
             d.resolve();
+
+            this.on['perform'].dispatch(this);
 
             return d;
         }
