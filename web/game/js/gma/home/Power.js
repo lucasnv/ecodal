@@ -9,7 +9,6 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
     var Power = my.Class(Entity, {
 
         constructor: function () {
-            console.log('create power');
             this.energy = 0;
             this.water = 0;
             this.recycling = 0;

@@ -2,10 +2,10 @@ body {background: url(/img/fondo.jpg) no-repeat center center fixed;-webkit-back
 canvas {
     border: 1px solid red;
 }
-.circle{margin:0 auto; margin-top:9px; margin-bottom:9px;color:#fff !important;display:block;width:70px;height:70px;border-radius:35px;border:5px solid #fff;font-size:26px;line-height:63px;text-align:center;text-decoration:none;cursor:pointer;}
+.circle{margin:0 auto; margin-top:9px; margin-bottom:9px;color:#fff !important;display:block;width:66px;height:66px;border-radius:33px;border:5px solid #fff;font-size:26px;line-height:59px;text-align:center;text-decoration:none;cursor:pointer;}
 .circle a{color:#fff !important;}
-.circle-home{width:110px;height:110px;border-radius:55px;line-height:93px;}
-.circle-user{width:150px;height:150px;border-radius:75px;line-height:145px;}
+.circle-home{border-radius:30px;float:left;height:60px;line-height:43px;width:60px;margin-right: 6px;}
+.circle-user{border-radius:75px;height:150px;line-height:145px;width:150px;}
 .circle:hover{text-decoration:none;}
 .bg-green{background-color:#5cb85c;}
 .bg-green:hover{background-color:#4cae4c;}
@@ -13,8 +13,13 @@ canvas {
 .bg-blue:hover{background-color:#357ebd;}
 .bg-red{background-color:#d9534f;}
 .bg-red:hover{background-color:#ac2925;}
-.progress{width:160px !important; height: 20px; margin:0 auto; margin-top:2px; margin-bottom:10px;} 
-.control-panel{background-color: rgba(255, 197, 42, 0.9); border-radius:8px;border:2px solid #fff; height: 525px !important;}
+.progress{width:100px !important; height: 19px; margin:0 auto; margin-top:1px; margin-bottom:5px; border:1px solid #eee;} 
+.progress-label{font-weight: bold; font-size: 12px; margin:1px; margin-left:5px;color:#000;}
+/*HOME*/
+#home-container{clear:fixed; margin-top: 50px;}
+.home-progress{width:165px !important;height:30px;}
+
+.control-panel{background-color: rgba(255, 197, 42, 0.8); border-radius:8px;border:2px solid #fff; height: 560px !important;}
 #gma_container {
     position: relative;   
 }

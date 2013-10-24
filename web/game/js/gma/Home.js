@@ -65,14 +65,14 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             }
         },
 
-        getMaxVitality: function () {
+        getMaxHomeVitality: function () {
             //Colocar vitalidad como un objeto esto es horrible
             return 3 * this.maxLevel;
         },
 
         getDamageDenizen: function () {
 
-            var damage = Math.round((this.getMaxVitality() - this.getVitality()) / 10);
+            var damage = Math.round((this.getMaxHomeVitality() - this.getVitality()) / 10);
 
             while (damage > 10) {
                 damage = Math.round(damage / 10);
@@ -95,14 +95,6 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             });
         },
 
-        addLifeLevel: function (life) {
-            this.lifeLevel += life;
-        },
-
-        removeLifeLevel: function (life) {
-            this.lifeLevel -= life;
-        },
-
         setVitality: function (vitality) {
             this.vitality = vitality;
         },
@@ -111,24 +103,16 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.energy = energy;
         },
 
-        getEnergy: function(){
-            return this.energy;
-        },
-
         setWater: function (water) {
             this.water = water;
-        },
-
-        getWater: function(){
-            return this.water;
         },
 
         setRecycling: function (recycling) {
             this.recycling = recycling;
         },
 
-        getRecycling: function (recycling) {
-            return this.recycling;
+        addLifeLevel: function (life) {
+            this.lifeLevel += life;
         },
 
         addEnergy: function (energy) {
@@ -143,6 +127,34 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.recycling += recycling;
         },
 
+        addPower: function (water, energy, recycling) {
+            if (water) {
+                if (this.maxLevel >= this.water + water) {
+                    this.addWater(water);
+                } else {
+                    this.addWater(this.maxLevel - this.water);
+                }
+            }
+
+            if (energy) {
+                if (this.maxLevel >= this.energy + energy) {
+                    this.addEnergy(energy);
+                } else {
+                    this.addEnergy(this.maxLevel - this.energy);
+                }
+            }
+
+            if (recycling) {
+                if (this.maxLevel >= this.recycling + recycling) {
+                    this.addRecycling(recycling);
+                } else {
+                    this.addRecycling(this.maxLevel - this.recycling);
+                }
+            }
+
+            this.show();
+        },
+
         removeEnergy: function (energy) {
             this.energy -= energy;
         },
@@ -155,8 +167,8 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.recycling -= recycling;
         },
 
-        getVitality: function () {
-            return this.energy + this.water + this.recycling;
+        removeLifeLevel: function (life) {
+            this.lifeLevel -= life;
         },
 
         removePower: function (water, energy, recycling) {
@@ -187,32 +199,24 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
             this.show();
         },
 
-        addPower: function (water, energy, recycling) {
-            if (water) {
-                if (this.maxLevel >= this.water + water) {
-                    this.addWater(water);
-                } else {
-                    this.addWater(this.maxLevel - this.water);
-                }
-            }
+        calculateVitality: function(vitality){
+            return (vitality*100)/this.maxLevel;
+        },
 
-            if (energy) {
-                if (this.maxLevel >= this.energy + energy) {
-                    this.addEnergy(energy);
-                } else {
-                    this.addEnergy(this.maxLevel - this.energy);
-                }
-            }
+        getEnergy: function(){
+            return this.calculateVitality(this.energy);
+        },
 
-            if (recycling) {
-                if (this.maxLevel >= this.recycling + recycling) {
-                    this.addRecycling(recycling);
-                } else {
-                    this.addRecycling(this.maxLevel - this.recycling);
-                }
-            }
+        getWater: function(){
+            return this.calculateVitality(this.water);
+        },
+        
+        getRecycling: function () {
+            return this.calculateVitality(this.recycling);
+        },
 
-            this.show();
+        getVitality: function () {
+            return ((this.energy + this.water + this.recycling)*100)/this.getMaxHomeVitality();
         },
 
         damage: function () {
@@ -268,32 +272,11 @@ define(['myclass', 'gma/Entity'], function (my, Entity) {
         },
 
         show: function () {
-            /*var home = 'Casa' +
-                       '<div class="progress">' +
-                            '<div id="home-vitality" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'+this.getVitality()+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'"></div>' +
-                       '</div>';
-
-            var recycling = 'Reciclado' +
-                            '<div class="progress">' +                            
-                                '<div id="home-recyling-vitality" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+this.recycling+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'"></div>' +
-                            '</div>';
-
-            var water = 'Agua' +
-                        '<div class="progress">' +
-                           '<div id="home-water-vitality" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+this.water+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'"></div>' +
-                        '</div>';
-
-            var energy = 'Energía' +
-                        '<div class="progress">' +
-                            '<div id="home-energy-vitality" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'+this.energy+'" aria-valuemin="'+this.minLevel+'" aria-valuemax="'+this.maxLevel+'"></div>' +
-                        '</div>';
-            var view = home + energy + water + recycling;*/
             var me = this;
-            //falta pasarlo a %
-            $('#home-vitality').css({width: '10%'});
-            $('#home-water-vitality').css({width: '10%'});
-            $('#home-energy-vitality').css({width: '10%'});
-            $('#home-recyling-vitality').css({width: '10%'});
+            $('#home-vitality').css({width: me.getVitality()+'%'});
+            $('#home-water-vitality').css({width: me.getWater() + '%'});
+            $('#home-energy-vitality').css({width: me.getEnergy() + '%'});
+            $('#home-recyling-vitality').css({width: me.getRecycling() + '%'});
         },
 
         init: function () {
