@@ -19,6 +19,10 @@ define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power)
             this.activities.push(activity);
         },
 
+        getActivities: function () {
+            return this.activities;
+        },
+
         getAvailableActivities: function () {
             return _.filter(this.activities, function (activity) {
                 return activity.isAvailable();
