@@ -11,7 +11,7 @@ define(
 
             constructor: function (type, cost){
                 product.Super.call(this);
-            	this.img = this.getTrash(color);
+            	this.img = this.getTrash(type);
             	this.cost = {'water':0, 'energy':0, 'recycling':0};
             },
 
@@ -23,7 +23,7 @@ define(
                     case 'blue':
                         this.img = 'trash-blue.png'; 
                         break;
-                    case 'yelllow':
+                    case 'yellow':
                         this.img = 'trash-yellow.png';
                         break;      
                 }
