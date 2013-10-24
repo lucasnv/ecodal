@@ -1,0 +1,11 @@
+<div id="home-container">
+    <div class="circle circle-home">
+        <img id="home_container_status" src="{{ asset('game/assets/avatar-hose.png')}}" width="40" >
+    </div>    
+    {% include 'GmaGameBundle:Layout:home-vitality.html.twig' %} 
+</div>
+<div class="progress home-progress">
+    <div id="home-vitality" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="900">
+        <span class="progress-label">Casa</span>
+    </div>
+</div>
