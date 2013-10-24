@@ -7,13 +7,16 @@ define(
     function (my, Product) {
         "use strict";
 
-        return my.Class(Product, {
+        var product = my.Class(Product, {
 
             constructor: function (type, cost){
+                product.Super.call(this);
             	this.img = 'washingmachine.png';
             	this.cost = {'water':0, 'energy':0, 'recycling':0};
             },
         });
+
+        return product;
     }
 )
 ;

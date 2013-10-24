@@ -16,9 +16,9 @@ define(
                 this.gender = gender;
                 this.insignias = { 'water':new InsigniaWater(), 'energy': new InsigniaEnergy(), 'recycling': new InsigniaRecycling() };
 
-                this.insignias.water.setCant(100);
-                this.insignias.energy.setCant(100);
-                this.insignias.recycling.setCant(100);
+                this.insignias.water.setCant(150);
+                this.insignias.energy.setCant(150);
+                this.insignias.recycling.setCant(200);
             },
 
             create: function (){
