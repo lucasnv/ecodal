@@ -17,12 +17,12 @@ canvas {
 .progress-label{font-weight: bold; font-size: 12px; margin:1px; margin-left:5px;color:#000;}
 
 /* Home */
-#home-container{clear:fixed; margin-top: 50px;}
+#home-container{clear:fixed; margin-top: 15px;}
 .home-progress{width:165px !important;height:30px;}
 
 /* User */
 #user-container{float:left; margin-left:15px; margin-right:0px}
-#user-info-container{clear:fixed;margin-top:20px; margin-bottom: 20px; height:100px;}
+#user-info-container{clear:fixed;margin-top:20px; margin-bottom: 5px; height:100px;}
 
 /* Insignias */
 #insignia-container{margin:0 auto; padding-top: 10px !important;}

@@ -1,8 +1,9 @@
 <div class="row">
     <div class="control-panel col-md-2 text-center">
-        <!-- Casa -->
+        <!-- Usuario -->
         {% include 'GmaGameBundle:Layout:user.html.twig' %}
-
+        <img src="{{ asset('game/assets/separator.png') }}" width="160">
+        
         <!-- Tienda Virutal -->
         <div id="online_container" class="circle bg-red" data-toggle="popover" data-content="Quiero <b>canjear en la tienda</b> insignias por artículos que mejoren mi casa.">
             <span class="glyphicon glyphicon-shopping-cart"></span>
@@ -19,7 +20,7 @@
                 <span class="glyphicon glyphicon-question-sign"></span>
             </a>
         </div>  
-
+        <img src="{{ asset('game/assets/separator.png') }}" width="160">
         <!-- Casa -->
         {% include 'GmaGameBundle:Layout:home.html.twig' %}
     </div>
