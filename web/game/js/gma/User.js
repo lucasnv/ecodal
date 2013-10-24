@@ -56,7 +56,7 @@ define(
             },
 
             //Debe mostrar la imagen de la alerta
-            removeInsigna: function(type, cant){
+            removeInsignia: function(type, cant){
                 switch(type){
                     case 'water': this.insignias.water.remove(cant);
                         break;

@@ -18,6 +18,7 @@ canvas {
 
 /* Home */
 #home-container{clear:fixed; margin-top: 5px;}
+#home-container p{ margin:0; padding-right: 2px;}
 .home-progress{width:165px !important;height:30px;}
 .label-home-vitality{font-size: 12px;}
 /* User */

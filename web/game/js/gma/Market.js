@@ -17,6 +17,7 @@ define(
                 if( user.canPay(product.getCost()) ){
                     //Descontar insignias al usuario
                     //actualizar insignias
+                    user.insignias.
                     return product;
                 } else {
                     return false;
@@ -34,7 +35,7 @@ define(
             },
 
             render: function(container){
-
+                //Mostrar el market
             }
 
 
