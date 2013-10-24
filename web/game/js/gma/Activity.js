@@ -3,7 +3,6 @@ define(['myclass', 'signals'], function (my, signals) {
         constructor: function (name) {
             this.name = name;
             this.room = undefined;
-            this.owner = undefined;
             this.inProgress = false;
             this.resolved = true;
             this.icon = '';
@@ -18,7 +17,7 @@ define(['myclass', 'signals'], function (my, signals) {
         },
 
         isAvailable: function () {
-            return !this.owner && !this.isInProgress();
+            return !this.isInProgress() && this.isResolved();
         },
 
         isInProgress: function () {
