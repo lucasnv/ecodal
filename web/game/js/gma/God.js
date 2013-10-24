@@ -111,12 +111,26 @@ define(
                 var home = new Home(/*homeStage*/);
 
                 var bathroom = this.createRoom('banio_sm', 0, 0, Bathroom);
-                bathroom.addActivity(new FaucetActivity('faucet'));
+                bathroom.addActivity(new FaucetActivity('faucet', {
+                    position: {
+                        x: 220,
+                        y: 210
+                    },
+                    gesture: 'action',
+                    time: 700
+                }));
 
                 var bedroom = this.createRoom('cuarto_sm', this.roomWidth, 0, Bedroom);
 
                 var kitchen = this.createRoom('cocina_sm', 0, this.roomHeight, Kitchen);
-                kitchen.addActivity(new FaucetActivity('faucet'));
+                kitchen.addActivity(new FaucetActivity('faucet', {
+                    position: {
+                        x: 145,
+                        y: this.roomHeight + 245
+                    },
+                    gesture: 'action',
+                    time: 700
+                }));
 
                 var livingroom = this.createRoom('living_sm', this.roomWidth, this.roomHeight, Livingroom);
 
@@ -190,19 +204,18 @@ define(
 
                 this.denizens.push(padre);
 
-                /*
-                 var mother = this.createHuman(this.speedHuman);
-                 mother.setPosition(this.getRoomCenter(bathroom));
-                 mother.think();
 
-                 this.denizens.push(mother);
+                var mother = this.createHuman(this.speedHuman);
+                mother.setPosition(this.getRoomCenter(bathroom));
+                mother.think();
 
-                 var kid = this.createHuman(this.speedHuman);
-                 kid.setPosition(this.getRoomCenter(bedroom));
-                 kid.think();
+                this.denizens.push(mother);
 
-                 this.denizens.push(kid);
-                 */
+                var kid = this.createHuman(this.speedHuman);
+                kid.setPosition(this.getRoomCenter(bedroom));
+                kid.think();
+
+                this.denizens.push(kid);
             },
 
             findPath: function (room1, room2) {
@@ -478,7 +491,7 @@ define(
 
                     icon.on('click', function () {
                         self.closeDialog(denizen);
-                        d.resolve(this.name);
+                        d.resolve(activity);
                     });
 
                     dialog.addChild(icon);
@@ -506,7 +519,6 @@ define(
                 var denizenBounds = denizen.body.getBounds();
                 var dialogBounds = dialog.getBounds();
 
-
                 dialog.x = pos.x - this.dialogPadding - (Math.round(dialogBounds.width * 0.5));
                 dialog.y = pos.y - denizenBounds.height - dialogBounds.height - (2 * this.dialogPadding);
 
@@ -532,11 +544,11 @@ define(
 
                 var fatherSpriteSheet = new createjs.SpriteSheet({
                     "images": [Resource.loader.getResult("father")],
-                    "frames": {width: 80, height: 155, regX: 40, regY: 155, count: 7},
+                    "frames": {width: 108, height: 152, regX: 54, regY: 152, count: 19},
                     "animations": {
-                        "walk": [0, 6, true, 0.5],
-                        "idle": [3],
-                        "action": [4, 6, "idle"]
+                        "walk": [7, 13, true, 0.5],
+                        "idle": [10],
+                        "action": [14, 17]
                     }
                 });
 
@@ -625,9 +637,8 @@ define(
 
                             var d = self.openDialog(denizen);
 
-                            d.done(function (activityName) {
-                                console.log('DIALOG CLOSE');
-                                denizen.excecute(denizen.conscience.getActivityIdea(room, activityName)).then(
+                            d.done(function (activity) {
+                                denizen.excecute(denizen.conscience.getActivityIdea(activity)).then(
                                     function () {
                                         denizen.think();
                                     }

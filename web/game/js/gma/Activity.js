@@ -1,11 +1,12 @@
 define(['myclass', 'signals'], function (my, signals) {
     return my.Class({
-        constructor: function (name) {
+        constructor: function (name, config) {
             this.name = name;
             this.room = undefined;
             this.inProgress = false;
             this.resolved = true;
             this.icon = '';
+            this.config = config || {};
 
             this.on = {
                 perform: new signals.Signal()

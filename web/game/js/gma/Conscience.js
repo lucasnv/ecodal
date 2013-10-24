@@ -104,7 +104,9 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
             if (room) {
                 var activities = this.god.getAvailableActivities(this.denizen);
-                if (!_.isEmpty(activities)) {
+                var evil = [true, false, false];
+                var doEvil = _.sample(evil, 1)[0] == true;
+                if (!_.isEmpty(activities) && doEvil) {
                     var sample = _.sample(activities, 1);
 
                     var activity = sample[0];
@@ -114,12 +116,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                     this.getWalkIdea(room, targetRoom, idea);
                     this.getLightIdea(targetRoom, idea);
 
-                    idea.addItem(new Action('interact', [
-                        targetRoom,
-                        new Action('performActivity', [activity.name])
-                    ]));
-
-                    this.getRandomWaitIdea(idea);
+                    this.getActivityIdea(activity, idea);
                 } else {
                     this.getRandomWaitIdea(idea);
 
@@ -128,6 +125,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                     if (emptyRoom) {
                         this.getWalkIdea(room, emptyRoom, idea);
                         this.getLightIdea(emptyRoom, idea);
+                        this.getRandomWaitIdea(idea);
                     }
                 }
             } else {
@@ -186,15 +184,29 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             return idea.addItem(new Action('wait', [minWait + Math.round(Math.random() * waitDiff)]));
         },
 
-        getActivityIdea: function (room, activityName, idea) {
+        getActivityIdea: function (activity, idea) {
             idea = idea || new Idea();
 
+            if (activity.config.position) {
+                idea.addItem(new Action('move', [activity.config.position.x, activity.config.position.y]));
+            }
+
+            if (activity.config.gesture) {
+                idea.addItem(new Action('gesture', [activity.config.gesture]));
+            }
+
             idea.addItem(new Action('interact', [
-                room,
-                new Action('performActivity', [activityName])
+                activity.room,
+                new Action('performActivity', [activity.name])
             ]));
 
-            this.getRandomWaitIdea(idea);
+            var time = activity.config.time || 1000;
+
+            idea.addItem(new Action('wait', [time]));
+
+            var roomPos = this.god.getRoomCenter(activity.room);
+
+            idea.addItem(new Action('move', [roomPos.x, roomPos.y]));
 
             return idea;
         }
