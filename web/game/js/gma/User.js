@@ -11,18 +11,21 @@ define(
 
             constructor: function (gender) {
                 /* Attr*/
-                this.container = '#user_container';
+                this.container = '#user-container';
                 this.insignaContainer = '#insigna-container';
                 this.gender = gender;
                 this.insignias = { 'water':new InsigniaWater(), 'energy': new InsigniaEnergy(), 'recycling': new InsigniaRecycling() };
-                //this.create();
+
+                this.insignias.water.setCant(150);
+                this.insignias.energy.setCant(150);
+                this.insignias.recycling.setCant(200);
             },
 
             create: function (){
-                //$(this.container).html('<h3>Usuario</h3><p id="img-user">Tipo: ' + this.gender + '</p>'+ this.getInsignaContainer());
-            },
+                this.updateInsignia();
+           },
 
-            addInsigna: function(type, cant){
+            addInsignia: function(type, cant){
                 switch(type){
                     case 'water': this.insignias.water.add(cant);
                         break;
@@ -31,25 +34,18 @@ define(
                     case 'recycling': this.insignias.recycling.add(cant);
                         break;
                 }
-                this.updateInsigna();
             },
 
             //Actualizar la cantidad de insigias cuando se agregan o se quitan
-            updateInsigna:function(){
-                $(this.insignaContainer).html(this.getInsignaContainer());
-            },
-
-            getInsignaContainer: function(){
-
-                return '<div id="insigna-container">'+
-                       '<p id="insigna-water">Agua: ' + this.insignias.water.getCant() + '</p>' +
-                       '<p id="insigna-energy">Energia: ' + this.insignias.energy.getCant() + '</p>' +
-                       '<p id="insigna-recycling">Reciclado: ' + this.insignias.recycling.getCant() + '</p>' +
-                       '</div>';
+            updateInsignia:function(){
+                var me = this;
+                $('.cant-insignia-water').html(me.insignias.water.getCant());
+                $('.cant-insignia-energy').html(me.insignias.energy.getCant());
+                $('.cant-insignia-recycling').html(me.insignias.recycling.getCant());
             },
 
             //Debe mostrar la imagen de la alerta
-            removeInsigna: function(type, cant){
+            removeInsignia: function(type, cant){
                 switch(type){
                     case 'water': this.insignias.water.remove(cant);
                         break;
@@ -58,7 +54,6 @@ define(
                     case 'recycling': this.insignias.recycling.remove(cant);
                         break;
                 }
-                this.updateInsigna();
             },
 
             showAlert: function(type){

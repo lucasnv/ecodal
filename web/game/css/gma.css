@@ -4,8 +4,8 @@ canvas {
 }
 .circle{margin:0 auto; margin-top:9px; margin-bottom:9px;color:#fff !important;display:block;width:66px;height:66px;border-radius:33px;border:5px solid #fff;font-size:26px;line-height:59px;text-align:center;text-decoration:none;cursor:pointer;}
 .circle a{color:#fff !important;}
-.circle-home{border-radius:30px;float:left;height:60px;line-height:43px;width:60px;margin-right: 6px;}
-.circle-user{border-radius:75px;height:150px;line-height:145px;width:150px;}
+.circle-home{border-radius:30px;float:left;height:90px;line-height:53px;width:60px;margin-right: 6px;margin-top:2px; margin-bottom: 15px; margin-right: 20px;}
+.circle-user{/*border-radius:75px;*/height:90px;/*line-height:145px;width:150px;*/}
 .circle:hover{text-decoration:none;}
 .bg-green{background-color:#5cb85c;}
 .bg-green:hover{background-color:#4cae4c;}
@@ -13,13 +13,24 @@ canvas {
 .bg-blue:hover{background-color:#357ebd;}
 .bg-red{background-color:#d9534f;}
 .bg-red:hover{background-color:#ac2925;}
-.progress{width:100px !important; height: 19px; margin:0 auto; margin-top:1px; margin-bottom:5px; border:1px solid #eee;} 
-.progress-label{font-weight: bold; font-size: 12px; margin:1px; margin-left:5px;color:#000;}
-/*HOME*/
-#home-container{clear:fixed; margin-top: 50px;}
-.home-progress{width:165px !important;height:30px;}
+.progress{width:85px !important; height: 10px; margin:0 auto; margin-top:1px; margin-bottom:1px; border:1px solid #eee;} 
+.progress-label{ font-size: 12px; margin:1px; margin-left:5px;color:#000;}
 
+/* Home */
+#home-container{clear:fixed; margin-top: 5px;}
+#home-container p{ margin:0; padding-right: 2px;}
+.home-progress{width:165px !important;height:30px;}
+.label-home-vitality{font-size: 12px;}
+/* User */
+#user-container{float:left; margin-left:15px; margin-right:0px}
+#user-info-container{clear:fixed;margin-top:20px; margin-bottom: 5px; height:100px;}
+
+/* Insignias */
+#insignia-container{margin:0 auto; padding-top: 10px !important;}
+.insignia-row{margin-bottom: 2px; cursor:pointer;}
+.label-insignia{ font-weight:bold; font-size:14px;} 
 .control-panel{background-color: rgba(255, 197, 42, 0.8); border-radius:8px;border:2px solid #fff; height: 560px !important;}
+
 #gma_container {
     position: relative;   
 }

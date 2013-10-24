@@ -8,18 +8,20 @@ define(
     function (my, Insignia) {
         "use strict";
 
-        return my.Class(Insignia, {
+        var insignia =  my.Class(Insignia, {
 
             constructor: function () {
+                insignia.Super.call(this);
             	this.img = 'insignia-water.png';
-            	this.cant = 0;
             },
 
             toString: function(){
                 return 'insigniaWater';
             }
 
-        });
+        });    
+
+        return insignia;    
     }
 )
 ;

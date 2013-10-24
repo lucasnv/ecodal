@@ -10,18 +10,23 @@ define(
         return my.Class({
 
             constructor: function () {
-                this.products = [];
+                this.products = []; colocar producto
             },
 
             buy: function(user, product){
                 if( user.canPay(product.getCost()) ){
-                    //Descontar insignias al usuario
-                    //actualizar insignias
+                    
+                    _.each(product.getCost(),function(value, key){
+                        user.removeInsignia(key, value);
+                    });
+
+                    user.updateInsignia();
                     return product;
                 } else {
                     return false;
                 }
             },
+
 
             addProduct: function(product){
                 if(_.isArray(product)){
@@ -34,7 +39,7 @@ define(
             },
 
             render: function(container){
-
+                //Mostrar el market
             }
 
 
