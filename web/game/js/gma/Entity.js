@@ -9,6 +9,9 @@ define(['myclass'],
                 /* Attr*/
                 this.parent = null;
                 this.body = new createjs.Container();
+                this.gestures = new createjs.Container();
+                this.body.addChild(this.gestures);
+
                 this.body.entity = this;
                 this.children = [];
                 this.stage = stage;
@@ -80,8 +83,8 @@ define(['myclass'],
 
                 sprite.setTransform(0, 0, this.direction < 0 ? -1 : 1);
 
-                this.body.removeAllChildren();
-                this.body.addChild(sprite);
+                this.gestures.removeAllChildren();
+                this.gestures.addChild(sprite);
 
                 sprite.gotoAndStop(gestureDef.animation);
                 sprite.play();

@@ -1,4 +1,4 @@
-define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power) {
+define(['myclass', 'gma/Entity', 'gma/home/Power', 'gma/Resource'], function (my, Entity, Power, Resource) {
     var Room = my.Class(Entity, {
         constructor: function (stage, look) {
             Room.Super.call(this, stage, look);
@@ -8,6 +8,25 @@ define(['myclass', 'gma/Entity', 'gma/home/Power'], function (my, Entity, Power)
             this.power = new Power();
 
             this.connections = [];
+
+            this.light = new createjs.Container();
+            var lightSpriteSheet = new createjs.SpriteSheet({
+                "images": [Resource.loader.getResult('light')],
+                "frames": {width: 50, height: 30, regX: 0, regY: 0, count: 2},
+                "animations": {
+                    "on": 0,
+                    "off": 1
+                }
+            });
+            var lightSprite = new createjs.Sprite(lightSpriteSheet, 'off');
+            this.light.addChild(lightSprite);
+
+            var roomBounds = this.body.getBounds();
+            var lightBounds = this.light.getBounds();
+
+            this.light.x = Math.round(roomBounds.width * 0.5 - lightBounds.width * 0.5);
+
+            this.body.addChild(this.light);
         },
 
         toString: function () {

@@ -17,6 +17,10 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
         perform: function () {
             var d = $.Deferred();
 
+            if (this.room.light) {
+                this.room.light.getChildAt(0).gotoAndStop(this.resolved ? 'on' : 'off')
+            }
+
             this.room.gesture(this.resolved ? 'idle' : 'off');
 
             this.resolved = !this.resolved;

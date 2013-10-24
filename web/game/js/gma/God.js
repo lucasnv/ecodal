@@ -7,15 +7,20 @@ define(
         'gma/entity/Denizen',
         'gma/entity/denizen/Human',
         'gma/home/Room',
+        'gma/home/room/Bathroom',
+        'gma/home/room/Bedroom',
+        'gma/home/room/Kitchen',
+        'gma/home/room/Livingroom',
         'gma/Idea',
         'gma/Action',
         'gma/Look',
         'gma/Resource',
         'gma/User',
         'pathfinding',
-        'gma/activity/Light'
+        'gma/activity/Light',
+        'gma/activity/Faucet'
     ],
-    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Idea, Action, Look, Resource, User, PF, LightActivity) {
+    function (my, World, Home, Scene, Conscience, Denizen, Human, Room, Bathroom, Bedroom, Kitchen, Livingroom, Idea, Action, Look, Resource, User, PF, LightActivity, FaucetActivity) {
         "use strict";
 
         return my.Class({
@@ -105,10 +110,15 @@ define(
                 //this.user.create(); 
                 var home = new Home(/*homeStage*/);
 
-                var bathroom = this.createRoom('banio_sm', 0, 0, home);
-                var bedroom = this.createRoom('cuarto_sm', this.roomWidth, 0, home);
-                var kitchen = this.createRoom('cocina_sm', 0, this.roomHeight, home);
-                var livingroom = this.createRoom('living_sm', this.roomWidth, this.roomHeight, home);
+                var bathroom = this.createRoom('banio_sm', 0, 0, Bathroom);
+                bathroom.addActivity(new FaucetActivity('faucet'));
+
+                var bedroom = this.createRoom('cuarto_sm', this.roomWidth, 0, Bedroom);
+
+                var kitchen = this.createRoom('cocina_sm', 0, this.roomHeight, Kitchen);
+                kitchen.addActivity(new FaucetActivity('faucet'));
+
+                var livingroom = this.createRoom('living_sm', this.roomWidth, this.roomHeight, Livingroom);
 
 
                 this.rooms.push(bathroom);
@@ -178,17 +188,21 @@ define(
                 padre.setPosition(this.getRoomCenter(livingroom));
                 padre.think();
 
-                var mother = this.createHuman(this.speedHuman);
-                mother.setPosition(this.getRoomCenter(bathroom));
-                mother.think();
+                this.denizens.push(padre);
 
-                this.denizens.push(mother);
+                /*
+                 var mother = this.createHuman(this.speedHuman);
+                 mother.setPosition(this.getRoomCenter(bathroom));
+                 mother.think();
 
-                var kid = this.createHuman(this.speedHuman);
-                kid.setPosition(this.getRoomCenter(bedroom));
-                kid.think();
+                 this.denizens.push(mother);
 
-                this.denizens.push(kid);
+                 var kid = this.createHuman(this.speedHuman);
+                 kid.setPosition(this.getRoomCenter(bedroom));
+                 kid.think();
+
+                 this.denizens.push(kid);
+                 */
             },
 
             findPath: function (room1, room2) {
@@ -282,10 +296,12 @@ define(
                 return [roomCol, roomRow];
             },
 
-            getAvailableActivities: function () {
+            getAvailableActivities: function (denizen) {
                 var activities = [];
 
-                _.each(this.rooms, function (room) {
+                var freeRooms = this.getRoomsWithoutDenizen(denizen);
+
+                _.each(freeRooms, function (room) {
                     activities = activities.concat(room.getAvailableActivities());
                 });
 
@@ -297,9 +313,7 @@ define(
                 var emptyRoom = null;
 
                 // Buscar rooms vacios
-                var emptyRooms = _.filter(this.rooms, function (room) {
-                    return !_.contains(room.denizens, denizen);
-                });
+                var emptyRooms = this.getRoomsWithoutDenizen(denizen);
 
                 // Buscar un room al azar entre los vacions
                 if (emptyRooms.length > 0) {
@@ -340,6 +354,12 @@ define(
                 return this.getRoomByCoordinates(pos.x, pos.y);
             },
 
+            getRoomsWithoutDenizen: function (denizen) {
+                return _.filter(this.rooms, function (room) {
+                    return !_.contains(room.denizens, denizen);
+                });
+            },
+
             getRoomCenter: function (room) {
                 var pos = room.getPosition();
 
@@ -363,7 +383,7 @@ define(
                 });
             },
 
-            createRoom: function (resourceName, x, y, home) {
+            createRoom: function (resourceName, x, y, Class) {
                 var self = this;
 
                 var spriteSheet = new createjs.SpriteSheet({
@@ -402,32 +422,32 @@ define(
                     ]
                 }, 'off');
 
-                var room = new Room(this.stage, look);
+                var room = new Class(this.stage, look);
                 room.setPosition({x: x, y: y});
                 room.gesture('off');
 
                 room.addActivity(new LightActivity('light'));
 
-                room.body.addEventListener('click', function (event) {
-                    _.each(self.denizens, function (denizen) {
-                        var currentRoom = self.getRoomByCoordinates(denizen.getPosition().x, denizen.getPosition().y);
+                /*
+                 room.body.addEventListener('click', function (event) {
+                 _.each(self.denizens, function (denizen) {
+                 var currentRoom = self.getRoomByCoordinates(denizen.getPosition().x, denizen.getPosition().y);
 
-                        var coordinates = self.findPath(currentRoom, room);
+                 var coordinates = self.findPath(currentRoom, room);
 
-                        var actions = [];
+                 var actions = [];
 
-                        _.each(coordinates, function (coord) {
-                            actions.push(new Action('move', [coord.x, coord.y]));
-                        });
+                 _.each(coordinates, function (coord) {
+                 actions.push(new Action('move', [coord.x, coord.y]));
+                 });
 
-                        var idea = new Idea(actions);
+                 var idea = new Idea(actions);
 
-                        denizen.halt();
-                        denizen.interpret(idea);
-                    });
-                }, true);
-
-                home.addRooms(room);
+                 denizen.halt();
+                 denizen.interpret(idea);
+                 });
+                 }, true);
+                 */
 
                 return room;
             },
@@ -440,6 +460,12 @@ define(
                 this.closeDialog(denizen);
 
                 var room = this.getRoomByDenizen(denizen);
+
+                if (!room) {
+                    d.reject();
+                    return d;
+                }
+
                 var activities = room.getActivities();
 
                 var dialog = new createjs.Container();
@@ -452,7 +478,7 @@ define(
 
                     icon.on('click', function () {
                         self.closeDialog(denizen);
-                        d.resolve(activity);
+                        d.resolve(this.name);
                     });
 
                     dialog.addChild(icon);
@@ -481,19 +507,14 @@ define(
                 var dialogBounds = dialog.getBounds();
 
 
-                dialog.x = pos.x - (2 * this.dialogPadding) - (Math.round(dialogBounds.width * 0.5));
+                dialog.x = pos.x - this.dialogPadding - (Math.round(dialogBounds.width * 0.5));
                 dialog.y = pos.y - denizenBounds.height - dialogBounds.height - (2 * this.dialogPadding);
-
-                console.log('width', dialogBounds);
-
 
                 return d;
             },
 
             closeDialog: function (denizen) {
                 var dialog = _.findWhere(this.dialogs, {denizen: denizen});
-
-                console.log('dialog', dialog);
 
                 if (dialog) {
                     this.stage.removeChild(dialog.dialog);
@@ -604,9 +625,13 @@ define(
 
                             var d = self.openDialog(denizen);
 
-                            d.done(function (activity) {
-                                activity.perform();
-                                denizen.think();
+                            d.done(function (activityName) {
+                                console.log('DIALOG CLOSE');
+                                denizen.excecute(denizen.conscience.getActivityIdea(room, activityName)).then(
+                                    function () {
+                                        denizen.think();
+                                    }
+                                );
                             });
 
                             d.fail(function () {

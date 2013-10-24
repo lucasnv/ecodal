@@ -30,7 +30,12 @@ var manifest = [
     {src: "/game/assets/room/living_sm.jpg", id: "living_sm"},
     {src: "/game/assets/room/living_sm_off.jpg", id: "living_sm_off"},
 
-    {src: "/game/assets/activity/icon_light.png", id: "icon_light"}
+    {src: "/game/assets/activity/icon_light.png", id: "icon_light"},
+    {src: "/game/assets/activity/light.png", id: "light"},
+    {src: "/game/assets/activity/light_super.png", id: "light_super"},
+
+    {src: "/game/assets/activity/icon_faucet.png", id: "icon_faucet"},
+    {src: "/game/assets/activity/faucet.png", id: "faucet"}
 ];
 
 var Resources = {
