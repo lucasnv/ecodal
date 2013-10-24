@@ -1,8 +1,8 @@
 <div class="row">
     <div class="control-panel col-md-2 text-center">
-        <div id="user_container" class="circle circle-user">
-            <img id="home_container_status" src="{{ asset('game/assets/avatar-nene.png')}}" width="70" data-toggle="popover" data-content='{% include 'GmaGameBundle:Layout:home-vitality.html.twig' %}' >
-        </div>
+        <!-- Casa -->
+        {% include 'GmaGameBundle:Layout:user.html.twig' %}
+
         <!-- Tienda Virutal -->
         <div id="online_container" class="circle bg-red" data-toggle="popover" data-content="<b>Canjear en la tienda</b> insignias por artículos que mejoren mi casa.">
             <span class="glyphicon glyphicon-shopping-cart"></span>

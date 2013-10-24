@@ -11,7 +11,7 @@ define(
 
             constructor: function (gender) {
                 /* Attr*/
-                this.container = '#user_container';
+                this.container = '#user-container';
                 this.insignaContainer = '#insigna-container';
                 this.gender = gender;
                 this.insignias = { 'water':new InsigniaWater(), 'energy': new InsigniaEnergy(), 'recycling': new InsigniaRecycling() };
