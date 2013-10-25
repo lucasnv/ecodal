@@ -111,12 +111,26 @@ define(
                 var home = new Home(/*homeStage*/);
 
                 var bathroom = this.createRoom('banio_sm', 0, 0, Bathroom);
-                bathroom.addActivity(new FaucetActivity('faucet'));
+                bathroom.addActivity(new FaucetActivity('faucet', {
+                    position: {
+                        x: 220,
+                        y: 210
+                    },
+                    gesture: 'action',
+                    time: 700
+                }));
 
                 var bedroom = this.createRoom('cuarto_sm', this.roomWidth, 0, Bedroom);
 
                 var kitchen = this.createRoom('cocina_sm', 0, this.roomHeight, Kitchen);
-                kitchen.addActivity(new FaucetActivity('faucet'));
+                kitchen.addActivity(new FaucetActivity('faucet', {
+                    position: {
+                        x: 145,
+                        y: this.roomHeight + 245
+                    },
+                    gesture: 'action',
+                    time: 700
+                }));
 
                 var livingroom = this.createRoom('living_sm', this.roomWidth, this.roomHeight, Livingroom);
 
@@ -184,25 +198,175 @@ define(
 
                 home.init();
 
-                var padre = this.createHuman(this.speedHuman);
+                var fatherSpriteSheet = new createjs.SpriteSheet({
+                    "images": [Resource.loader.getResult("father")],
+                    "frames": {width: 108, height: 152, regX: 54, regY: 152, count: 19},
+                    "animations": {
+                        "walk": [7, 13, true, 0.5],
+                        "idle": [10],
+                        "action": [14, 17, "action"]
+                    }
+                });
+                var fatherSprite = new createjs.Sprite(fatherSpriteSheet, "idle");
+                var fatherLook = new Look({
+                    father: fatherSprite
+                }, {
+                    idle: [
+                        {
+                            direction: 90,
+                            sprite: 'father',
+                            animation: 'idle'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'father',
+                            animation: 'idle'
+                        }
+                    ],
+                    walk: [
+                        {
+                            direction: 90,
+                            sprite: 'father',
+                            animation: 'walk'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'father',
+                            animation: 'walk'
+                        }
+                    ],
+                    action: [
+                        {
+                            direction: 90,
+                            sprite: 'father',
+                            animation: 'action'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'father',
+                            animation: 'action'
+                        }
+                    ]
+                }, 'idle');
+
+                var kidSpriteSheet = new createjs.SpriteSheet({
+                    "images": [Resource.loader.getResult("kid")],
+                    "frames": {width: 72, height: 100, regX: 36, regY: 100, count: 22},
+                    "animations": {
+                        "walk": [10, 19, true, 0.5],
+                        "idle": [14],
+                        "action": [20, 21, true, 0.8]
+                    }
+                });
+                var kidSprite = new createjs.Sprite(kidSpriteSheet, "idle");
+                var kidLook = new Look({
+                    kid: kidSprite
+                }, {
+                    idle: [
+                        {
+                            direction: 90,
+                            sprite: 'kid',
+                            animation: 'idle'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'kid',
+                            animation: 'idle'
+                        }
+                    ],
+                    walk: [
+                        {
+                            direction: 90,
+                            sprite: 'kid',
+                            animation: 'walk'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'kid',
+                            animation: 'walk'
+                        }
+                    ],
+                    action: [
+                        {
+                            direction: 90,
+                            sprite: 'kid',
+                            animation: 'action'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'kid',
+                            animation: 'action'
+                        }
+                    ]
+                }, 'idle');
+
+                var motherSpriteSheet = new createjs.SpriteSheet({
+                    "images": [Resource.loader.getResult("mother")],
+                    "frames": {width: 107, height: 150, regX: 54, regY: 150, count: 21},
+                    "animations": {
+                        "walk": [7, 13, true, 0.5],
+                        "idle": [10],
+                        "action": [17, 19, true, 0.8]
+                    }
+                });
+                var motherSprite = new createjs.Sprite(motherSpriteSheet, "idle");
+                var motherLook = new Look({
+                    mother: motherSprite
+                }, {
+                    idle: [
+                        {
+                            direction: 90,
+                            sprite: 'mother',
+                            animation: 'idle'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'mother',
+                            animation: 'idle'
+                        }
+                    ],
+                    walk: [
+                        {
+                            direction: 90,
+                            sprite: 'mother',
+                            animation: 'walk'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'mother',
+                            animation: 'walk'
+                        }
+                    ],
+                    action: [
+                        {
+                            direction: 90,
+                            sprite: 'mother',
+                            animation: 'action'
+                        },
+                        {
+                            direction: -90,
+                            sprite: 'mother',
+                            animation: 'action'
+                        }
+                    ]
+                }, 'idle');
+
+                var padre = this.createHuman(this.speedHuman, fatherLook);
                 padre.setPosition(this.getRoomCenter(livingroom));
                 padre.think();
-
                 this.denizens.push(padre);
 
-                /*
-                 var mother = this.createHuman(this.speedHuman);
-                 mother.setPosition(this.getRoomCenter(bathroom));
-                 mother.think();
 
-                 this.denizens.push(mother);
+                var mother = this.createHuman(this.speedHuman, motherLook);
+                mother.setPosition(this.getRoomCenter(bathroom));
+                mother.think();
+                this.denizens.push(mother);
 
-                 var kid = this.createHuman(this.speedHuman);
-                 kid.setPosition(this.getRoomCenter(bedroom));
-                 kid.think();
 
-                 this.denizens.push(kid);
-                 */
+                var kid = this.createHuman(this.speedHuman, kidLook);
+                kid.setPosition(this.getRoomCenter(bedroom));
+                kid.think();
+                this.denizens.push(kid);
             },
 
             findPath: function (room1, room2) {
@@ -478,7 +642,7 @@ define(
 
                     icon.on('click', function () {
                         self.closeDialog(denizen);
-                        d.resolve(this.name);
+                        d.resolve(activity);
                     });
 
                     dialog.addChild(icon);
@@ -506,7 +670,6 @@ define(
                 var denizenBounds = denizen.body.getBounds();
                 var dialogBounds = dialog.getBounds();
 
-
                 dialog.x = pos.x - this.dialogPadding - (Math.round(dialogBounds.width * 0.5));
                 dialog.y = pos.y - denizenBounds.height - dialogBounds.height - (2 * this.dialogPadding);
 
@@ -527,63 +690,8 @@ define(
                 }
             },
 
-            createHuman: function (speed) {
+            createHuman: function (speed, look) {
                 var self = this;
-
-                var fatherSpriteSheet = new createjs.SpriteSheet({
-                    "images": [Resource.loader.getResult("father")],
-                    "frames": {width: 80, height: 155, regX: 40, regY: 155, count: 7},
-                    "animations": {
-                        "walk": [0, 6, true, 0.5],
-                        "idle": [3],
-                        "action": [4, 6, "idle"]
-                    }
-                });
-
-                //createjs.SpriteSheetUtils.addFlippedFrames(fatherSpriteSheet, true, false, false);
-
-                var father = new createjs.Sprite(fatherSpriteSheet, "idle");
-
-                var look = new Look({
-                    father: father
-                }, {
-                    idle: [
-                        {
-                            direction: 90,
-                            sprite: 'father',
-                            animation: 'idle'
-                        },
-                        {
-                            direction: -90,
-                            sprite: 'father',
-                            animation: 'idle'
-                        }
-                    ],
-                    walk: [
-                        {
-                            direction: 90,
-                            sprite: 'father',
-                            animation: 'walk'
-                        },
-                        {
-                            direction: -90,
-                            sprite: 'father',
-                            animation: 'walk'
-                        }
-                    ],
-                    action: [
-                        {
-                            direction: 90,
-                            sprite: 'father',
-                            animation: 'action'
-                        },
-                        {
-                            direction: -90,
-                            sprite: 'father',
-                            animation: 'action'
-                        }
-                    ]
-                }, 'idle');
 
                 var conscience = new Conscience(this);
                 var human = new Human(conscience, this.stage, look, speed);
@@ -625,9 +733,8 @@ define(
 
                             var d = self.openDialog(denizen);
 
-                            d.done(function (activityName) {
-                                console.log('DIALOG CLOSE');
-                                denizen.excecute(denizen.conscience.getActivityIdea(room, activityName)).then(
+                            d.done(function (activity) {
+                                denizen.excecute(denizen.conscience.getActivityIdea(activity)).then(
                                     function () {
                                         denizen.think();
                                     }

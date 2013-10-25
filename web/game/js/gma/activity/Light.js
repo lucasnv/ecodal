@@ -1,7 +1,7 @@
 define(['myclass', 'gma/Activity'], function (my, Activity) {
     var Light = my.Class(Activity, {
-        constructor: function (name) {
-            Light.Super.call(this, name);
+        constructor: function (name, config) {
+            Light.Super.call(this, name, config);
 
             this.icon = 'icon_light';
         },
@@ -28,6 +28,7 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
             d.resolve();
 
             this.on['perform'].dispatch(this);
+            this.removeOwner();
 
             return d;
         }

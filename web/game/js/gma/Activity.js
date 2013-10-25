@@ -1,11 +1,13 @@
 define(['myclass', 'signals'], function (my, signals) {
     return my.Class({
-        constructor: function (name) {
+        constructor: function (name, config) {
             this.name = name;
             this.room = undefined;
             this.inProgress = false;
             this.resolved = true;
             this.icon = '';
+            this.config = config || {};
+            this.owner = undefined;
 
             this.on = {
                 perform: new signals.Signal()
@@ -17,7 +19,7 @@ define(['myclass', 'signals'], function (my, signals) {
         },
 
         isAvailable: function () {
-            return !this.isInProgress() && this.isResolved();
+            return !this.isInProgress() && !this.hasOwner() && this.isResolved();
         },
 
         isInProgress: function () {
@@ -26,6 +28,14 @@ define(['myclass', 'signals'], function (my, signals) {
 
         isResolved: function () {
             return this.resolved;
+        },
+
+        isOwner: function (denizen) {
+            return this.owner == denizen;
+        },
+
+        hasOwner: function () {
+            return !!this.owner;
         },
 
         addOwner: function (denizen) {
@@ -38,11 +48,9 @@ define(['myclass', 'signals'], function (my, signals) {
 
         perform: function () {
             var d = $.Deferred();
-
             d.resolve();
-
             this.on['perform'].dispatch(this);
-
+            this.removeOwner();
             return d;
         }
 
