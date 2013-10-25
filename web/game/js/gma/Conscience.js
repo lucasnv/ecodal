@@ -110,6 +110,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
                     var sample = _.sample(activities, 1);
 
                     var activity = sample[0];
+                    activity.addOwner(this.denizen);
 
                     var targetRoom = activity.room;
 
@@ -173,7 +174,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
         getRandomWaitIdea: function (idea, minWait, maxWait) {
             idea = idea || new Idea();
-            minWait = minWait || 1000;
+            minWait = minWait || 0;
             maxWait = maxWait || 5000;
 
             var waitDiff = maxWait - minWait;
@@ -186,6 +187,11 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
         getActivityIdea: function (activity, idea) {
             idea = idea || new Idea();
+
+            if (activity.config.idea) {
+                idea.addItem(new Action('execute', [activity.config.idea]));
+                return idea;
+            }
 
             if (activity.config.position) {
                 idea.addItem(new Action('move', [activity.config.position.x, activity.config.position.y]));

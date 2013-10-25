@@ -21,6 +21,7 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
             d.resolve();
 
             this.on['perform'].dispatch(this);
+            this.removeOwner();
 
             return d;
         }

@@ -16,6 +16,8 @@ var manifest = [
     {src: "/game/assets/light.png", id: "light"},
     // Denizen
     {src: "/game/assets/denizen/padre.png", id: "father"},
+    {src: "/game/assets/denizen/hijo.png", id: "kid"},
+    {src: "/game/assets/denizen/madre.png", id: "mother"},
 
     // Room
     {src: "/game/assets/room/bano_sm.jpg", id: "banio_sm"},
@@ -76,3 +78,26 @@ preload().done(
         });
     }
 );
+
+var updateLayout = function () {
+    var $house = $('#house');
+    var $background = $('#background');
+
+    var _w = $(document).width();
+    var _h = $(document).height();
+
+    $house.css('left', _w * 0.5 - 940 * 0.5);
+    $house.css('top', _h * 0.5 - 575 * 0.5);
+
+    $background.css('left', _w * 0.5 - 1920 * 0.5);
+    $background.css('top', _h * 0.5 - 1513 * 0.5);
+
+};
+
+$(document).ready(function () {
+    $(window).resize(function () {
+        updateLayout();
+    });
+
+    updateLayout();
+});
