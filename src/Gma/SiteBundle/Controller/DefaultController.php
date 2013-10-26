@@ -16,6 +16,11 @@ class DefaultController extends Controller
         return $this->render('GmaSiteBundle:Default:academic.html.twig',array('pageAcademic'=>true));
     }
 
+    public function credentialAction()
+    {
+        return $this->render('GmaSiteBundle:Default:credential.html.twig',array('pageCredential'=>true));
+    }
+
     public function contactAction()
     {
         return $this->render('GmaSiteBundle:Default:contact.html.twig',array('pageContact'=>true));

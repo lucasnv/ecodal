@@ -3,17 +3,55 @@
 {% block content %} 
 <div class="container">
 	<!-- Main component for a primary marketing message or call to action -->
-	<div class="jumbotron">
-		<h1 class="text-center"><span class="red">EC</span><span class="green">OD</span><span class="yellow">AL</span>
-			<span class="subtitle blue"> Cuida, juega y aprende</span></h1>
-			<p>This example is a quick exercise to illustrate how the default, 
-			static and fixed to top navbar work. It includes the responsive CSS and HTML,
-			 so it also adapts to your viewport and device.</p>		
-		<center>
-			<a class="circle btn btn-lg btn-success img-circle" href="{{ url('gma_game_home') }}" target="_blank">
-				JUGAR				
-			</a>
-		</center>	
+	<div id="index-jumbotron" class="jumbotron">
+		<span class="glyphicon glyphicon-volume-off btn-sound small-circle white"></span>
+		<span class="glyphicon glyphicon-volume-up btn-sound small-circle white"></span>
+		<a href="{{ url('gma_game_home') }}" target="_blank"><img id="btn-play" src="{{ asset('img/btn-play.png')}}"></a>	
 	</div>
 </div> <!-- /container --> 
+<script type="text/javascript">
+/*
+createjs.Sound.registerSound("/audio/bienvenida.mp3", "au-bienvenida");
+var instance = createjs.Sound.createInstance("au-bienvenida");
+
+instance.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
+
+function loadHandler(){
+	console.log('llego');
+	instance.play();
+}
+
+*/
+
+
+
+
+//createjs.Sound.play("/audio/bienvenida.mp3");
+ //createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
+ //
+
+//var instance = createjs.Sound.createInstance("au-bienvenida");
+
+//instance.setVolume(0.6);
+   // instance.play();
+
+    /*
+ var instance = createInstance('au-bienvenida');
+instance.addEventListener("complete", play);
+
+function play(){
+	console.log('plassssssssss');
+}*/
+ //soundPlay(instance,0.5);
+
+ /*function loadHandler(event) {
+     // This is fired for each sound that is registered.
+     var instance = createjs.Sound.play("au-bienvenida");  // play using id.  Could also use full sourcepath or event.src.
+     instance.addEventListener("complete", createjs.proxy(this.handleComplete, this));
+     instance.volume = 0.5;
+ }*/
+
+
+
+</script>
 {% endblock %}
