@@ -3,17 +3,32 @@
 {% block content %} 
 <div class="container">
 	<!-- Main component for a primary marketing message or call to action -->
-	<div class="jumbotron">
-		<h1 class="text-center"><span class="red">EC</span><span class="green">OD</span><span class="yellow">AL</span>
+	<div id="index-jumbotron" class="jumbotron">
+		<!--h1 class="text-center"><span class="red">EC</span><span class="green">OD</span><span class="yellow">AL</span>
 			<span class="subtitle blue"> Cuida, juega y aprende</span></h1>
-			<p>This example is a quick exercise to illustrate how the default, 
-			static and fixed to top navbar work. It includes the responsive CSS and HTML,
-			 so it also adapts to your viewport and device.</p>		
+			<p style="text-center">Desde hace mucho tiempo los malos hábitos en los hogares han hecho que el planeta 
+				tierra sufra.<br>
+				Los ríos han comenzado a secarse, las aves han dejado de cantar, 
+				el aire se ha vuelto más pesado.<br>
+				 Únete a la comunidad EcoDal y sé parte del 
+				cambio mientras te diviertes jugando.</p>		
 		<center>
 			<a class="circle btn btn-lg btn-success img-circle" href="{{ url('gma_game_home') }}" target="_blank">
 				JUGAR				
 			</a>
-		</center>	
+		</center-->		
 	</div>
 </div> <!-- /container --> 
+<script type="text/javascripts">
+
+ createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
+ createjs.Sound.registerSound("/audio/bienvenida.mp3", "au-bienvenida");
+
+ function loadHandler(event) {
+     // This is fired for each sound that is registered.
+     var instance = createjs.Sound.play("au-bienvenida");  // play using id.  Could also use full sourcepath or event.src.
+    // instance.addEventListener("complete", createjs.proxy(this.handleComplete, this));
+     instance.volume = 0.5;
+ }
+</script>
 {% endblock %}

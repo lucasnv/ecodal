@@ -6,7 +6,8 @@ h1{font-family: Ranchers;font-size: 102px !important; margin-top: 5px;}
 .tbl-select-avatar{margin:auto;width:540px;}
 .tbl-select-avatar td{width:270px;text-align:center;}
 .img-avatar{width:230px;}
-.jumbotron{border:1px solid #aaa;}
+.jumbotron{border:1px solid #aaa; text-align: center;}
+#index-jumbotron{ background: url(/img/index.png) no-repeat center; height:550px;}
 .active{background-color:#4cae4c !important;}
 .navbar{border:1px solid #aaa;}
 .red{color:#d9534f;}
