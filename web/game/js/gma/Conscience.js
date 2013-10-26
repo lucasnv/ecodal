@@ -150,7 +150,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
             var coordinates = this.god.findPath(startRoom, endRoom);
 
             _.each(coordinates, function (coord) {
-                idea.addItem(new Action('move', [coord.x, coord.y]));
+                idea.addItem(new Action('move', [coord.x, coord.y, coord.z]));
             });
 
             return idea;
@@ -159,11 +159,13 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
         getLightIdea: function (room, idea) {
             idea = idea || new Idea();
 
+            var self = this;
+
             if (room.hasActivity('light')) {
                 idea.addItem(new Action('evaluate', [function () {
                     var lightActivity = room.getActivity('light');
                     if (lightActivity.isResolved()) {
-                        lightActivity.perform();
+                        lightActivity.perform(self.denizen);
                     }
                     return true;
                 }]));
@@ -203,7 +205,7 @@ define(['myclass', 'signals', 'gma/Idea', 'gma/Action'], function (my, Signal, I
 
             idea.addItem(new Action('interact', [
                 activity.room,
-                new Action('performActivity', [activity.name])
+                new Action('performActivity', [activity.name, this.denizen])
             ]));
 
             var time = activity.config.time || 1000;

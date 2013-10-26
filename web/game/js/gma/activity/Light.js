@@ -14,7 +14,7 @@ define(['myclass', 'gma/Activity', 'gma/Resource'], function (my, Activity, Reso
             return false;
         },
 
-        perform: function () {
+        perform: function (denizen) {
             var d = $.Deferred();
 
             if (this.room.light) {
@@ -25,6 +25,10 @@ define(['myclass', 'gma/Activity', 'gma/Resource'], function (my, Activity, Reso
             this.room.gesture(this.resolved ? 'idle' : 'off');
 
             this.resolved = !this.resolved;
+
+            if (this.isResolved()) {
+                Resource.sound.applause.play();
+            }
 
             d.resolve();
 

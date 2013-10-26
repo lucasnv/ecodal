@@ -166,31 +166,47 @@ define(
 
                 bedroom.addConnection(livingroom, [
                     {
-                        x: bedroom.getPosition().x + 20,
-                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset
+                        x: bedroom.getPosition().x + 37,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset,
+                        z: 0
                     },
                     {
-                        x: bedroom.getPosition().x + 20,
-                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset - 60
+                        x: bedroom.getPosition().x + 37,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset - 60,
+                        z: 0
                     },
                     {
-                        x: livingroom.getPosition().x + 20,
-                        y: livingroom.getPosition().y + this.roomHeight + this.floorOffset
+                        x: bedroom.getPosition().x + 37,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset - 60,
+                        z: 1
+                    },
+                    {
+                        x: livingroom.getPosition().x + 37,
+                        y: livingroom.getPosition().y + this.roomHeight + this.floorOffset,
+                        z: 1
                     }
                 ]);
 
                 livingroom.addConnection(bedroom, [
                     {
-                        x: livingroom.getPosition().x + 20,
-                        y: livingroom.getPosition().y + this.roomHeight + this.floorOffset
+                        x: livingroom.getPosition().x + 37,
+                        y: livingroom.getPosition().y + this.roomHeight + this.floorOffset,
+                        z: 1
                     },
                     {
-                        x: bedroom.getPosition().x + 20,
-                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset - 60
+                        x: bedroom.getPosition().x + 37,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset - 60,
+                        z: 1
                     },
                     {
-                        x: bedroom.getPosition().x + 20,
-                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset
+                        x: bedroom.getPosition().x + 37,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset - 60,
+                        z: 0
+                    },
+                    {
+                        x: bedroom.getPosition().x + 37,
+                        y: bedroom.getPosition().y + this.roomHeight + this.floorOffset,
+                        z: 0
                     }
                 ]);
 
@@ -364,17 +380,25 @@ define(
                 padre.think();
                 this.denizens.push(padre);
 
-
                 var mother = this.createHuman(this.speedHuman, motherLook);
                 mother.setPosition(this.getRoomCenter(bathroom));
                 mother.think();
                 this.denizens.push(mother);
 
-
                 var kid = this.createHuman(this.speedHuman, kidLook);
                 kid.setPosition(this.getRoomCenter(bedroom));
                 kid.think();
                 this.denizens.push(kid);
+
+                var self = this;
+                this.stage.on('drawstart', function () {
+                    _.each(self.denizens, function (denizen) {
+                        var room = self.getRoomByDenizen(denizen);
+                        if (room) {
+                            self.occupyRoom(room, denizen);
+                        }
+                    });
+                });
             },
 
             findPath: function (room1, room2) {
@@ -537,7 +561,8 @@ define(
 
                 return {
                     x: pos.x + this.roomPadding + Math.round(Math.random() * (this.roomWidth - 2 * this.roomPadding)),
-                    y: pos.y + this.roomHeight + this.floorOffset
+                    y: pos.y + this.roomHeight + this.floorOffset,
+                    z: 0
                 }
             },
 

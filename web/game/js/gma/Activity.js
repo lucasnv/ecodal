@@ -46,7 +46,11 @@ define(['myclass', 'signals'], function (my, signals) {
             this.owner = undefined;
         },
 
-        perform: function () {
+        isProblematic: function () {
+            return false;
+        },
+
+        perform: function (denizen) {
             var d = $.Deferred();
             d.resolve();
             this.on['perform'].dispatch(this);

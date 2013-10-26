@@ -1,4 +1,4 @@
-define(['myclass', 'gma/Activity'], function (my, Activity) {
+define(['myclass', 'gma/Activity', 'gma/Resource'], function (my, Activity, Resource) {
     var Faucet = my.Class(Activity, {
         constructor: function (name, config) {
             Faucet.Super.call(this, name, config);
@@ -14,10 +14,22 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
             Faucet.Super.prototype.init.call(this, room);
         },
 
-        perform: function () {
+        isProblematic: function () {
+            if (!this.isResolved() && !this.hasOwner()) {
+                return true;
+            }
+
+            if (!this.isResolved() && this.room.denizens.indexOf(this.get)) {
+
+            }
+
+            return false;
+        },
+
+        perform: function (denizen) {
             var d = $.Deferred();
             if (this.room.faucet) {
-                this.room.faucet.getChildAt(0).gotoAndStop(this.resolved ? 'on' : 'off')
+                this.room.faucet.getChildAt(0).gotoAndStop(this.resolved ? 'on' : 'off');
 
                 if (this.resolved) {
                     this.sound.faucet.play({loop: -1});
@@ -27,6 +39,10 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
             }
 
             this.resolved = !this.resolved;
+
+            if (this.isResolved()) {
+                Resource.sound.applause.play();
+            }
 
             d.resolve();
 

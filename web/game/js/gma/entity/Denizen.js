@@ -175,8 +175,8 @@ define(['myclass', 'signals', 'gma/Entity', 'gma/Idea'],
                 return d;
             },
 
-            move: function (x, y) {
-                var d = this.fly(x, y);
+            move: function (x, y, z) {
+                var d = this.fly(x, y, z);
 
                 this.gesture('walk');
 

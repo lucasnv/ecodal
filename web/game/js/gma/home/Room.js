@@ -67,11 +67,11 @@ define(['myclass', 'gma/Entity', 'gma/home/Power', 'gma/Resource'], function (my
             return _.findWhere(this.connections, {room: room});
         },
 
-        performActivity: function (name, params) {
+        performActivity: function (name, denizen) {
             var activity = this.getActivity(name);
 
             if (activity) {
-                return activity.perform(params);
+                return activity.perform(denizen);
             }
 
             return null;

@@ -17,6 +17,7 @@ var manifest = [
     {src: "/game/assets/sound/atmosfera_1.mp3", id: "snd_ambient"},
     {src: "/game/assets/sound/preview-so-uplifting.mp3", id: "snd_music"},
     {src: "/game/assets/sound/pop.mp3", id: "snd_pop"},
+    {src: "/game/assets/sound/applause-1.mp3", id: "snd_applause"},
 
     // Denizen
     {src: "/game/assets/denizen/padre.png", id: "father"},
@@ -43,12 +44,10 @@ var manifest = [
 
     {src: "/game/assets/activity/icon_faucet.png", id: "icon_faucet"},
     {src: "/game/assets/activity/faucet.png", id: "faucet"},
-    {src: "/game/assets/sound/faucet.mp3", id: "snd_faucet"}
-];
+    {src: "/game/assets/sound/faucet.mp3", id: "snd_faucet"},
 
-var Resources = {
-    loader: null
-};
+    {src: "/game/assets/room/parche.jpg", id: "parche"}
+];
 
 var preload = function () {
     console.log('main', '::', 'preload');
@@ -58,6 +57,8 @@ var preload = function () {
         Resource.loader = new createjs.LoadQueue();
         Resource.loader.installPlugin(createjs.Sound);
         Resource.loader.addEventListener('complete', function () {
+            Resource.sound.applause = createjs.Sound.createInstance('snd_applause');
+
             d.resolve();
         });
 

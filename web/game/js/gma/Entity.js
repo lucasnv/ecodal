@@ -9,6 +9,7 @@ define(['myclass'],
                 /* Attr*/
                 this.parent = null;
                 this.body = new createjs.Container();
+                this.body.z = 0;
                 this.gestures = new createjs.Container();
                 this.body.addChild(this.gestures);
 
@@ -40,15 +41,16 @@ define(['myclass'],
             },
 
             setPosition: function (position) {
-                this.body.x = position.x;
-                this.body.y = position.y;
-                this.update();
+                this.body.x = position.x || 0;
+                this.body.y = position.y || 0;
+                this.body.z = position.z || 0;
             },
 
             getPosition: function () {
                 return {
                     x: this.body.x,
-                    y: this.body.y
+                    y: this.body.y,
+                    z: this.body.z
                 }
             },
 
@@ -161,12 +163,13 @@ define(['myclass'],
                 this.body.y = y;
             },
 
-            fly: function (x, y) {
+            fly: function (x, y, z) {
+                z = z || 0;
                 var d = $.Deferred();
 
                 if (!this.body) {
                     d.resolve();
-                    return;
+                    return d;
                 }
 
                 var self = this;
@@ -180,7 +183,9 @@ define(['myclass'],
                 if (this.body.x != x)
                     this.direction = this.body.x < x ? 90 : -90;
 
-                TweenMax.to(this.body, seconds, {x: x, y: y, ease: Linear.easeNone, onComplete: function () {
+                console.log('z', z);
+
+                TweenMax.to(this.body, seconds, {x: x, y: y, z: z, ease: Linear.easeNone, onComplete: function () {
                     self.gesture('idle');
                     d.resolve();
                 }});
