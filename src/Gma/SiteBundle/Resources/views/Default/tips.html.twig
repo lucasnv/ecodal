@@ -10,7 +10,7 @@
 				Cuando salgas de una habitación y quede desocupada apaga las luces.<br> 
 				Tener la luz encendida sin necesidad, genera desperdicio y contaminación.<br>
 				<span class="glyphicon glyphicon-volume-off small-circle white"></span>
-				<span class="glyphicon glyphicon-volume-up small-circle white"></span>
+				<span class="glyphicon glyphicon-volume-up small-circle white" id="tip-luz"></span>
 		</div> 
 		<div class="alert alert-warning tip">
 			<h3>Aire acondicionado</h3> 
@@ -40,4 +40,25 @@
 		</div>
 	</div>
 </div> <!-- /container --> 
+<script type="text/javascript">
+
+createjs.Sound.registerSound("/audio/tip-luz.mp3", "tip-luz");
+createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
+
+var intance = null;
+
+ function loadHandler(event) {
+     // This is fired for each sound that is registered.
+     instance = createjs.Sound.createInstance("tip-luz"); 
+     //instance.addEventListener("complete", createjs.proxy(this.handleComplete, this));
+     instance.volume = 0.5;
+
+     $(document).ready(function(){
+     		$('#tip-luz').on('click',function(){
+     			instance.play();
+     		});
+     });
+ }
+
+</script>
 {% endblock %}
