@@ -14,13 +14,16 @@
 					<a href="{{ url('gma_site_home') }}"><span class="glyphicon glyphicon-home"></span><span><strong>&nbsp;Inicio</strong></span></a>
 				</li>
 				<li class="{% if pageProject is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_project') }}"><span class="glyphicon glyphicon-bullhorn green"></span><span><strong>&nbsp;Proyecto</strong></span></a>
+					<a href="{{ url('gma_site_project') }}"><span class="glyphicon glyphicon-bullhorn green"></span><span><strong>&nbsp;ECO Proyecto</strong></span></a>
 				</li>
 				<li class="{% if pageTips is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_tips') }}"><span class="glyphicon glyphicon-ok blue"></span><span><strong>&nbsp;Tips</strong></span></a>
+					<a href="{{ url('gma_site_tips') }}"><span class="glyphicon glyphicon-ok blue"></span><span><strong>&nbsp;ECO Tips</strong></span></a>
 				</li>
 				<li class="{% if pageAcademic is defined %}active{% endif %}">
-					<a href="{{ url('gma_site_academic') }}"><span class="glyphicon glyphicon-book yellow"></span><span><strong>&nbsp;Escolar</strong></span></a>
+					<a href="{{ url('gma_site_academic') }}"><span class="glyphicon glyphicon-book yellow"></span><span><strong>&nbsp;ECO Escolar</strong></span></a>
+				</li>
+				<li class="{% if pageCredential is defined %}active{% endif %}">
+					<a href="{{ url('gma_site_credencial') }}"><span class="glyphicon glyphicon-credit-card red"></span><span><strong>&nbsp;Eco DNI</strong></span></a>
 				</li>
 				<!--li class="{% if pageContact is defined %}active{% endif %}">
 					<a href="{{ url('gma_site_contact') }}"><span class="glyphicon glyphicon-earphone red"></span><span><strong>&nbsp;Contáctanos</strong></span></a>
