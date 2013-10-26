@@ -1,4 +1,4 @@
-define(['myclass', 'gma/Activity'], function (my, Activity) {
+define(['myclass', 'gma/Activity', 'gma/Resource'], function (my, Activity, Resource) {
     var Light = my.Class(Activity, {
         constructor: function (name, config) {
             Light.Super.call(this, name, config);
@@ -18,7 +18,8 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
             var d = $.Deferred();
 
             if (this.room.light) {
-                this.room.light.getChildAt(0).gotoAndStop(this.resolved ? 'on' : 'off')
+                createjs.Sound.play('snd_light');
+                this.room.light.getChildAt(0).gotoAndStop(this.resolved ? 'on' : 'off');
             }
 
             this.room.gesture(this.resolved ? 'idle' : 'off');

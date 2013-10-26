@@ -42,7 +42,7 @@ define(
 
                 this.dialogIconWidth = 50;
                 this.dialogIconHeight = 50;
-                this.dialogIconMargin = 20;
+                this.dialogIconMargin = 10;
                 this.dialogPadding = 10;
 
                 this.denizens = [];
@@ -53,6 +53,12 @@ define(
                 this.worldMatrix = [];
 
                 this.dialogs = [];
+
+                this.sound = {
+                    ambient: createjs.Sound.createInstance('snd_ambient'),
+                    music: createjs.Sound.createInstance('snd_music'),
+                    pop: createjs.Sound.createInstance('snd_pop')
+                };
 
                 this.init();
             },
@@ -91,6 +97,8 @@ define(
             },
 
             create: function () {
+                this.sound.music.volume = 0.3;
+                this.sound.music.play({loop: -1});
 
                 var user = new User(this.config.gender);
                 user.create();
@@ -672,6 +680,8 @@ define(
 
                 dialog.x = pos.x - this.dialogPadding - (Math.round(dialogBounds.width * 0.5));
                 dialog.y = pos.y - denizenBounds.height - dialogBounds.height - (2 * this.dialogPadding);
+
+                this.sound.pop.play();
 
                 return d;
             },

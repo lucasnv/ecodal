@@ -13,7 +13,11 @@ requirejs.config({
 });
 
 var manifest = [
-    {src: "/game/assets/light.png", id: "light"},
+
+    {src: "/game/assets/sound/atmosfera_1.mp3", id: "snd_ambient"},
+    {src: "/game/assets/sound/preview-so-uplifting.mp3", id: "snd_music"},
+    {src: "/game/assets/sound/pop.mp3", id: "snd_pop"},
+
     // Denizen
     {src: "/game/assets/denizen/padre.png", id: "father"},
     {src: "/game/assets/denizen/hijo.png", id: "kid"},
@@ -35,9 +39,11 @@ var manifest = [
     {src: "/game/assets/activity/icon_light.png", id: "icon_light"},
     {src: "/game/assets/activity/light.png", id: "light"},
     {src: "/game/assets/activity/light_super.png", id: "light_super"},
+    {src: "/game/assets/sound/light.mp3", id: "snd_light"},
 
     {src: "/game/assets/activity/icon_faucet.png", id: "icon_faucet"},
-    {src: "/game/assets/activity/faucet.png", id: "faucet"}
+    {src: "/game/assets/activity/faucet.png", id: "faucet"},
+    {src: "/game/assets/sound/faucet.mp3", id: "snd_faucet"}
 ];
 
 var Resources = {

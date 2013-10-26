@@ -4,6 +4,10 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
             Faucet.Super.call(this, name, config);
 
             this.icon = 'icon_faucet';
+
+            this.sound = {
+                faucet: createjs.Sound.createInstance('snd_faucet')
+            };
         },
 
         init: function (room) {
@@ -14,6 +18,12 @@ define(['myclass', 'gma/Activity'], function (my, Activity) {
             var d = $.Deferred();
             if (this.room.faucet) {
                 this.room.faucet.getChildAt(0).gotoAndStop(this.resolved ? 'on' : 'off')
+
+                if (this.resolved) {
+                    this.sound.faucet.play({loop: -1});
+                } else {
+                    this.sound.faucet.stop();
+                }
             }
 
             this.resolved = !this.resolved;
