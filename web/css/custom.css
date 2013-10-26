@@ -1,6 +1,9 @@
 body {background: url(/img/fondo.jpg) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;}
-h1{font-family: Ranchers;font-size: 102px !important; margin-top: 5px;}
+h1{font-family: Ranchers;font-size: 50px !important; margin-top: 5px;}
+.btn-sound{position:absolute;left:1170px;top:100px;}
 .subtitle{font-size:32px; display:block; margin-top:5px;}
+.small-circle{font-size:20px;width:40px; height:40px; border-radius: 100px; border:4px solid #ccc; cursor:pointer; line-height: 30px}
+.small-circle:hover{border:4px solid #d9534f;}
 .circle{display:block;width:200px;height:200px;border-radius:100px;border:4px double #ccc;font-size:40px;line-height:170px;text-align:center;text-decoration:none;text-shadow:0 1px 0 #fff;}
 .circle:hover{border:4px double;text-decoration:none;background:#4cae4c;}
 .tbl-select-avatar{margin:auto;width:540px;}
@@ -20,3 +23,5 @@ h1{font-family: Ranchers;font-size: 102px !important; margin-top: 5px;}
 .blue{color:#428bca;}
 .yellow{color:#f0ad4e;}
 .grey{color:#666;}
+.tip{border-left: 5px; font-size: 12px; width:300px; height: 250px; float:left;margin:17px;}
+#proyect-content{font-size: 14px !important;}
