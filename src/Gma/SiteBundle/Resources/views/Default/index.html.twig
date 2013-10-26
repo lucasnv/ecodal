@@ -9,43 +9,49 @@
 		<a href="{{ url('gma_game_home') }}" target="_blank"><img id="btn-play" src="{{ asset('img/btn-play.png')}}"></a>	
 	</div>
 </div> <!-- /container --> 
-<script type="text/javascripts">
-	jQuery(document,function($){
-		$()
-	});
- createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
- createjs.Sound.registerSound("audio/bienvenida.mp3", "au-bienvenida");
- function loadHandler(event) {
+<script type="text/javascript">
+/*
+createjs.Sound.registerSound("/audio/bienvenida.mp3", "au-bienvenida");
+var instance = createjs.Sound.createInstance("au-bienvenida");
+
+instance.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
+
+function loadHandler(){
+	console.log('llego');
+	instance.play();
+}
+
+*/
+
+
+
+
+//createjs.Sound.play("/audio/bienvenida.mp3");
+ //createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
+ //
+
+//var instance = createjs.Sound.createInstance("au-bienvenida");
+
+//instance.setVolume(0.6);
+   // instance.play();
+
+    /*
+ var instance = createInstance('au-bienvenida');
+instance.addEventListener("complete", play);
+
+function play(){
+	console.log('plassssssssss');
+}*/
+ //soundPlay(instance,0.5);
+
+ /*function loadHandler(event) {
      // This is fired for each sound that is registered.
      var instance = createjs.Sound.play("au-bienvenida");  // play using id.  Could also use full sourcepath or event.src.
      instance.addEventListener("complete", createjs.proxy(this.handleComplete, this));
      instance.volume = 0.5;
- }
+ }*/
 
- /**
- * Crea una intancia de sonido
- */
-function createInstance(id){
-	var instance = createjs.Sound.createInstance(id);
-	return instance;
-}
 
-/**
- * Crea una intancia de sonido
- */
-function soundPlay(instance, volume){
-	instance.setVolume(volume);
-	instance.play();
-}
-/**
- * Stop de sonido
- */
-function soundStop(instance){
-	instance.stop();
-}
 
-function soundPause(instance){
-
-} 
 </script>
 {% endblock %}

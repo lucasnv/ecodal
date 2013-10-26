@@ -38,3 +38,32 @@ $(document).ready(function () {
     });
 });
 */
+
+ /**
+ * Crea una intancia de sonido
+ */
+function createInstance(id){
+    var instance = createjs.Sound.createInstance(id);
+    return instance;
+}
+
+/**
+ * Crea una intancia de sonido
+ */
+function soundPlay(instance, volume){
+    instance.setVolume(volume);
+    instance.play();
+}
+/**
+ * Stop de sonido
+ */
+function soundStop(instance){
+    instance.stop();
+}
+
+/**
+ * Pausa de sonidos
+ */
+function soundPause(instance){
+    instance.pause();
+} 
