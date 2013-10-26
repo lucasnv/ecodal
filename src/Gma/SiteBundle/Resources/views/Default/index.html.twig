@@ -4,6 +4,7 @@
 <div class="container">
 	<!-- Main component for a primary marketing message or call to action -->
 	<div id="index-jumbotron" class="jumbotron">
+		<a href="{{ url('gma_game_home') }}" target="_blank"><img id="btn-play" src="{{ asset('img/btn-play.png')}}"></a>
 		<!--h1 class="text-center"><span class="red">EC</span><span class="green">OD</span><span class="yellow">AL</span>
 			<span class="subtitle blue"> Cuida, juega y aprende</span></h1>
 			<p style="text-center">Desde hace mucho tiempo los malos hábitos en los hogares han hecho que el planeta 
@@ -20,15 +21,42 @@
 	</div>
 </div> <!-- /container --> 
 <script type="text/javascripts">
-
+	jQuery(document,function($){
+		$()
+	});
  createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
- createjs.Sound.registerSound("/audio/bienvenida.mp3", "au-bienvenida");
-
+ createjs.Sound.registerSound("audio/bienvenida.mp3", "au-bienvenida");
  function loadHandler(event) {
      // This is fired for each sound that is registered.
      var instance = createjs.Sound.play("au-bienvenida");  // play using id.  Could also use full sourcepath or event.src.
-    // instance.addEventListener("complete", createjs.proxy(this.handleComplete, this));
+     instance.addEventListener("complete", createjs.proxy(this.handleComplete, this));
      instance.volume = 0.5;
  }
+
+ /**
+ * Crea una intancia de sonido
+ */
+function createInstance(id){
+	var instance = createjs.Sound.createInstance(id);
+	return instance;
+}
+
+/**
+ * Crea una intancia de sonido
+ */
+function soundPlay(instance, volume){
+	instance.setVolume(volume);
+	instance.play();
+}
+/**
+ * Stop de sonido
+ */
+function soundStop(instance){
+	instance.stop();
+}
+
+function soundPause(instance){
+
+} 
 </script>
 {% endblock %}
